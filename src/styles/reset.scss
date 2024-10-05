@@ -1,0 +1,18 @@
+@import-normalize;
+
+
+html {
+    font-size: 14px;
+    height: 100%;
+}
+
+body {
+    background: $cream;
+    font-size: 14px;
+    font-family: 'RobotoSlab', 'Avenir', Helvetica, Arial, sans-serif;;
+    height: 100%;
+}
+
+a {
+    text-decoration: none;
+}

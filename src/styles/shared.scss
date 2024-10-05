@@ -1,0 +1,45 @@
+.link {
+    transition: color .15s ease-in-out;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.link-primary {
+    @extend .link;
+    color: $green;
+
+    &:active,
+    &:focus,
+    &:hover,
+    &:visited {
+        color: $green;
+    }
+}
+
+.link-secondary {
+    @extend .link;
+    color: $light-gray;
+
+    &:hover {
+        color: $gold;
+    }
+}
+
+
+.link-tertiary {
+    @extend .link;
+    color: $sage-brown;
+
+    &:hover {
+        color: $sage-brown;
+    }
+}
+
+.link-quaternary {
+    @extend .link;
+    color: $dark-brown;
+
+    &:hover {
+        color: $dark-brown;
+    }
+}

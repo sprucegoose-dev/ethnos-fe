@@ -1,0 +1,26 @@
+@import '../../styles/variables.scss';
+
+.header {
+    background: $dark-brown;
+    box-shadow: -2px 1px 3px 1px #8c8c8c;
+    color: $light-gray;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 25px;
+    position: relative;
+    min-height: 40px;
+
+    > * {
+        align-self: center;
+    }
+
+    .logo {
+        position: absolute;
+        left: 2.5%;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        height: 40px;
+        width: auto;
+    }
+}
