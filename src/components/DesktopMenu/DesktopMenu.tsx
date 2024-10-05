@@ -23,12 +23,12 @@ const {
 
 export const menuItems: IMenuItem[] = [
     {
-        label: 'Find a game',
+        label: 'Play',
         path: '/rooms',
         visibility: [ALWAYS],
     },
     {
-        label: 'How to play',
+        label: 'Rules',
         path: '/rules',
         visibility: [ALWAYS],
     },
@@ -113,9 +113,6 @@ export function DesktopMenu(): JSX.Element {
                 onClick={closeUserMenu}
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                PaperProps={{
-                    className: 'menu-items-wrapper',
-                }}
                 MenuListProps={{
                     className: 'menu-items'
                 }}

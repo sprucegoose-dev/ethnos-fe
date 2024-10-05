@@ -14,7 +14,7 @@
     color: $dark-blue;
 
     &.btn-primary {
-        background: $dark-gray;
+        background: rgba(0, 0, 0, .75);
         // background-image: url('../assets/btn_bkg_2.png');
         // background-size: cover;
         // background-position: center;
@@ -23,7 +23,7 @@
         color: white;
 
         &:hover {
-            background: $dark-gray-2;
+            background: rgba(0, 0, 0, .95);
             border: 1px solid rgba(55, 55, 55, .6);
         }
     }

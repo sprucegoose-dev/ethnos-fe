@@ -11,7 +11,6 @@ import { IRootReducer } from './reducers/reducers.types';
 import 'react-toastify/dist/ReactToastify.css';
 import './styles/styles.scss';
 import './App.scss';
-import { LoginForm } from './components/LoginForm/LoginForm';
 import { Footer } from './components/Footer/Footer';
 
 function App() {
@@ -42,7 +41,6 @@ function App() {
         <div className="app">
             {inGame ? null : <Header />}
             <div className="content">
-                <LoginForm/>
                 <Outlet />
             </div>
             {inGame ? null : <Footer />}

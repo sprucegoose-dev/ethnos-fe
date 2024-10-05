@@ -12,7 +12,9 @@ export function Header(): JSX.Element {
                Home
             </Link> */}
             <div className="title">
-                ETHNOS
+                <Link to="/">
+                    ETHNOS
+                </Link>
             </div>
             <DesktopMenu />
             <MobileMenu />

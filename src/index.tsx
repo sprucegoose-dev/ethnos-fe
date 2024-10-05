@@ -9,6 +9,7 @@ import reportWebVitals from './reportWebVitals';
 import { store, persistor } from './reducers/store';
 
 import './index.css';
+import { LoginForm } from './components/LoginForm/LoginForm';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -20,6 +21,8 @@ root.render(
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<App />}>
+                            <Route path="login/:signUp" element={<LoginForm />} />
+                            <Route path="login" element={<LoginForm />} />
                         </Route>
                     </Routes>
                 </BrowserRouter>

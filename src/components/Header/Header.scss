@@ -34,6 +34,14 @@
         left: 50%;
         transform: translateX(-50%);
 
+        a,
+        a:active,
+        a:visited,
+        a:focus,
+        a:hover {
+            color: white;
+        }
+
         .subtitle {
             font-size: 1.5rem;
             position: absolute;

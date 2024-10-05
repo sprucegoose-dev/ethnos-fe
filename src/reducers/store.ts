@@ -14,7 +14,7 @@ import storage from 'redux-persist/lib/storage';
 import { rootReducer } from '../reducers';
 
 const persistConfig = {
-    key: 'root',
+    key: 'ethnos',
     storage,
     whitelist: ['auth'],
 }
