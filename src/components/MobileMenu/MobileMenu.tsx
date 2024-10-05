@@ -27,7 +27,7 @@ export function MobileMenu(): JSX.Element {
                 onClick={() => setOpen(true)}
             />
             <Drawer
-                className="mobile-menu-sidebar"
+                className="menu mobile-menu-sidebar"
                 anchor={'right'}
                 open={open}
                 onClose={() => setOpen(false)}

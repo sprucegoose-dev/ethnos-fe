@@ -93,7 +93,7 @@ export function DesktopMenu(): JSX.Element {
     }
 
     return (
-        <div className="desktop-menu">
+        <div className="menu desktop-menu">
             {filteredMenuItems.map(({ label, path, callbackName }, index) =>
                 <Link
                     to={path}

@@ -11,6 +11,8 @@ import { IRootReducer } from './reducers/reducers.types';
 import 'react-toastify/dist/ReactToastify.css';
 import './styles/styles.scss';
 import './App.scss';
+import { LoginForm } from './components/LoginForm/LoginForm';
+import { Footer } from './components/Footer/Footer';
 
 function App() {
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
@@ -40,9 +42,10 @@ function App() {
         <div className="app">
             {inGame ? null : <Header />}
             <div className="content">
+                <LoginForm/>
                 <Outlet />
             </div>
-            {/* {inGame ? null : <Footer />} */}
+            {inGame ? null : <Footer />}
             <ToastContainer autoClose={2000} pauseOnFocusLoss={false} />
         </div>
     );

@@ -4,13 +4,15 @@
 html {
     font-size: 14px;
     height: 100%;
+    margin: 0;
 }
 
 body {
-    background: $cream;
+    background: $background;
     font-size: 14px;
     font-family: 'RobotoSlab', 'Avenir', Helvetica, Arial, sans-serif;;
     height: 100%;
+    margin: 0;
 }
 
 a {

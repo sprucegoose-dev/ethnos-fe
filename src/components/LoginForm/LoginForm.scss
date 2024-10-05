@@ -1,0 +1,39 @@
+@import '../../styles/variables.scss';
+
+.login-form-wrapper {
+    background: rgba(0, 0, 0, .5);
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: $light-gray;
+    margin: 25px auto;
+    max-width: 375px;
+    padding: 25px;
+    position: relative;
+    text-align: center;
+
+    .form-title {
+        margin: 8px 0 15px;
+    }
+
+    .form-type-toggle {
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .logo {
+        display: block;
+        height: auto;
+        margin-bottom: 5px;
+        max-height: 135px;
+        max-width: 165px;
+        width: auto;
+        margin: 0 auto 5px auto;
+    }
+
+    .reset-password-wrapper {
+        position: absolute;
+        bottom: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}

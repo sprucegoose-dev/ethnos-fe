@@ -1,5 +1,6 @@
 
 @import '../../styles/variables.scss';
+@import '../../styles/shared.scss';
 
 .desktop-menu {
     display: none;
@@ -12,32 +13,6 @@
 
         > * {
             align-self: center;
-        }
-
-        .menu-item {
-            margin-left: 15px;
-            position: relative;
-
-            &:after {
-                background-color: $gold;
-                content: '';
-                display: block;
-                height: 2px;
-                left: 0;
-                opacity: 0;
-                position: absolute;
-                right: 0;
-                transition: transform .15s ease-in-out, opacity .15s ease-in-out;
-                width: 100%;
-            }
-
-            &:hover {
-
-                &:after {
-                    opacity: 1;
-                    transform: translateY(325%);
-                }
-            }
         }
 
         .user-avatar {
@@ -68,6 +43,7 @@
 
             .user-avatar {
                 padding: 0 16px 6px;
+                box-sizing: border-box;
                 white-space: nowrap;
             }
         }

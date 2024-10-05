@@ -8,9 +8,12 @@ import './Header.scss';
 export function Header(): JSX.Element {
     return (
         <div className="header">
-            <Link className="logo-wrapper" to="/">
-               Logo
-            </Link>
+            {/* <Link className="logo-wrapper" to="/">
+               Home
+            </Link> */}
+            <div className="title">
+                ETHNOS
+            </div>
             <DesktopMenu />
             <MobileMenu />
         </div>

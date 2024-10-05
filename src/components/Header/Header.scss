@@ -1,17 +1,17 @@
 @import '../../styles/variables.scss';
 
 .header {
-    background: $dark-brown;
-    box-shadow: -2px 1px 3px 1px #8c8c8c;
-    color: $light-gray;
+    box-sizing: border-box;
     display: flex;
     justify-content: space-between;
-    padding: 10px 25px;
+    padding: 15px 25px;
     position: relative;
-    min-height: 40px;
+    background: rgba(0, 0, 0, .4);
 
     > * {
         align-self: center;
+        color: $light-gray;
+        text-shadow: 2px 2px $dark-gray;
     }
 
     .logo {
@@ -22,5 +22,29 @@
         cursor: pointer;
         height: 40px;
         width: auto;
+    }
+
+    .title {
+        color: white;
+        font-size: 2rem;
+        font-family: CaxtonStd-Bold;
+        text-align: center;
+        text-shadow: 2px 2px $dark-gray;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+
+        .subtitle {
+            font-size: 1.5rem;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            text-shadow: none;;
+        }
+    }
+
+    .desktop-menu,
+    .mobile-menu {
+        margin-left: auto;
     }
 }

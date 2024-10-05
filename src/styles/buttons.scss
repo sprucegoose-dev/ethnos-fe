@@ -14,8 +14,18 @@
     color: $dark-blue;
 
     &.btn-primary {
-        background: $green;
+        background: $dark-gray;
+        // background-image: url('../assets/btn_bkg_2.png');
+        // background-size: cover;
+        // background-position: center;
+        // background-repeat: no-repeat;
+        border: 1px solid rgba(77, 77, 77, .5);
         color: white;
+
+        &:hover {
+            background: $dark-gray-2;
+            border: 1px solid rgba(55, 55, 55, .6);
+        }
     }
 
     &.btn-outline {
