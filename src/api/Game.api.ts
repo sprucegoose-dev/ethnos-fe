@@ -1,6 +1,7 @@
 import { Method, requestOptions } from './Api.types';
 import { IActionPayload } from '../types/game.types';
 import api from './Api';
+import { ICreateGamePayload } from '../components/RoomForm/RoomForm.types';
 
 export default class GameApi {
 
@@ -30,13 +31,14 @@ export default class GameApi {
         return await api.request(Method.POST, `/game/${gameId}/join`, options);
     }
 
-    static async create() {
+    static async create(payload: ICreateGamePayload) {
         const options = {
             ...requestOptions,
             authorize: true,
+            payload,
         };
 
-        return await api.request(Method.POST, '/game', options);
+        return await api.request(Method.POST, '/game/create', options);
     }
 
     static async start(gameId: number) {

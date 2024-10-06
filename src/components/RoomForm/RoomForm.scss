@@ -1,0 +1,12 @@
+@import '../../styles/variables.scss';
+
+.room-form {
+    background: rgba(0, 0, 0, .6);
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: $light-gray;
+    width: 375px;
+    padding: 25px;
+    position: relative;
+    text-align: center;
+}

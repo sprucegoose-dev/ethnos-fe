@@ -1,8 +1,23 @@
+import { useEffect } from 'react';
 import './Home.scss';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { IRootReducer } from '../../reducers/reducers.types';
+import { IAuthReducer } from '../Auth/Auth.types';
 
 export function Home(): JSX.Element {
+    const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const isLoggedIn = Boolean(auth.userId);
+
+        if (isLoggedIn) {
+            navigate('/rooms');
+        }
+    }, [auth, navigate]);
+
     return (
         <div className="home">
             <div className="intro">

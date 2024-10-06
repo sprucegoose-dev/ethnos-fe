@@ -12,6 +12,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import './styles/styles.scss';
 import './App.scss';
 import { Footer } from './components/Footer/Footer';
+import UserApi from './api/User.api';
+import { resetAuthDetails } from './components/Auth/Auth.reducer';
 
 function App() {
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
@@ -21,11 +23,11 @@ function App() {
         socket.connect();
 
         const validateLoginState = async () => {
-            // const response = await (await UserResource.getDetails()).json();
+            const response = await (await UserApi.getDetails()).json();
 
-            // if (response.code === 401) {
-            //     dispatch(resetAuthDetails());
-            // }
+            if (response.code === 401) {
+                dispatch(resetAuthDetails());
+            }
         }
 
         if (auth.userId) {

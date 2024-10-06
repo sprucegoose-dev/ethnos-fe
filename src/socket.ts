@@ -6,10 +6,7 @@ const socketUrl = isProduction ?
     process.env.REACT_APP_BASE_API_URL_DEV;
 
 export const socket = io(socketUrl, {
-    transports: [
-        'websocket',
-        'polling',
-    ],
+    transports: ['websocket'],
     secure: isProduction,
     rejectUnauthorized: false,
 });
