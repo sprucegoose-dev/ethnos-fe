@@ -6,13 +6,16 @@
 
 .link-primary {
     @extend .link;
-    color: $green;
+    color: $light-gold;
+
+    &:visited {
+        color: $light-gold;
+    }
 
     &:active,
     &:focus,
-    &:hover,
-    &:visited {
-        color: $green;
+    &:hover {
+        color: $gold;
     }
 }
 

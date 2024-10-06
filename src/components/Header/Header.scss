@@ -6,22 +6,12 @@
     justify-content: space-between;
     padding: 15px 25px;
     position: relative;
-    background: rgba(0, 0, 0, .4);
+    background: rgba(0, 0, 0, .5);
 
     > * {
         align-self: center;
         color: $light-gray;
         text-shadow: 2px 2px $dark-gray;
-    }
-
-    .logo {
-        position: absolute;
-        left: 2.5%;
-        top: 50%;
-        transform: translateY(-50%);
-        cursor: pointer;
-        height: 40px;
-        width: auto;
     }
 
     .title {
@@ -32,7 +22,14 @@
         text-shadow: 2px 2px $dark-gray;
         position: absolute;
         left: 50%;
-        transform: translateX(-50%);
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+        top: 60%;
+
+        img {
+            height: 35px;
+            width: auto;
+        }
 
         a,
         a:active,

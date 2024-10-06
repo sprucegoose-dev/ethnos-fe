@@ -26,3 +26,10 @@
         font-size: .8rem;
     }
 }
+
+@media only screen and (min-width: $screen-sm) {
+
+    .footer {
+        max-width: 55%;
+    }
+}
