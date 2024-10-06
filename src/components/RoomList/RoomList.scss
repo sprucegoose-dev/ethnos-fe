@@ -5,7 +5,6 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
 
     .room-form {
         margin-right: 10px;
@@ -13,13 +12,9 @@
 
     .rooms {
         display: flex;
-        flex-wrap: wrap;
+        margin-top: 25px;
         position: relative;
-
-        .room {
-            align-self: flex-start;
-            margin: 0 10px 20px;
-        }
+        flex-direction: column;
     }
 }
 
@@ -27,5 +22,18 @@
 
     .room-list {
         flex-direction: row;
+        justify-content: flex-start;
+
+        .rooms {
+            margin-top: 0;
+            flex-wrap: wrap;
+
+            .room {
+                align-self: flex-start;
+                margin: 0 10px 20px;
+                max-width: 250px;
+                width: 250px;
+            }
+        }
     }
 }

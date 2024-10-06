@@ -8,8 +8,6 @@
     display: flex;
     flex-direction: column;
     padding: 15px;
-    width: 250px;
-    max-width: 250px;
 
     .room-title {
         display: flex;
@@ -37,7 +35,6 @@
     }
 
     .players {
-
 
         .player {
             display: inline-block;
