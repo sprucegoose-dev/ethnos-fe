@@ -2,12 +2,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
-import { LoginFormType, ILoginFormErrors } from './LoginForm-types';
-import './LoginForm.scss';
-// import UserResource from '../../resources/UserResource';
 import { useDispatch } from 'react-redux';
+
+import { LoginFormType, ILoginFormErrors } from './LoginForm.types';
 import { setAuthDetails } from '../Auth/Auth.reducer';
+import UserApi from '../../api/User.api';
+
+import './LoginForm.scss';
 
 const defaultErrors: ILoginFormErrors = {
     email: null,
@@ -105,24 +106,26 @@ export function LoginForm(): JSX.Element {
     }
 
     const onSubmit = async () => {
+        const payload = {
+            email,
+            username,
+            password,
+        };
         let response: any;
-        // let payload = {
-        //     email,
-        //     username,
-        //     password,
-        // };
 
         if (!formIsValid()) {
             return;
         }
 
         if (isSignUp) {
-            // response = await UserResource.signUp(payload);
+            response = await UserApi.signUp(payload);
         } else {
-            // response = await UserResource.login(payload);
+            response = await UserApi.login(payload);
         }
 
         const data = await response.json();
+
+        let errorMsg = '';
 
         if (response.ok) {
             dispatch(setAuthDetails(data));
@@ -132,8 +135,20 @@ export function LoginForm(): JSX.Element {
             switch (data.code) {
                 case 400:
                 case 404:
-                case 409:
                     toast.error(data.message);
+                    break;
+                case 409:
+                    errorMsg = data.message;
+
+                    if (errorMsg.includes('email')) {
+                        errorMsg = 'This email address already exists.';
+                    }
+
+                    if (errorMsg.includes('username')) {
+                        errorMsg = 'This username address already exists.';
+                    }
+
+                    toast.error(errorMsg);
                     break;
                 default:
                     toast.error(`Error signing ${isSignUp ? 'up' : 'in'}`);

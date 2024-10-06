@@ -24,28 +24,33 @@
 
 .user-menu {
 
-    .menu-items-wrapper {
+    .MuiPaper-root {
+        background: rgba(0, 0, 0, .5);
         margin-top: 6px;
 
-        .menu-items {
+        .MuiList-root {
+            color: white;
+        }
+    }
 
-            .menu-item {
-                display: flex;
+    .menu-items {
 
-                .menu-item-label {
-                    margin-left: 7.5px;
-                }
+        .menu-item {
+            display: flex;
 
-                .icon-logout {
-                    transform: scaleX(-1);
-                }
+            .menu-item-label {
+                margin-left: 7.5px;
             }
 
-            .user-avatar {
-                padding: 0 16px 6px;
-                box-sizing: border-box;
-                white-space: nowrap;
+            .icon-logout {
+                transform: scaleX(-1);
             }
+        }
+
+        .user-avatar {
+            padding: 0 16px 6px;
+            box-sizing: border-box;
+            white-space: nowrap;
         }
     }
 }

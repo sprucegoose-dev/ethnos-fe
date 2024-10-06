@@ -15,16 +15,12 @@
 
     &.btn-primary {
         background: rgba(0, 0, 0, .75);
-        // background-image: url('../assets/btn_bkg_2.png');
-        // background-size: cover;
-        // background-position: center;
-        // background-repeat: no-repeat;
         border: 1px solid rgba(77, 77, 77, .5);
         color: white;
 
         &:hover {
             background: rgba(0, 0, 0, .95);
-            border: 1px solid rgba(55, 55, 55, .6);
+            border: 1px solid $medium-gray-2;
         }
     }
 

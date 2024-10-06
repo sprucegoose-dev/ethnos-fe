@@ -34,15 +34,33 @@
             max-width: 100%;
         }
     }
+
+    .actions {
+        display: flex;
+        margin-top: 20px;
+
+        > * {
+            flex-grow: 1;
+
+            &:first-of-type {
+                margin-right: 5px;
+            }
+
+            &:last-of-type {
+                margin-left: 5px;
+            }
+        }
+    }
 }
 
 @media only screen and (min-width: $screen-sm) {
 
     .home {
+        margin-top: 100px;
         max-width: 650px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        // position: absolute;
+        // top: 50%;
+        // left: 50%;
+        // transform: translate(-50%, -50%);
     }
 }

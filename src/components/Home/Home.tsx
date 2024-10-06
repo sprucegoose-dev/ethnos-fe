@@ -7,8 +7,8 @@ export function Home(): JSX.Element {
         <div className="home">
             <div className="intro">
                 <p>
-                    Ethnos is a fast-paced area control and set collection game where 2-6 players recruit fantasy creatures
-                    and compete to control regions on a map.
+                    Ethnos is a fast-paced area control and set collection game where 2-6 players compete to recruit fantasy creatures
+                    and control regions on a map.
                 </p>
                 <p>
                     The game was designed by Paolo Mori and published by
@@ -32,6 +32,18 @@ export function Home(): JSX.Element {
                     </Link>
                     to find a game or create one.
                 </p>
+            </div>
+            <div className="actions">
+                <Link to="/login/signUp" className="link-primary">
+                    <button className="btn btn-primary btn-block">
+                        Sign up
+                    </button>
+                </Link>
+                <Link to="/login" className="link-primary">
+                    <button className="btn btn-primary btn-block">
+                        Login
+                    </button>
+                </Link>
             </div>
         </div>
     );

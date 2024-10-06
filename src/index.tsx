@@ -11,6 +11,7 @@ import { store, persistor } from './reducers/store';
 import './index.css';
 import { LoginForm } from './components/LoginForm/LoginForm';
 import { Home } from './components/Home/Home';
+import { RoomList } from './components/RoomList/RoomList';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -24,6 +25,7 @@ root.render(
                         <Route path="/" element={<App />}>
                             <Route path="login/:signUp" element={<LoginForm />} />
                             <Route path="login" element={<LoginForm />} />
+                            <Route path="rooms" element={<RoomList />} />
                             <Route path="/" element={<Home />} />
                         </Route>
                     </Routes>

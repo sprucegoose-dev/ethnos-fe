@@ -3,13 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Divider, Menu, MenuItem } from '@mui/material';
 
 import { IMenuItem, MenuItemVisibility } from '../../types/menu.types';
 import { IAuthReducer } from '../Auth/Auth.types';
 import { IRootReducer } from '../../reducers/reducers.types';
-import { UserAvatarTheme } from '../UserAvatar/UserAvatar-types';
 import { UserAvatar } from '../UserAvatar/UserAvatar';
 import { resetAuthDetails } from '../Auth/Auth.reducer';
 
@@ -119,7 +118,17 @@ export function DesktopMenu(): JSX.Element {
                     className: 'menu-items'
                 }}
             >
-                <UserAvatar label={auth.username} theme={UserAvatarTheme.DARK} />
+                <MenuItem className="menu-item">
+                    <FontAwesomeIcon className="menu-item-icon icon-logout" icon={faUser}/>
+                    <span className="menu-item-label">
+                        <Link
+                            to="/account"
+                            className="menu-item link-secondary"
+                        >
+                            {auth.username}
+                        </Link>
+                    </span>
+                </MenuItem>
                 <Divider />
                 <MenuItem className="menu-item" onClick={logout}>
                     <FontAwesomeIcon className="menu-item-icon icon-logout" icon={faArrowRightFromBracket}/>
