@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faLock, faUser } from '@fortawesome/free-solid-svg-icons';
 
 import { IRoomProps } from './Room.types';
-import { GameState } from '../../types/game.types';
+import { GameState, TribeName } from '../../types/game.types';
 
 import GameApi from '../../api/Game.api';
 
@@ -15,6 +15,34 @@ import { PasswordForm } from '../PasswordForm/PasswordForm';
 import { useSelector } from 'react-redux';
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
+
+import centaurIcon from '../../assets/circle_icon_centaur.png';
+import dwarfIcon from '../../assets/circle_icon_dwarf.png';
+import elfIcon from '../../assets/circle_icon_elf.png';
+import giantIcon from '../../assets/circle_icon_giant.png';
+import halflingIcon from '../../assets/circle_icon_halfling.png';
+import merfolkIcon from '../../assets/circle_icon_merfolk.png';
+import minotaurIcon from '../../assets/circle_icon_minotaur.png';
+import orcIcon from '../../assets/circle_icon_orc.png';
+import skeletonIcon from '../../assets/circle_icon_skeleton.png';
+import trollIcon from '../../assets/circle_icon_troll.png';
+import wingfolkIcon from '../../assets/circle_icon_wingfolk.png';
+import wizardIcon from '../../assets/circle_icon_wizard.png';
+
+const tribeIcons = {
+    [TribeName.CENTAUR]: centaurIcon,
+    [TribeName.DWARF]: dwarfIcon,
+    [TribeName.ELF]: elfIcon,
+    [TribeName.GIANT]: giantIcon,
+    [TribeName.HALFLING]: halflingIcon,
+    [TribeName.MERFOLK]: merfolkIcon,
+    [TribeName.MINOTAUR]: minotaurIcon,
+    [TribeName.ORC]: orcIcon,
+    [TribeName.SKELETON]: skeletonIcon,
+    [TribeName.TROLL]: trollIcon,
+    [TribeName.WINGFOLK]: wingfolkIcon,
+    [TribeName.WIZARD]: wizardIcon,
+};
 
 export function Room({game}: IRoomProps): JSX.Element {
     const [showPasswordModal, setShowPasswordModal] = useState<boolean>(false);
@@ -47,6 +75,8 @@ export function Room({game}: IRoomProps): JSX.Element {
         }
     }
 
+    const tribes: TribeName[] = Array.from({ length: 6 }, (_, i) => game.settings.tribes[i] || null);
+
     return (
         <div className="room">
             <div className="room-title">
@@ -60,10 +90,13 @@ export function Room({game}: IRoomProps): JSX.Element {
                     />
                         { game.players.length }/{ game.maxPlayers }
                 </span>
+                {game.hasPassword ?
+                    <FontAwesomeIcon
+                        className="password-icon"
+                        icon={faLock}
+                    /> : null
+                }
             </div>
-
-
-            {/* TODO: add x players/max players indicator */}
             <div className="players">
                 {game.players.map(({ user }, index) =>
                     <Link
@@ -75,13 +108,21 @@ export function Room({game}: IRoomProps): JSX.Element {
                     </Link>
                 )}
             </div>
-            {game.settings ? <div className="tribes">
-                {game.settings.tribes.map((tribe, index) =>
-                    <div key={`tribe=${tribe}`}>
-                        {tribe}
+            <div className="tribes">
+                {tribes.map((tribe, index) =>
+                    <div className="tribe-icon" key={`tribe-${index}`}>
+                        <div className="tribe-icon-inner">
+                            {tribe ?
+                                // @ts-ignore
+                                <img className="tribe-img" src={tribeIcons[tribe]} alt={tribe} /> :
+                                <span className="tribe-placeholder">
+                                    ?
+                                </span>
+                            }
+                        </div>
                     </div>
                 )}
-            </div> : null}
+            </div>
             <div className='action-btn-wrapper'>
                 {(
                     game.state === GameState.CREATED &&

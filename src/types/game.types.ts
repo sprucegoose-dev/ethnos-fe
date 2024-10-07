@@ -96,7 +96,7 @@ export enum CardState {
     REVEALED = 'revealed',
 }
 
-export interface Tribe {
+export interface ITribe {
     id: number;
     name: TribeName;
     description: string;
@@ -127,7 +127,7 @@ export interface ICard {
     gameId: number;
     playerId: number;
     index: number;
-    tribe: Tribe;
+    tribe: ITribe;
 }
 
 export interface IGameState {

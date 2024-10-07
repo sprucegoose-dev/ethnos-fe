@@ -32,7 +32,7 @@ export function RoomList(): JSX.Element {
             <RoomForm/>
             <div className="rooms">
                 {games.map(game =>
-                    <Room game={game} />
+                    <Room game={game} key={`room-${game.id}`} />
                 )}
             </div>
         </div>

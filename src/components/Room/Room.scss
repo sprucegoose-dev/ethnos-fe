@@ -12,6 +12,7 @@
     .room-title {
         display: flex;
         margin-bottom: 15px;
+        position: relative;
 
         .room-name {
             border-radius: 4px;
@@ -24,13 +25,21 @@
 
         .player-count-label {
             border-radius: 4px;
-            margin-left: 10px;
+            margin-left: 5px;
             padding: 5px;
             color: white;
 
             .player-icon {
                 margin-right: 5px;
             }
+        }
+
+        .password-icon {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
         }
     }
 
@@ -47,7 +56,45 @@
         }
     }
 
-    .action-btn-wrapper {
+    .tribes {
+        display: flex;
+        flex-wrap: wrap;
         margin-top: 15px;
+        justify-content: space-evenly;
+        max-width: 90%;
+        margin: 15px auto 15px;
+
+        .tribe-icon {
+            flex: 0 0 calc(33.33% - 10px);
+            margin: 5px;
+            max-width: 56px;
+
+            .tribe-icon-inner {
+                border: 3.2px solid rgba(255, 255, 255, 0.8);
+                border-radius: 50%;
+                position: relative;
+
+                .tribe-img {
+                    width: 50px;
+                    height: 50px;
+                    display: block;
+                }
+
+                .tribe-placeholder {
+                    align-items: center;
+                    color: white;
+                    box-sizing: border-box;
+                    display: inline-flex;
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                    justify-content: center;
+                    width: 50px;
+                    height: 50px;
+                    padding: 0;
+                    margin: 0;
+                }
+            }
+        }
     }
 }
+
