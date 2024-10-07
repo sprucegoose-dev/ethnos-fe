@@ -146,3 +146,7 @@ export interface IGameState {
     cards: ICard[];
     players: IPlayer[];
 }
+
+export interface IActiveGame extends IGameState {
+    hasPassword: boolean;
+}

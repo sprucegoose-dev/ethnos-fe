@@ -43,7 +43,7 @@ function App() {
         <div className="app">
             {inGame ? null : <Header />}
             <div className="content">
-                <Outlet />
+                {<Outlet />}
             </div>
             {inGame ? null : <Footer />}
             <ToastContainer autoClose={2000} pauseOnFocusLoss={false} />

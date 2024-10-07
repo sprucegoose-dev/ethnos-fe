@@ -22,10 +22,13 @@ export default class GameApi {
         return await api.request(Method.POST, `/game/${gameId}/leave`, options);
     }
 
-    static async join(gameId: number) {
+    static async join(gameId: number, password: string = null) {
         const options = {
             ...requestOptions,
             authorize: true,
+            payload: {
+                password
+            }
         };
 
         return await api.request(Method.POST, `/game/${gameId}/join`, options);

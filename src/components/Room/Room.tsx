@@ -1,22 +1,50 @@
-import { Link } from 'react-router-dom';
-import { IRoomProps } from './Room.types';
-import './Room.scss';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import GameApi from '../../api/Game.api';
+
+import { IRoomProps } from './Room.types';
 import { GameState } from '../../types/game.types';
 
+import GameApi from '../../api/Game.api';
+
+import './Room.scss';
+import { toast } from 'react-toastify';
+import { Modal } from '../Modal/Modal';
+import { PasswordForm } from '../PasswordForm/PasswordForm';
+import { useSelector } from 'react-redux';
+import { IRootReducer } from '../../reducers/reducers.types';
+import { IAuthReducer } from '../Auth/Auth.types';
+
 export function Room({game}: IRoomProps): JSX.Element {
+    const [showPasswordModal, setShowPasswordModal] = useState<boolean>(false);
+    const navigate = useNavigate();
+    const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
 
     const renderRoomName = () => {
         const username = game.creator.username;
         return `${username}${username.charAt(-1) === 's'? "'" : "'s"} Room`
     };
 
-    const onSubmit = async() => {
-        // TODO: prompt to enter password if the room has one
+    const submitJoinGame = async() => {
+        if (game.creatorId === auth.userId) {
+            navigate(`/game/${game.id}`);
+            return;
+        }
 
-        await GameApi.join(game.id);
+        if (game.hasPassword) {
+            setShowPasswordModal(true);
+            return;
+        }
+
+        const response = await GameApi.join(game.id);
+
+        if (response.ok) {
+            navigate(`/game/${game.id}`);
+            toast.success('Joined game successfully');
+        } else {
+            toast.error('Error joining game');
+        }
     }
 
     return (
@@ -62,7 +90,7 @@ export function Room({game}: IRoomProps): JSX.Element {
                     <button
                         className="btn btn-primary btn-block"
                         type="submit"
-                        onClick={onSubmit}
+                        onClick={submitJoinGame}
                     >
                         Join
                     </button> :
@@ -76,6 +104,11 @@ export function Room({game}: IRoomProps): JSX.Element {
                     </Link>
                 }
             </div>
+            {showPasswordModal ?
+                <Modal onClose={() => setShowPasswordModal(false)}>
+                    <PasswordForm gameId={game.id} />
+                </Modal>
+            : null}
         </div>
     );
 }

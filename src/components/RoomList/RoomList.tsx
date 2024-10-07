@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import { socket } from '../../socket';
 
 import GameApi from '../../api/Game.api';
-import { IGameState } from '../../types/game.types';
+import { IActiveGame } from '../../types/game.types';
 import { Room } from '../Room/Room';
 import { RoomForm } from '../RoomForm/RoomForm';
 
 import './RoomList.scss';
 
 export function RoomList(): JSX.Element {
-    const [games, setGames] = useState<IGameState[]>([]);
+    const [games, setGames] = useState<IActiveGame[]>([]);
 
     useEffect(() => {
         const getActiveGames = async () => {
