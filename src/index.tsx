@@ -12,6 +12,7 @@ import './index.css';
 import { LoginForm } from './components/LoginForm/LoginForm';
 import { Home } from './components/Home/Home';
 import { RoomList } from './components/RoomList/RoomList';
+import { Game } from './components/Game/Game';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -28,6 +29,7 @@ root.render(
                             <Route path="rooms" element={<RoomList />} />
                             <Route path="/" element={<Home />} />
                         </Route>
+                        <Route path="game/:id" element={<Game />} />
                     </Routes>
                 </BrowserRouter>
             </PersistGate>

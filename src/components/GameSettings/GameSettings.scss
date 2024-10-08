@@ -1,0 +1,17 @@
+@import '../../styles/variables.scss';
+
+.game-settings {
+    background: white;
+    text-align: center;
+    margin: 50px auto;
+    border-radius: 4px;
+    width: 375px;
+    max-width: 97%;
+    color: $gray;
+    position: relative;
+
+    .content {
+        padding: 20px;
+    }
+
+}

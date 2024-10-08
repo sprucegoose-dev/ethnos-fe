@@ -1,0 +1,17 @@
+@import '../../styles/variables.scss';
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height:100%;
+    justify-content: space-between;
+    background-image: url('../../assets/dragon_bkg.png');
+    background-size: cover;
+    background-position-x: center;
+    background-repeat: no-repeat;
+
+    > .content {
+        flex-grow: 1;
+    }
+}
