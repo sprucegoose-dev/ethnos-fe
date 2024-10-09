@@ -104,7 +104,10 @@ export function Room({game}: IRoomProps): JSX.Element {
                         key={`player-${index}`}
                         className="player"
                     >
-                        {user.username}
+                        <FontAwesomeIcon
+                        className="player-icon"
+                        icon={faUser}
+                    /> {user.username}
                     </Link>
                 )}
             </div>

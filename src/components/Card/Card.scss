@@ -1,0 +1,39 @@
+@import '../../styles/variables.scss';
+
+.card {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: 5px solid $dark-gray;
+    border-radius: 10px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: 150px;
+    min-height: 250px;
+    padding: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+
+    background: linear-gradient(
+        rgba(0, 0, 0, 0.5),
+        rgba(0, 0, 0, 0.5)
+    );
+
+    .tribe-name {
+        background-color: rgba(0, 0, 0, 0.7);
+        font-weight: bold;
+        padding: 6px;
+        border-radius: 5px;
+        text-align: center;
+        font-size: .9rem;
+    }
+
+    .tribe-description {
+        background: rgba(255, 255, 255, 0.8);
+        color: $dark-gray;
+        padding: 6px;
+        font-size: 0.9rem;
+        border-radius: 5px;
+    }
+}

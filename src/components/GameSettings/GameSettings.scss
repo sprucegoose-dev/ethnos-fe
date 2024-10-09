@@ -14,4 +14,37 @@
         padding: 20px;
     }
 
+    .players {
+
+        .player {
+            display: inline-block;
+            background-color: white;
+            border-radius: 4px;
+            box-sizing: border-box;
+            padding: 5px;
+            color: black;
+            margin-right: 10px;
+        }
+    }
+
+    .tribes {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        margin-top: 10px;
+
+        .card {
+            min-height: 200px;
+            max-width: 130px;
+            border: 5px solid $dark-gray;
+            border-radius: 10px;
+            margin-bottom: 10px;
+
+            .tribe-description {
+                font-size: .8rem;
+            }
+        }
+    }
+
+
 }
