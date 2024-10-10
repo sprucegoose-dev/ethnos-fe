@@ -12,7 +12,10 @@ export function Card({description, image, tribe}: ICardProps): JSX.Element {
     useEffect(() => {
         const getTribes = async () => {
             const response = await TribeApi.getAll();
-            setTribes(await response.json());
+
+            if (response.ok) {
+                setTribes(await response.json());
+            }
         };
 
         getTribes();

@@ -55,12 +55,20 @@ export function GameSettings(props: IGameSettingsProps): JSX.Element {
         getTribes();
     }, []);
 
+    const renderRoomName = () => {
+        const username = props.gameState.creator.username;
+        return `${username}${username.charAt(-1) === 's'? "'" : "'s"} Room`
+    };
+
     const handleStartGame = () => {
 
     };
 
     return (
         <div className="game-settings">
+            <div className="room-title">
+                {renderRoomName()}
+            </div>
             <div className="content">
                 <div className="players">
                     {/* TODO: move into 'PlayerLabel' component */}
@@ -93,7 +101,7 @@ export function GameSettings(props: IGameSettingsProps): JSX.Element {
                     )}
                 </div> : null}
                 <div>
-                    <button className="btn btn-primary" onClick={handleStartGame}>
+                    <button className="btn btn-action btn-3d" onClick={handleStartGame}>
                         Start game
                     </button>
                 </div>

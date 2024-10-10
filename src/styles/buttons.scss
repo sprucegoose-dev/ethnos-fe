@@ -24,6 +24,11 @@
         }
     }
 
+    &.btn-action {
+        background: $green;
+        color: $white;
+    }
+
     &.btn-outline {
         border: 1px solid $light-gray;
         color: $gray;

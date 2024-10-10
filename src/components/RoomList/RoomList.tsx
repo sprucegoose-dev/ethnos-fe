@@ -14,8 +14,11 @@ export function RoomList(): JSX.Element {
     useEffect(() => {
         const getActiveGames = async () => {
             const response = await GameApi.getActiveGames();
-            const activeGames = await response.json();
-            setGames(activeGames);
+
+            if (response.ok) {
+                const activeGames = await response.json();
+                setGames(activeGames);
+            }
         }
 
         getActiveGames();

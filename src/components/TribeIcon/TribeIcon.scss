@@ -3,8 +3,9 @@
 .tribe-icon {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     position: relative;
+    align-items: center;
 
     .tribe-img {
         border-radius: 50%;
