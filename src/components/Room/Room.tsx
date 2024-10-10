@@ -16,18 +16,18 @@ import { useSelector } from 'react-redux';
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
 
-import centaurIcon from '../../assets/circle_icon_centaur.png';
-import dwarfIcon from '../../assets/circle_icon_dwarf.png';
-import elfIcon from '../../assets/circle_icon_elf.png';
-import giantIcon from '../../assets/circle_icon_giant.png';
-import halflingIcon from '../../assets/circle_icon_halfling.png';
-import merfolkIcon from '../../assets/circle_icon_merfolk.png';
-import minotaurIcon from '../../assets/circle_icon_minotaur.png';
-import orcIcon from '../../assets/circle_icon_orc.png';
-import skeletonIcon from '../../assets/circle_icon_skeleton.png';
-import trollIcon from '../../assets/circle_icon_troll.png';
-import wingfolkIcon from '../../assets/circle_icon_wingfolk.png';
-import wizardIcon from '../../assets/circle_icon_wizard.png';
+import centaurIcon from '../../assets/circle_icon_centaur_2.png';
+import dwarfIcon from '../../assets/circle_icon_dwarf_2.png';
+import elfIcon from '../../assets/circle_icon_elf_2.png';
+import giantIcon from '../../assets/circle_icon_giant_2.png';
+import halflingIcon from '../../assets/circle_icon_halfling_2.png';
+import merfolkIcon from '../../assets/circle_icon_merfolk_2.png';
+import minotaurIcon from '../../assets/circle_icon_minotaur_2.png';
+import orcIcon from '../../assets/circle_icon_orc_2.png';
+import skeletonIcon from '../../assets/circle_icon_skeleton_2.png';
+import trollIcon from '../../assets/circle_icon_troll_2.png';
+import wingfolkIcon from '../../assets/circle_icon_wingfolk_2.png';
+import wizardIcon from '../../assets/circle_icon_wizard_2.png';
 
 const tribeIcons = {
     [TribeName.CENTAUR]: centaurIcon,
