@@ -38,8 +38,23 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
     };
 
     const handleStartGame = async () => {
-        if (auth.userId === gameState.creatorId) {
-            await GameApi.start(gameState.id, { tribes: selectedTribes});
+        if (gameState.creatorId !== auth.userId) {
+            toast.info('Only the game creator can start the game');
+            return;
+        }
+
+        if (selectedTribes.length < 6) {
+            toast.info('Please select 6 tribes');
+            return;
+        }
+
+        if (gameState.creatorId === auth.userId) {
+            const response = await GameApi.start(gameState.id, { tribes: selectedTribes});
+
+            if (!response.ok) {
+                const error = await response.json();
+                toast.error(error.message);
+            }
         }
     };
 
@@ -124,7 +139,7 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                     </div>}
                 <div>
                     <button
-                        className={`btn btn-action btn-3d ${auth.userId === gameState.creatorId ? '' : 'btn-disabled'}`}
+                        className={`btn btn-action btn-3d ${auth.userId !== gameState.creatorId || selectedTribes.length < 6 ? 'btn-disabled' : ''}`}
                         onClick={handleStartGame}
                     >
                         Start game

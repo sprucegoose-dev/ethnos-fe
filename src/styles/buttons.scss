@@ -144,5 +144,14 @@
             }
         }
 
+
+        &.btn-disabled {
+            box-shadow: 0 3px $medium-gray;
+
+            &:hover {
+                top: 0;
+                box-shadow: 0 3px $medium-gray;
+            }
+        }
     }
 }
