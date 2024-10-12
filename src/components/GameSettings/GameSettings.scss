@@ -35,6 +35,16 @@
         }
     }
 
+    .instructions {
+        margin-bottom: 30px;
+
+        .btn {
+            font-size: .9rem;
+            margin-left: 10px;
+            padding: 3px 8px;
+        }
+    }
+
     .tribes {
         display: flex;
         flex-wrap: wrap;

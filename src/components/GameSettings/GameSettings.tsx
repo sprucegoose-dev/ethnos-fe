@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
+import shuffle from 'lodash.shuffle';
 
 import { IGameSettingsProps } from './GameSettings.types';
 import { ITribe, TribeName } from '../Game/game.types';
@@ -59,6 +60,12 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
         await GameApi.updateSettings(gameState.id, { tribes: newSelectedTribes});
     };
 
+    const randomizeTribes = async () => {
+        const newSelectedTribes = shuffle(tribes).slice(0, 6).map((tribe) => tribe.name);
+        setSelectedTribes(newSelectedTribes);
+        await GameApi.updateSettings(gameState.id, { tribes: newSelectedTribes});
+    }
+
     return (
         <div className="game-settings">
             <div className="room-title">
@@ -80,23 +87,35 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                         </Link>
                     )}
                 </div>
-                {tribes.length ? <div className="tribes">
-                    {tribes.map((tribe, index) =>
-                        <TribeIcon
-                            key={`tribe-icon-${index}`}
-                            onSelectTribe={handleSelectTribe}
-                            selected={selectedTribes.includes(tribe.name)}
-                            tribe={tribe}
-                        />
-                        // <Card
-                        //     key={`tribe-card-${index}`}
-                        //     tribe={tribe.name}
-                        //     // @ts-ignore
-                        //     image={tribeImgs[tribe.name]}
-                        //     description={tribe.description}
-                        // />
-                    )}
-                </div> : null}
+                {tribes.length &&
+                    <>
+                        <div className='instructions'>
+                            Select 6 tribes or
+                            <button
+                                className="btn btn-action btn-3d"
+                                onClick={randomizeTribes}
+                            >
+                                Randomize
+                            </button>
+                        </div>
+                        <div className="tribes">
+                            {tribes.map((tribe, index) =>
+                                <TribeIcon
+                                    key={`tribe-icon-${index}`}
+                                    onSelectTribe={handleSelectTribe}
+                                    selected={selectedTribes.includes(tribe.name)}
+                                    tribe={tribe}
+                                />
+                                // <Card
+                                //     key={`tribe-card-${index}`}
+                                //     tribe={tribe.name}
+                                //     // @ts-ignore
+                                //     image={tribeImgs[tribe.name]}
+                                //     description={tribe.description}
+                                // />
+                            )}
+                        </div>
+                    </>}
                 <div>
                     <button
                         className={`btn btn-action btn-3d ${auth.userId === gameState.creatorId ? '' : 'btn-disabled'}`}
