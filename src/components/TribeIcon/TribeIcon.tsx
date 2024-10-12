@@ -17,7 +17,6 @@ import wizardIcon from '../../assets/circle_icon_wizard_2.png';
 import { TribeName } from '../Game/game.types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-// import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 const tribeIcons = {
     [TribeName.CENTAURS]: centaurIcon,
@@ -46,7 +45,6 @@ export function TribeIcon({onSelectTribe, selected, tribe}: ITribeIconProps): JS
             />
             <div className="tribe-name">
                 {tribe.name}
-                {/* <FontAwesomeIcon className="info-icon" icon={faInfoCircle} /> */}
             </div>
 
             {selected ?

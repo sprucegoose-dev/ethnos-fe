@@ -126,19 +126,36 @@ export function Room({game}: IRoomProps): JSX.Element {
                 )}
             </div>
             <div className="tribes">
-                {tribes.map((tribe, index) =>
-                    <div className="tribe-icon" key={`tribe-${index}`}>
-                        <div className="tribe-icon-inner">
-                            {tribe ?
-                                // @ts-ignore
-                                <img className="tribe-img" src={tribeIcons[tribe]} alt={tribe} /> :
-                                <span className="tribe-placeholder">
-                                    ?
-                                </span>
-                            }
+                <div className="tribe-row">
+                    {tribes.slice(0, 3).map((tribe, index) =>
+                        <div className="tribe-icon" key={`tribe-${index}`}>
+                            <div className="tribe-icon-inner">
+                                {tribe ?
+                                    // @ts-ignore
+                                    <img className="tribe-img" src={tribeIcons[tribe]} alt={tribe} /> :
+                                    <span className="tribe-placeholder">
+                                        ?
+                                    </span>
+                                }
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
+                <div className="tribe-row">
+                    {tribes.slice(3).map((tribe, index) =>
+                        <div className="tribe-icon" key={`tribe-${index}`}>
+                            <div className="tribe-icon-inner">
+                                {tribe ?
+                                    // @ts-ignore
+                                    <img className="tribe-img" src={tribeIcons[tribe]} alt={tribe} /> :
+                                    <span className="tribe-placeholder">
+                                        ?
+                                    </span>
+                                }
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
             <div className='join-room-wrapper'>
                 {

@@ -210,7 +210,7 @@ export function LoginForm(): JSX.Element {
                 </div>
                 <div className="form-control-wrapper">
                     <button
-                        className="btn btn-primary btn-block"
+                        className="btn btn-primary btn-3d btn-block"
                         type="submit"
                         onClick={onSubmit}
                     >

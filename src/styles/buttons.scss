@@ -94,6 +94,10 @@
             }
         }
 
+        &.btn-primary {
+            border: 1px solid rgba(77, 77, 77, .5);
+        }
+
         &.btn-light {
             box-shadow: 0 3px $sage-brown;
 
@@ -160,7 +164,7 @@
         }
 
         &.btn-outline {
-            border: 1px solid rgba(255, 255, 255, .9);
+            border: 1px solid rgba(255, 255, 255, .5);
         }
     }
 }
