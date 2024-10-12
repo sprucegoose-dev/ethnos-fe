@@ -73,6 +73,9 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
             </div>
             <div className="content">
                 <div className="players">
+                    <div className="players-title">
+                        Players
+                    </div>
                     {/* TODO: move into 'PlayerLabel' component */}
                     {gameState.players.map(({ user }, index) =>
                         <Link
@@ -88,7 +91,10 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                     )}
                 </div>
                 {tribes.length &&
-                    <>
+                    <div className="settings">
+                        <div className="settings-title">
+                            Settings
+                        </div>
                         <div className='instructions'>
                             Select 6 tribes or
                             <button
@@ -115,7 +121,7 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                                 // />
                             )}
                         </div>
-                    </>}
+                    </div>}
                 <div>
                     <button
                         className={`btn btn-action btn-3d ${auth.userId === gameState.creatorId ? '' : 'btn-disabled'}`}
