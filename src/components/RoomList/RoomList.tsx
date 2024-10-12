@@ -33,10 +33,12 @@ export function RoomList(): JSX.Element {
     return (
         <div className="room-list">
             <RoomForm/>
-            <div className="rooms">
-                {games.map(game =>
-                    <Room game={game} key={`room-${game.id}`} />
-                )}
+            <div className="rooms-wrapper">
+                <div className="rooms">
+                    {games.map(game =>
+                        <Room game={game} key={`room-${game.id}`} />
+                    )}
+                </div>
             </div>
         </div>
     );
