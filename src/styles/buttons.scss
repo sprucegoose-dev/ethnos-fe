@@ -64,6 +64,12 @@
         color: white;
     }
 
+    &.btn-outline {
+        background: transparent;
+        border: 1px solid white;
+        color: white;
+    }
+
     &.btn-round {
         border-radius: 50%;
     }
@@ -144,7 +150,6 @@
             }
         }
 
-
         &.btn-disabled {
             box-shadow: 0 3px $medium-gray;
 
@@ -152,6 +157,10 @@
                 top: 0;
                 box-shadow: 0 3px $medium-gray;
             }
+        }
+
+        &.btn-outline {
+            border: 1px solid rgba(255, 255, 255, .9);
         }
     }
 }

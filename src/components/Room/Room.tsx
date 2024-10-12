@@ -157,7 +157,7 @@ export function Room({game}: IRoomProps): JSX.Element {
                     userInGame() &&
                     <>
                         <button
-                            className="btn btn-muted btn-block btn-3d leav-ebtn "
+                            className="btn btn-outline btn-block btn-3d leave-btn"
                             type="submit"
                             onClick={submitLeaveGame}
                         >
