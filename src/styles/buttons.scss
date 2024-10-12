@@ -72,13 +72,13 @@
         position: relative;
         top: 0;
         transition: all 0.1s ease-in-out;
-        box-shadow: 0 3px $dark-teal;
+        box-shadow: 0 3px $dark-gray;
         border: 1px solid transparent;
         box-sizing: border-box;
 
         &:hover {
             top: 2px;
-            box-shadow: 0 1px $dark-teal;
+            box-shadow: 0 1px $dark-gray;
         }
 
         &.brn-round {
@@ -101,6 +101,14 @@
                 &:hover {
                     box-shadow: 0 .5px $sage-brown;
                 }
+            }
+        }
+
+        &.btn-action {
+            box-shadow: 0 3px $dark-teal;
+
+            &:hover {
+                box-shadow: 0 1px $dark-teal;
             }
         }
 

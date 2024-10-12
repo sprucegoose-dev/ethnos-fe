@@ -96,5 +96,17 @@
             }
         }
     }
+
+    .join-room-wrapper {
+        display: flex;
+
+        .leave-btn {
+            margin-right: 10px;
+        }
+
+        .rejoin-btn {
+            margin-left: 10px;
+        }
+    }
 }
 

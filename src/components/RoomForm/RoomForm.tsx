@@ -3,21 +3,22 @@ import { toast } from 'react-toastify';
 import { useState } from 'react';
 
 import './RoomForm.scss';
+import { useNavigate } from 'react-router-dom';
 
 export function RoomForm(): JSX.Element {
     const [password, setPassword] = useState<string>('');
-    // const [maxPlayers, setMaxPlayers] = useState<number>(4);
+    const navigate = useNavigate();
 
     const onSubmit = async () => {
         const response = await GameApi.create({
             password,
-            // maxPlayers
         });
 
         const data = await response.json();
 
         if (response.ok) {
             toast.success('Game created successfully');
+            navigate(`/game/${data.id}`);
         } else {
             if (data.code === 401) {
                 toast.error('You must be signed in to create a game.');
@@ -34,20 +35,6 @@ export function RoomForm(): JSX.Element {
             <div className="form-title">
                 Create a new game
             </div>
-            {/* <div className="form-control-wrapper">
-                <select
-                    className="form-control"
-                    name="maxPlayers"
-                    value={maxPlayers}
-                    onChange={event => setMaxPlayers(Number(event.target.value))}
-                >
-                {[2, 3, 4, 5, 6].map((num) => (
-                    <option key={num} value={num}>
-                        {num} Players
-                    </option>
-                ))}
-                </select>
-            </div> */}
             <div className="form-control-wrapper">
                     <input
                         className="form-control"
@@ -59,7 +46,7 @@ export function RoomForm(): JSX.Element {
                     />
                 </div>
             <button
-                className="btn btn-primary btn-block"
+                className="btn btn-primary btn-3d btn-block"
                 type="submit"
                 onClick={onSubmit}
             >

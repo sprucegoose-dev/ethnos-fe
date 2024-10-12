@@ -54,8 +54,12 @@ export function Room({game}: IRoomProps): JSX.Element {
         return `${username}${username.charAt(-1) === 's'? "'" : "'s"} Room`
     };
 
+    const userInGame = () => {
+        return game.players.find(player => player.userId === auth.userId);
+    }
+
     const submitJoinGame = async() => {
-        if (game.creatorId === auth.userId) {
+        if (userInGame()) {
             navigate(`/game/${game.id}`);
             return;
         }
@@ -71,8 +75,18 @@ export function Room({game}: IRoomProps): JSX.Element {
             navigate(`/game/${game.id}`);
             toast.success('Joined game successfully');
         } else {
-            toast.error('Error joining game');
+            const error = await response.json();
+
+            if (error.code === 401) {
+                toast.error('You must be logged in to join a game');
+            } else {
+                toast.error('Error joining game');
+            }
         }
+    }
+
+    const submitLeaveGame = async() => {
+        await GameApi.leave(game.id);
     }
 
     const tribes: TribeName[] = Array.from({ length: 6 }, (_, i) => game.settings.tribes[i] || null);
@@ -126,21 +140,45 @@ export function Room({game}: IRoomProps): JSX.Element {
                     </div>
                 )}
             </div>
-            <div className='action-btn-wrapper'>
-                {(
+            <div className='join-room-wrapper'>
+                {
                     game.state === GameState.CREATED &&
-                    game.players.length < game.maxPlayers
-                ) ?
+                    !userInGame() &&
+                    game.players.length < game.maxPlayers &&
                     <button
-                        className="btn btn-primary btn-block"
+                        className="btn btn-primary btn-3d btn-block join-btn"
                         type="submit"
                         onClick={submitJoinGame}
                     >
                         Join
-                    </button> :
+                    </button>
+                }
+                {
+                    userInGame() &&
+                    <>
+                        <button
+                            className="btn btn-muted btn-block btn-3d leav-ebtn "
+                            type="submit"
+                            onClick={submitLeaveGame}
+                        >
+                            Leave
+                        </button>
+                        <button
+                            className="btn btn-primary btn-block btn-3d rejoin-btn"
+                            type="submit"
+                            onClick={submitJoinGame}
+                        >
+                            Rejoin
+                        </button>
+                    </>
+
+                }
+                {
+                    game.state !== GameState.CREATED &&
+                    !userInGame() &&
                     <Link to={`/game/${game.id}`}>
                         <button
-                            className="btn btn-primary btn-block"
+                            className="btn btn-primary btn-block spectate-btn"
                             type="submit"
                         >
                             Spectate
