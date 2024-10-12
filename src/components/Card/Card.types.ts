@@ -1,4 +1,4 @@
-import { TribeName } from '../../types/game.types';
+import { TribeName } from '../Game/game.types';
 
 export interface ICardProps {
     tribe: TribeName;

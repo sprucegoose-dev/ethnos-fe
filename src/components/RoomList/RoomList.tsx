@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { socket } from '../../socket';
 
 import GameApi from '../../api/Game.api';
-import { IActiveGame } from '../../types/game.types';
+import { IActiveGame } from '../Game/game.types';
 import { Room } from '../Room/Room';
 import { RoomForm } from '../RoomForm/RoomForm';
 

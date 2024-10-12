@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+
 import './Game.scss';
-import { GameState, IGameState } from '../../types/game.types';
+import { GameState, IActionPayload, IGameState } from './game.types';
 import GameApi from '../../api/Game.api';
+import { socket } from '../../socket';
 import { useParams } from 'react-router-dom';
 import { GameSettings } from '../GameSettings/GameSettings';
 
@@ -43,6 +45,7 @@ const {
 export function Game(): JSX.Element {
     const { id: gameId } = useParams();
     const [gameState, setGameState] = useState<IGameState>(null);
+    const [ _actions, setActions ] = useState<IActionPayload[]>([]);
 
     useEffect(() => {
         const getGameState = async () => {
@@ -50,7 +53,25 @@ export function Game(): JSX.Element {
             setGameState(await response.json());
         }
 
+        const getActions = async () => {
+            const response = await GameApi.getActions(parseInt(gameId, 10));
+            setActions(await response.json());
+        }
+
         getGameState();
+
+        const updateGameState = (payload: IGameState) => {
+            setGameState(payload);
+            getActions();
+        }
+
+        socket.emit('onJoinGame', gameId);
+        socket.on('onUpdateGameState', updateGameState);
+
+        return () => {
+            socket.emit('onLeaveGame', gameId);
+            socket.off('onUpdateGameState', updateGameState);
+        }
     }, [gameId]);
 
     return (

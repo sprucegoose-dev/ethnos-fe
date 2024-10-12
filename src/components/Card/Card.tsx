@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { ITribe } from '../../types/game.types';
+import { ITribe } from '../Game/game.types';
 import TribeApi from '../../api/Tribe.api';
 import { ICardProps } from './Card.types';
 

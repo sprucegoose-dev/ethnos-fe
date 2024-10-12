@@ -1,4 +1,4 @@
-import { IActiveGame } from '../../types/game.types';
+import { IActiveGame } from '../Game/game.types';
 
 export interface IRoomProps {
     game: IActiveGame;

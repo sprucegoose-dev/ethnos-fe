@@ -3,17 +3,19 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { socket } from './socket';
-import { Header } from './components/Header/Header';
-import { IAuthReducer } from './components/Auth/Auth.types';
-import { IRootReducer } from './reducers/reducers.types';
+import { socket } from '../../socket';
+import { Header } from '../Header/Header';
+import { IAuthReducer } from '../Auth/Auth.types';
+import { IRootReducer } from '../../reducers/reducers.types';
+
+
+import { Footer } from '../Footer/Footer';
+import UserApi from '../../api/User.api';
+import { resetAuthDetails } from '../Auth/Auth.reducer';
 
 import 'react-toastify/dist/ReactToastify.css';
-import './styles/styles.scss';
+import '../../styles/styles.scss';
 import './App.scss';
-import { Footer } from './components/Footer/Footer';
-import UserApi from './api/User.api';
-import { resetAuthDetails } from './components/Auth/Auth.reducer';
 
 function App() {
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;

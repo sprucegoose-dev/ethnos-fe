@@ -14,7 +14,7 @@ import skeletonIcon from '../../assets/circle_icon_skeleton_2.png';
 import trollIcon from '../../assets/circle_icon_troll_2.png';
 import wingfolkIcon from '../../assets/circle_icon_wingfolk_2.png';
 import wizardIcon from '../../assets/circle_icon_wizard_2.png';
-import { TribeName } from '../../types/game.types';
+import { TribeName } from '../Game/game.types';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 

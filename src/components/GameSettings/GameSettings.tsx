@@ -7,7 +7,7 @@ import { IGameSettingsProps } from './GameSettings.types';
 import {
     ITribe,
     // TribeName
-} from '../../types/game.types';
+} from '../Game/game.types';
 
 // import centaurImg from '../../assets/centaurs.png';
 // import dwarfImg from '../../assets/dwarves.png';
@@ -27,6 +27,7 @@ import TribeApi from '../../api/Tribe.api';
 
 import './GameSettings.scss';
 import { TribeIcon } from '../TribeIcon/TribeIcon';
+import GameApi from '../../api/Game.api';
 
 // const tribeImgs = {
 //     [TribeName.CENTAUR]: centaurImg,
@@ -43,7 +44,7 @@ import { TribeIcon } from '../TribeIcon/TribeIcon';
 //     [TribeName.WIZARD]: wizardImg,
 // };
 
-export function GameSettings(props: IGameSettingsProps): JSX.Element {
+export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
     const [tribes, setTribes] = useState<ITribe[]>([]);
 
     useEffect(() => {
@@ -56,12 +57,12 @@ export function GameSettings(props: IGameSettingsProps): JSX.Element {
     }, []);
 
     const renderRoomName = () => {
-        const username = props.gameState.creator.username;
+        const username = gameState.creator.username;
         return `${username}${username.charAt(-1) === 's'? "'" : "'s"} Room`
     };
 
-    const handleStartGame = () => {
-
+    const handleStartGame = async () => {
+        await GameApi.start(gameState.id);
     };
 
     return (
@@ -72,7 +73,7 @@ export function GameSettings(props: IGameSettingsProps): JSX.Element {
             <div className="content">
                 <div className="players">
                     {/* TODO: move into 'PlayerLabel' component */}
-                    {props.gameState.players.map(({ user }, index) =>
+                    {gameState.players.map(({ user }, index) =>
                         <Link
                             to={`/matches/${decodeURIComponent(user.username)}`}
                             key={`player-${index}`}

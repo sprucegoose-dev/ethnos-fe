@@ -1,4 +1,4 @@
-import { ITribe } from '../../types/game.types';
+import { ITribe } from '../Game/game.types';
 
 export interface ITribeIconProps {
     tribe: ITribe;
