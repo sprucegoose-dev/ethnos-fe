@@ -1,5 +1,5 @@
 import { Method, requestOptions } from './Api.types';
-import { IActionPayload } from '../components/Game/game.types';
+import { IActionPayload, IGameSettings } from '../components/Game/game.types';
 import api from './Api';
 import { ICreateGamePayload } from '../components/RoomForm/RoomForm.types';
 
@@ -44,13 +44,24 @@ export default class GameApi {
         return await api.request(Method.POST, '/game/create', options);
     }
 
-    static async start(gameId: number) {
+    static async start(gameId: number, payload: IGameSettings) {
         const options = {
             ...requestOptions,
             authorize: true,
+            payload,
         };
 
         return await api.request(Method.POST, `/game/${gameId}/start`, options);
+    }
+
+    static async updateSettings(gameId: number, payload: IGameSettings) {
+        const options = {
+            ...requestOptions,
+            authorize: true,
+            payload,
+        };
+
+        return await api.request(Method.POST, `/game/${gameId}/updateSettings`, options);
     }
 
     static async getState(gameId: number) {

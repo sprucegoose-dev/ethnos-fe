@@ -43,12 +43,12 @@ function App() {
 
     return (
         <div className="app">
-            {inGame ? null : <Header />}
+            {<Header />}
             <div className="content">
                 {<Outlet />}
             </div>
-            {inGame ? null : <Footer />}
-            <ToastContainer autoClose={2000} pauseOnFocusLoss={false} />
+            { <Footer />}
+            <ToastContainer autoClose={2000} pauseOnFocusLoss={false} limit={1} />
         </div>
     );
 }

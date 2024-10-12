@@ -24,7 +24,7 @@
     color: $light-gray;
 
     &:hover {
-        color: $white;
+        color: white;
     }
 }
 
@@ -55,7 +55,7 @@
         position: relative;
 
         &:after {
-            background-color: $white;
+            background-color: white;
             content: '';
             display: block;
             height: 2px;

@@ -30,18 +30,18 @@ import wingfolkIcon from '../../assets/circle_icon_wingfolk_2.png';
 import wizardIcon from '../../assets/circle_icon_wizard_2.png';
 
 const tribeIcons = {
-    [TribeName.CENTAUR]: centaurIcon,
-    [TribeName.DWARF]: dwarfIcon,
-    [TribeName.ELF]: elfIcon,
-    [TribeName.GIANT]: giantIcon,
-    [TribeName.HALFLING]: halflingIcon,
+    [TribeName.CENTAURS]: centaurIcon,
+    [TribeName.DWARVES]: dwarfIcon,
+    [TribeName.ELVES]: elfIcon,
+    [TribeName.GIANTS]: giantIcon,
+    [TribeName.HALFLINGS]: halflingIcon,
     [TribeName.MERFOLK]: merfolkIcon,
-    [TribeName.MINOTAUR]: minotaurIcon,
-    [TribeName.ORC]: orcIcon,
-    [TribeName.SKELETON]: skeletonIcon,
-    [TribeName.TROLL]: trollIcon,
+    [TribeName.MINOTAURS]: minotaurIcon,
+    [TribeName.ORCS]: orcIcon,
+    [TribeName.SKELETONS]: skeletonIcon,
+    [TribeName.TROLLS]: trollIcon,
     [TribeName.WINGFOLK]: wingfolkIcon,
-    [TribeName.WIZARD]: wizardIcon,
+    [TribeName.WIZARDS]: wizardIcon,
 };
 
 export function Room({game}: IRoomProps): JSX.Element {

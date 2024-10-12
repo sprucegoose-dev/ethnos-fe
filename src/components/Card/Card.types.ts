@@ -1,7 +1,5 @@
-import { TribeName } from '../Game/game.types';
+import { ITribe } from '../Game/game.types';
 
 export interface ICardProps {
-    tribe: TribeName;
-    description: string;
-    image: string;
+    tribe: ITribe;
 }

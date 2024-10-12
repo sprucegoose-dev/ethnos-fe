@@ -7,7 +7,6 @@ export default class TribeApi {
         const options = {
             ...requestOptions,
         };
-        console.log('got here');
 
         return await api.request(Method.GET, '/tribe/all', options);
     }

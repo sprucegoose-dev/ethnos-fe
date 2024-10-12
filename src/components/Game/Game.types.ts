@@ -9,19 +9,19 @@ export enum Color {
 }
 
 export enum TribeName {
-    CENTAUR = 'Centaur',
-    DWARF = 'Dwarf',
-    DRAGON = 'Dragon',
-    ELF = 'Elf',
-    GIANT = 'Giant',
-    HALFLING = 'Halfling',
+    CENTAURS = 'Centaurs',
+    DWARVES = 'Dwarves',
+    DRAGON = 'Dragons',
+    ELVES = 'Elves',
+    GIANTS = 'Giants',
+    HALFLINGS = 'Halflings',
     MERFOLK = 'Merfolk',
-    MINOTAUR = 'Minotaur',
-    ORC = 'Orc',
-    SKELETON = 'Skeleton',
-    TROLL = 'Troll',
+    MINOTAURS = 'Minotaurs',
+    ORCS = 'Orcs',
+    SKELETONS = 'Skeletons',
+    TROLLS = 'Trolls',
     WINGFOLK = 'Wingfolk',
-    WIZARD = 'Wizard',
+    WIZARDS = 'Wizards',
 }
 
 export enum ActionType {

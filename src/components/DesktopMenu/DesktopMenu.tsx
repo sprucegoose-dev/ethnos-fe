@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Divider, Menu, MenuItem } from '@mui/material';
 
-import { IMenuItem, MenuItemVisibility } from '../App/app.types';
+import { IMenuItem, MenuItemVisibility } from '../App/App.types';
 import { IAuthReducer } from '../Auth/Auth.types';
 import { IRootReducer } from '../../reducers/reducers.types';
 import { UserAvatar } from '../UserAvatar/UserAvatar';

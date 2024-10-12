@@ -1,39 +1,13 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
-import './Game.scss';
 import { GameState, IActionPayload, IGameState } from './game.types';
 import GameApi from '../../api/Game.api';
 import { socket } from '../../socket';
-import { useParams } from 'react-router-dom';
 import { GameSettings } from '../GameSettings/GameSettings';
 
-// import centaurIcon from '../../assets/circle_icon_centaur.png';
-// import dwarfIcon from '../../assets/circle_icon_dwarf.png';
-// import elfIcon from '../../assets/circle_icon_elf.png';
-// import giantIcon from '../../assets/circle_icon_giant.png';
-// import halflingIcon from '../../assets/circle_icon_halfling.png';
-// import merfolkIcon from '../../assets/circle_icon_merfolk.png';
-// import minotaurIcon from '../../assets/circle_icon_minotaur.png';
-// import orcIcon from '../../assets/circle_icon_orc.png';
-// import skeletonIcon from '../../assets/circle_icon_skeleton.png';
-// import trollIcon from '../../assets/circle_icon_troll.png';
-// import wingfolkIcon from '../../assets/circle_icon_wingfolk.png';
-// import wizardIcon from '../../assets/circle_icon_wizard.png';
-
-// const tribeCards = {
-//     [TribeName.CENTAUR]: centaurIcon,
-//     [TribeName.DWARF]: dwarfIcon,
-//     [TribeName.ELF]: elfIcon,
-//     [TribeName.GIANT]: giantIcon,
-//     [TribeName.HALFLING]: halflingIcon,
-//     [TribeName.MERFOLK]: merfolkIcon,
-//     [TribeName.MINOTAUR]: minotaurIcon,
-//     [TribeName.ORC]: orcIcon,
-//     [TribeName.SKELETON]: skeletonIcon,
-//     [TribeName.TROLL]: trollIcon,
-//     [TribeName.WINGFOLK]: wingfolkIcon,
-//     [TribeName.WIZARD]: wizardIcon,
-// };
+import './Game.scss';
 
 const {
     CREATED,
@@ -84,6 +58,7 @@ export function Game(): JSX.Element {
                     Game
                 </div> : null
             }
+            <ToastContainer autoClose={2000} pauseOnFocusLoss={false} limit={1} />
         </div>
     );
 }

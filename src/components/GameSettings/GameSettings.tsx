@@ -1,51 +1,26 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
 
 import { IGameSettingsProps } from './GameSettings.types';
-import {
-    ITribe,
-    // TribeName
-} from '../Game/game.types';
-
-// import centaurImg from '../../assets/centaurs.png';
-// import dwarfImg from '../../assets/dwarves.png';
-// import elfImg from '../../assets/elves.png';
-// import giantImg from '../../assets/giants.png';
-// import halflingImg from '../../assets/halflings.png';
-// import merfolkImg from '../../assets/merfolk.png';
-// import minotaurImg from '../../assets/minotaurs.png';
-// import orcImg from '../../assets/orcs.png';
-// import skeletonImg from '../../assets/skeletons.png';
-// import trollImg from '../../assets/trolls.png';
-// import wingfolkImg from '../../assets/wingfolk.png';
-// import wizardImg from '../../assets/wizards.png';
+import { ITribe, TribeName } from '../Game/game.types';
+import { IRootReducer } from '../../reducers/reducers.types';
+import { IAuthReducer } from '../Auth/Auth.types';
 
 import TribeApi from '../../api/Tribe.api';
-// import { Card } from '../Card/Card';
-
-import './GameSettings.scss';
-import { TribeIcon } from '../TribeIcon/TribeIcon';
 import GameApi from '../../api/Game.api';
 
-// const tribeImgs = {
-//     [TribeName.CENTAUR]: centaurImg,
-//     [TribeName.DWARF]: dwarfImg,
-//     [TribeName.ELF]: elfImg,
-//     [TribeName.GIANT]: giantImg,
-//     [TribeName.HALFLING]: halflingImg,
-//     [TribeName.MERFOLK]: merfolkImg,
-//     [TribeName.MINOTAUR]: minotaurImg,
-//     [TribeName.ORC]: orcImg,
-//     [TribeName.SKELETON]: skeletonImg,
-//     [TribeName.TROLL]: trollImg,
-//     [TribeName.WINGFOLK]: wingfolkImg,
-//     [TribeName.WIZARD]: wizardImg,
-// };
+import { TribeIcon } from '../TribeIcon/TribeIcon';
+
+import './GameSettings.scss';
 
 export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
+    const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
     const [tribes, setTribes] = useState<ITribe[]>([]);
+    const [selectedTribes, setSelectedTribes] = useState<TribeName[]>(gameState.settings.tribes || []);
 
     useEffect(() => {
         const getTribes = async () => {
@@ -62,7 +37,26 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
     };
 
     const handleStartGame = async () => {
-        await GameApi.start(gameState.id);
+        if (auth.userId === gameState.creatorId) {
+            await GameApi.start(gameState.id, { tribes: selectedTribes});
+        }
+    };
+
+    const handleSelectTribe = async (tribeName: TribeName) => {
+        let newSelectedTribes;
+
+        if (selectedTribes.includes(tribeName)) {
+            newSelectedTribes = selectedTribes.filter((name) => name !== tribeName);
+        } else if (selectedTribes.length >= 6) {
+            toast.info('You can only select 6 tribes');
+            return;
+        } else {
+            newSelectedTribes = [...selectedTribes, tribeName];
+        }
+
+        setSelectedTribes(newSelectedTribes);
+
+        await GameApi.updateSettings(gameState.id, { tribes: newSelectedTribes});
     };
 
     return (
@@ -90,6 +84,8 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                     {tribes.map((tribe, index) =>
                         <TribeIcon
                             key={`tribe-icon-${index}`}
+                            onSelectTribe={handleSelectTribe}
+                            selected={selectedTribes.includes(tribe.name)}
                             tribe={tribe}
                         />
                         // <Card
@@ -102,7 +98,10 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                     )}
                 </div> : null}
                 <div>
-                    <button className="btn btn-action btn-3d" onClick={handleStartGame}>
+                    <button
+                        className={`btn btn-action btn-3d ${auth.userId === gameState.creatorId ? '' : 'btn-disabled'}`}
+                        onClick={handleStartGame}
+                    >
                         Start game
                     </button>
                 </div>

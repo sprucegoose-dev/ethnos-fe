@@ -12,6 +12,10 @@
         border: 1px solid $dark-gray;
         height: 75px;
         width: 75px;
+
+        &.selectable {
+            cursor: pointer;
+        }
     }
 
     .tribe-name {
@@ -22,6 +26,18 @@
         text-align: center;
         font-size: .8rem;
         margin-top: 1px;
+    }
+
+    .selected-icon {
+        background: $off-white;
+        border-radius: 50%;
+        border: 1px solid $light-gray;
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6);
+        color: $green;
+        position: absolute;
+        font-size: 1.3rem;
+        top: 0;
+        right: 10px;
     }
 
 }

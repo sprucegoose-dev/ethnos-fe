@@ -15,37 +15,44 @@ import trollIcon from '../../assets/circle_icon_troll_2.png';
 import wingfolkIcon from '../../assets/circle_icon_wingfolk_2.png';
 import wizardIcon from '../../assets/circle_icon_wizard_2.png';
 import { TribeName } from '../Game/game.types';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 // import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 const tribeIcons = {
-    [TribeName.CENTAUR]: centaurIcon,
-    [TribeName.DWARF]: dwarfIcon,
-    [TribeName.ELF]: elfIcon,
-    [TribeName.GIANT]: giantIcon,
-    [TribeName.HALFLING]: halflingIcon,
+    [TribeName.CENTAURS]: centaurIcon,
+    [TribeName.DWARVES]: dwarfIcon,
+    [TribeName.ELVES]: elfIcon,
+    [TribeName.GIANTS]: giantIcon,
+    [TribeName.HALFLINGS]: halflingIcon,
     [TribeName.MERFOLK]: merfolkIcon,
-    [TribeName.MINOTAUR]: minotaurIcon,
-    [TribeName.ORC]: orcIcon,
-    [TribeName.SKELETON]: skeletonIcon,
-    [TribeName.TROLL]: trollIcon,
+    [TribeName.MINOTAURS]: minotaurIcon,
+    [TribeName.ORCS]: orcIcon,
+    [TribeName.SKELETONS]: skeletonIcon,
+    [TribeName.TROLLS]: trollIcon,
     [TribeName.WINGFOLK]: wingfolkIcon,
-    [TribeName.WIZARD]: wizardIcon,
+    [TribeName.WIZARDS]: wizardIcon,
 };
 
-export function TribeIcon({tribe}: ITribeIconProps): JSX.Element {
+export function TribeIcon({onSelectTribe, selected, tribe}: ITribeIconProps): JSX.Element {
     return (
         <div className="tribe-icon">
             <img
-                className="tribe-img"
+                className={`tribe-img ${onSelectTribe ? 'selectable' : ''}`}
                 // @ts-ignore
                 src={tribeIcons[tribe.name]}
                 alt={tribe.name}
+                onClick={() => onSelectTribe ? onSelectTribe(tribe.name) : null}
             />
             <div className="tribe-name">
                 {tribe.name}
                 {/* <FontAwesomeIcon className="info-icon" icon={faInfoCircle} /> */}
             </div>
+
+            {selected ?
+                <FontAwesomeIcon className="selected-icon" icon={faCheckCircle} /> :
+                null
+            }
         </div>
     );
 }
