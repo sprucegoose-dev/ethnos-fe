@@ -41,4 +41,6 @@ class Api {
     }
 }
 
-export default new Api();
+const instance = new Api();
+
+export default instance;

@@ -58,7 +58,12 @@ export function Game(): JSX.Element {
                     Game
                 </div> : null
             }
-            <ToastContainer autoClose={2000} pauseOnFocusLoss={false} limit={1} />
+            <ToastContainer
+                autoClose={2000}
+                limit={1}
+                pauseOnFocusLoss={false}
+                theme="dark"
+            />
         </div>
     );
 }

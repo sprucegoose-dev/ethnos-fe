@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -37,10 +37,6 @@ function App() {
         }
     }, [auth, dispatch]);
 
-    const { pathname } = useLocation();
-
-    const inGame = pathname.includes('game');
-
     return (
         <div className="app">
             {<Header />}
@@ -48,7 +44,12 @@ function App() {
                 {<Outlet />}
             </div>
             { <Footer />}
-            <ToastContainer autoClose={2000} pauseOnFocusLoss={false} limit={1} />
+            <ToastContainer
+                autoClose={2000}
+                limit={1}
+                pauseOnFocusLoss={false}
+                theme="dark"
+            />
         </div>
     );
 }

@@ -1,8 +1,9 @@
 @import '../../styles/variables.scss';
+
 .game-settings {
     background: white;
-    box-sizing: border-box;
     border-radius: 4px;
+    box-sizing: border-box;
     color: $dark-gray;
     margin: 50px auto;
     max-width: 97%;
@@ -15,18 +16,22 @@
         margin-bottom: 15px;
     }
 
-    .room-title {
-        font-family: CaxtonStd-Bold;
-        font-size: 1.2rem;
-        margin-bottom: 20px;
-    }
-
     .players {
         border-radius: 4px;
         border-top: 1px solid $light-gray-2;
         margin-bottom: 25px;
         padding-top: 22px;
         position: relative;
+
+        .player {
+            background-color: white;
+            border-radius: 4px;
+            box-sizing: border-box;
+            color: $dark-gray;
+            display: inline-block;
+            margin-right: 10px;
+            padding: 5px;
+        }
 
         .players-title {
             background: white;
@@ -39,16 +44,12 @@
             top: 0;
             transform: translate(-50%, -50%);
         }
+    }
 
-        .player {
-            background-color: white;
-            border-radius: 4px;
-            box-sizing: border-box;
-            color: $dark-gray;
-            display: inline-block;
-            margin-right: 10px;
-            padding: 5px;
-        }
+    .room-title {
+        font-family: CaxtonStd-Bold;
+        font-size: 1.2rem;
+        margin-bottom: 20px;
     }
 
     .settings {
@@ -57,6 +58,16 @@
         margin-bottom: 20px;
         padding-top: 25px;
         position: relative;
+
+        .instructions {
+            margin-bottom: 30px;
+
+            .btn {
+                font-size: .9rem;
+                margin-left: 8px;
+                padding: 3px 8px;
+            }
+        }
 
         .settings-title {
             background: white;
@@ -68,16 +79,6 @@
             position: absolute;
             top: 0;
             transform: translate(-50%, -50%);
-        }
-
-        .instructions {
-            margin-bottom: 30px;
-
-            .btn {
-                font-size: .9rem;
-                margin-left: 8px;
-                padding: 3px 8px;
-            }
         }
 
         .tribes {
@@ -92,3 +93,4 @@
         }
     }
 }
+

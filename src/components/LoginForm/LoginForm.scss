@@ -6,10 +6,11 @@
     box-sizing: border-box;
     color: $light-gray;
     margin: 25px auto;
-    max-width: 375px;
     padding: 25px;
     position: relative;
     text-align: center;
+    width: 100%;
+    max-width: 375px;
 
     .form-title {
         margin: 8px 0 15px;
@@ -23,17 +24,17 @@
     .logo {
         display: block;
         height: auto;
+        margin: 0 auto 5px auto;
         margin-bottom: 5px;
         max-height: 135px;
         max-width: 165px;
         width: auto;
-        margin: 0 auto 5px auto;
     }
 
     .reset-password-wrapper {
-        position: absolute;
         bottom: -30px;
         left: 50%;
+        position: absolute;
         transform: translateX(-50%);
     }
 }

@@ -91,5 +91,4 @@ export default class GameApi {
 
         return await api.request(Method.POST, `/game/${gameId}/action`, options);
     }
-
 }
