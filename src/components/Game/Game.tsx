@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
 import { GameState, IActionPayload, IGameState } from './game.types';
 import GameApi from '../../api/Game.api';
@@ -20,6 +20,7 @@ export function Game(): JSX.Element {
     const { id: gameId } = useParams();
     const [gameState, setGameState] = useState<IGameState>(null);
     const [ _actions, setActions ] = useState<IActionPayload[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getGameState = async () => {
@@ -37,6 +38,11 @@ export function Game(): JSX.Element {
         const updateGameState = (payload: IGameState) => {
             setGameState(payload);
             getActions();
+
+            if (payload.state === GameState.CANCELLED) {
+                toast.info('The game has been cancelled');
+                navigate('/rooms');
+            }
         }
 
         socket.emit('onJoinGame', gameId);

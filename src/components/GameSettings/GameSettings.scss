@@ -8,14 +8,10 @@
     color: $dark-gray;
     margin: 50px auto;
     max-width: 375px;
-    padding: 18px 15px;
+    padding: 25px 15px 28px;
     position: relative;
     text-align: center;
     width: 100%;
-
-    > * {
-        margin-bottom: 15px;
-    }
 
     .btn-back {
         box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.3);
@@ -32,7 +28,7 @@
 
     .section {
         border-top: 1px solid $light-gray-2;
-        margin-bottom: 25px;
+        margin-bottom: 20px;
         padding-top: 23px;
 
         .section-title {
@@ -59,6 +55,7 @@
             color: $dark-gray;
             display: inline-block;
             margin-right: 10px;
+            margin-bottom: 5px;
             padding: 5px;
         }
     }
@@ -76,16 +73,47 @@
         position: relative;
 
         .instructions {
-            margin-bottom: 30px;
+            position: relative;
+
+            .instructions-separator {
+                margin: 0 25px;
+            }
+
+            .tribes-text {
+                color: $teal;
+                cursor: pointer;
+                font-weight: bold;
+                position: relative;
+                text-decoration: underline;
+
+                .info-icon-wrapper {
+                    border: 1px solid $teal;
+                    border-radius: 50%;
+                    display: inline-block;
+                    height: 11px;
+                    width: 11px;
+                    padding: 1px;
+                    position: absolute;
+                    top: -8px;
+                    right: -15px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    .info-icon {
+                        font-size: .6rem;
+                        color: $teal;
+                    }
+                }
+            }
 
             .btn {
-                font-size: .9rem;
                 margin-left: 8px;
-                padding: 3px 8px;
             }
         }
 
         .tribes {
+            margin-top: 25px;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-evenly;
@@ -94,6 +122,51 @@
                 flex: 0 0 calc(33.33% - 10px);
                 margin-bottom: 10px;
             }
+        }
+    }
+
+    .tribes-modal {
+        width: 85%;
+        border-color: rgba(0, 0, 0, 0.6);
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border: 1px solid $medium-gray-3;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        background-color: white;
+
+        .btn-close {
+
+            .btn-close-icon {
+                color: black;
+            }
+        }
+
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px 15px;
+            box-sizing: border-box;
+            max-height: 625px;
+            overflow: auto;
+
+            .card {
+                margin: 7px;
+            }
+        }
+    }
+
+    .btn-leave-wrapper {
+        bottom: -55px;
+        left: 50%;
+        position: absolute;
+        transform: translateX(-50%);
+
+        .btn-leave {
+            padding: 8px 12px;
         }
     }
 }

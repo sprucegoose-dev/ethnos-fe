@@ -45,6 +45,7 @@
     }
 
     .players {
+        text-align: center;
 
         .player {
             display: inline-block;
@@ -54,7 +55,8 @@
             box-sizing: border-box;
             padding: 5px;
             color: white;
-            margin-right: 10px;
+            margin: 0 2.5px 10px;
+            font-size: .9rem;
         }
     }
 

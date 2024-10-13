@@ -8,7 +8,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-    border: 5px solid $dark-gray;
+    border: 5px solid rgba(25, 25, 25, 0.7);
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     color: white;
@@ -29,9 +29,9 @@
     }
 
     .tribe-description {
-        background: rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.9);
         border-radius: 5px;
-        color: $dark-gray;
+        color: black;
         font-size: 0.9rem;
         padding: 6px;
     }

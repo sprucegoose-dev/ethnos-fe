@@ -45,9 +45,9 @@ const tribeIcons = {
 };
 
 export function Room({game}: IRoomProps): JSX.Element {
+    const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
     const [showPasswordModal, setShowPasswordModal] = useState<boolean>(false);
     const navigate = useNavigate();
-    const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
 
     const renderRoomName = () => {
         const username = game.creator.username;
@@ -84,6 +84,11 @@ export function Room({game}: IRoomProps): JSX.Element {
             }
         }
     };
+
+    const onPasswordSuccess = () => {
+        setShowPasswordModal(false);
+        navigate(`/game/${game.id}`);
+    }
 
     const submitLeaveGame = async() => {
         await GameApi.leave(game.id);
@@ -224,7 +229,7 @@ export function Room({game}: IRoomProps): JSX.Element {
             </div>
             {showPasswordModal ?
                 <Modal onClose={() => setShowPasswordModal(false)}>
-                    <PasswordForm gameId={game.id} />
+                    <PasswordForm gameId={game.id} onSuccess={onPasswordSuccess} />
                 </Modal>
             : null}
         </div>

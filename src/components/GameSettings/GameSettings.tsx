@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faCaretLeft, faChevronLeft, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faInfo, faUser } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import shuffle from 'lodash.shuffle';
 
@@ -17,11 +17,17 @@ import GameApi from '../../api/Game.api';
 import { TribeIcon } from '../TribeIcon/TribeIcon';
 
 import './GameSettings.scss';
+import { Modal } from '../Modal/Modal';
+import { Card } from '../Card/Card';
+import { PasswordForm } from '../PasswordForm/PasswordForm';
 
 export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
+    const navigate = useNavigate();
     const [tribes, setTribes] = useState<ITribe[]>([]);
     const [selectedTribes, setSelectedTribes] = useState<TribeName[]>(gameState.settings.tribes || []);
+    const [showTribsModal, setShowTribesModal] = useState<boolean>(false);
+    const [showPasswordModal, setShowPasswordModal] = useState<boolean>(false);
 
     useEffect(() => {
         const getTribes = async () => {
@@ -81,6 +87,36 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
         await GameApi.updateSettings(gameState.id, { tribes: newSelectedTribes});
     };
 
+    const toggleTribesModal = (value: boolean) => {
+        setShowTribesModal(value);
+    };
+
+    const submitJoinGame = async () => {
+        const response = await GameApi.join(gameState.id);
+
+        if (!response.ok) {
+            const error = await response.json();
+
+            if (error.code === 403) {
+                setShowPasswordModal(true);
+            }
+        }
+    }
+
+    const submitLeaveGame = async() => {
+        await GameApi.leave(gameState.id);
+        navigate('/rooms');
+    };
+
+    const onPasswordSuccess = () => {
+        setShowPasswordModal(false);
+    }
+
+    const playerCanJoin = () => {
+        return !gameState.players.find(player => player.userId === auth.userId) &&
+            gameState.players.length < gameState.maxPlayers;
+    }
+
     return (
         <div className="game-settings">
             <Link to="/rooms">
@@ -112,6 +148,14 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                             /> {user.username}
                         </Link>
                     )}
+                    {playerCanJoin() &&
+                        <button
+                            className="btn btn-action btn-3d btn-mini"
+                            onClick={submitJoinGame}
+                        >
+                            Join
+                        </button>
+                    }
                 </div>
                 {tribes.length &&
                     <div className="section settings">
@@ -119,9 +163,17 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                             Settings
                         </div>
                         <div className='instructions'>
-                            Select 6 tribes or
+                            Select 6 <span className="tribes-text" onClick={() => toggleTribesModal(true)}>tribes
+                                <span className="info-icon-wrapper">
+                                    <FontAwesomeIcon
+                                        className="info-icon"
+                                        icon={faInfo}
+                                    />
+                                </span>
+                            </span>
+                            <span className="instructions-separator">OR</span>
                             <button
-                                className="btn btn-action btn-3d"
+                                className="btn btn-action btn-3d btn-mini"
                                 onClick={randomizeTribes}
                             >
                                 Randomize
@@ -135,13 +187,6 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                                     selected={selectedTribes.includes(tribe.name)}
                                     tribe={tribe}
                                 />
-                                // <Card
-                                //     key={`tribe-card-${index}`}
-                                //     tribe={tribe.name}
-                                //     // @ts-ignore
-                                //     image={tribeImgs[tribe.name]}
-                                //     description={tribe.description}
-                                // />
                             )}
                         </div>
                     </div>}
@@ -154,7 +199,33 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                     </button>
                 </div>
             </div>
-
+            <div className="btn-leave-wrapper">
+                <button
+                    className="btn btn-outline btn-3d btn-leave"
+                    onClick={submitLeaveGame}
+                >
+                    Leave
+                </button>
+            </div>
+            {showTribsModal ?
+                    <Modal
+                        modalClass='tribes-modal'
+                        onClose={() => toggleTribesModal(false)}
+                    >
+                        {tribes.map((tribe, index) =>
+                            <Card
+                                key={`tribe-card-${index}`}
+                                tribe={tribe}
+                            />
+                        )}
+                    </Modal>
+                : null
+            }
+            {showPasswordModal ?
+                <Modal onClose={() => setShowPasswordModal(false)}>
+                    <PasswordForm gameId={gameState.id} onSuccess={onPasswordSuccess} />
+                </Modal>
+            : null}
         </div>
     );
 }

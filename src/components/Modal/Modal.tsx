@@ -14,18 +14,20 @@ export function Modal(props: IModalProps): JSX.Element {
 
     return (
         <div className="modal-backdrop" onClick={handleBackdropClick}>
-            <div className="modal">
+            <div className={`modal ${props.modalClass || ''}`}>
                 <div className="modal-header">
-                    <span
+                </div>
+                {props.children &&
+                    <div className="content">
+                        {props.children}
+                    </div>
+                }
+                <span
                         className="btn-close"
                         onClick={() => props.onClose()}
                     >
-                        <FontAwesomeIcon icon={faRemove} />
+                        <FontAwesomeIcon className="btn-close-icon" icon={faRemove} />
                     </span>
-                </div>
-                <div className="content">
-                    {props.children}
-                </div>
             </div>
         </div>
     );

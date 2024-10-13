@@ -1,5 +1,4 @@
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 import GameApi from '../../api/Game.api';
@@ -9,13 +8,12 @@ import './PasswordForm.scss';
 
 export function PasswordForm(props: IPasswordFormProps): JSX.Element {
     const [password, setPassword] = useState<string>('');
-    const navigate = useNavigate();
 
     const submitPassword = async () => {
         const response = await GameApi.join(props.gameId, password);
 
         if (response.ok) {
-            navigate(`/game/${props.gameId}`);
+            props.onSuccess();
             toast.success('Joined game successfully');
         } else {
             toast.error('Incorrect password');
