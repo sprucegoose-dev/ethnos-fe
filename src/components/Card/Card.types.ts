@@ -1,5 +1,8 @@
-import { ITribe } from '../Game/game.types';
+import { ICard } from '../Game/game.types';
 
 export interface ICardProps {
-    tribe: ITribe;
+    card: ICard;
+    customStyles?: Object;
+    onMouseEnter?: React.MouseEventHandler<HTMLDivElement>;
+    onMouseLeave?: React.MouseEventHandler<HTMLDivElement>;
 }

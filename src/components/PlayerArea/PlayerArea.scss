@@ -1,0 +1,31 @@
+@import '../../styles/variables.scss';
+
+.player-area {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+
+    .player-hand {
+        display: flex;
+        position: absolute;
+        left: 50%;
+        top: -155px;
+        width: 100%;
+
+        .cards {
+            position: relative;
+            width: 100%;
+
+            > .card {
+                position: absolute;
+
+                &:hover {
+                    z-index: 1;
+                    transform: translateY(-50px) rotate(0deg);
+                    transition: transform 0.15s ease;
+                }
+            }
+        }
+    }
+}

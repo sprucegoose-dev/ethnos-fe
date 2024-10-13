@@ -25,17 +25,16 @@ export enum TribeName {
 }
 
 export enum ActionType {
+    ADD_FREE_TOKEN = 'add_free_token',
     DRAW_CARD = 'draw_card',
+    KEEP_CARDS = 'keep_cards',
     PICK_UP_CARD = 'pick_up_card',
     PLAY_BAND = 'play_band',
-    KEEP_CARDS = 'keep_cards',
-    ADD_FREE_TOKEN = 'add_free_token'
 }
 
 export interface IActionPayloadBase {
     cardIds?: number[];
-    type: ActionType.DRAW_CARD |
-        ActionType.KEEP_CARDS;
+    type: ActionType.DRAW_CARD | ActionType.KEEP_CARDS;
 }
 
 export interface IPickUpCardPayload {
@@ -50,15 +49,16 @@ export interface IAddFreeTokenPayload {
 }
 
 export interface IPlayBandPayload {
-    nextActionId?: number;
     cardIds?: number[];
     cardIdsToKeep?: number[];
     leaderId: number;
+    nextActionId?: number;
     regionColor?: Color;
     type: ActionType.PLAY_BAND;
 }
 
-export type IActionPayload = IActionPayloadBase |
+export type IActionPayload =
+    IActionPayloadBase |
     IPlayBandPayload |
     IPickUpCardPayload |
     IAddFreeTokenPayload;
@@ -72,9 +72,9 @@ export interface IActionRequest {
 }
 
 export interface IBandDetails {
+    bandSize: number;
     color: Color;
     tribe: TribeName;
-    bandSize: number;
 }
 
 export enum GameState {
@@ -89,17 +89,17 @@ export interface IGameSettings {
 }
 
 export enum CardState {
-    IN_MARKET = 'in_market',
+    IN_BAND = 'in_band',
     IN_DECK = 'in_deck',
     IN_HAND = 'in_hand',
-    IN_BAND = 'in_band',
+    IN_MARKET = 'in_market',
     REVEALED = 'revealed',
 }
 
 export interface ITribe {
+    description: string;
     id: number;
     name: TribeName;
-    description: string;
 }
 
 export interface IUser {
@@ -108,43 +108,44 @@ export interface IUser {
 }
 
 export interface IPlayer {
-    id: number;
-    userId: number;
+    cards: ICard[];
     gameId: number;
     giantTokenValue: number;
+    id: number;
+    merfolkTrackScore: number;
     orcTokens: Color[];
     trollTokens: number[];
-    merfolkTrackScore: number;
     user: IUser;
+    userId: number;
 }
 
 export interface ICard {
-    id: number;
-    state: CardState;
     color: Color;
-    tribeId: number;
-    leaderId: number;
     gameId: number;
-    playerId: number;
+    id: number;
     index: number;
+    leaderId: number;
+    playerId: number;
+    state: CardState;
     tribe: ITribe;
+    tribeId: number;
 }
 
 export interface IGameState {
-    id: number;
     activePlayerId: number;
-    winnerId: number;
-    state: GameState;
-    maxPlayers: number;
-    turnOrder: number[];
     age: number;
-    settings: IGameSettings;
-    createdAt: string;
-    updatedAt: string;
-    creatorId: number;
-    creator: IUser;
     cards: ICard[];
+    createdAt: string;
+    creator: IUser;
+    creatorId: number;
+    id: number;
+    maxPlayers: number;
     players: IPlayer[];
+    settings: IGameSettings;
+    state: GameState;
+    turnOrder: number[];
+    updatedAt: string;
+    winnerId: number;
 }
 
 export interface IActiveGame extends IGameState {

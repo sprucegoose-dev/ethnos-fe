@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 import { GameState, IActionPayload, IGameState } from './game.types';
+import { IRootReducer } from '../../reducers/reducers.types';
+import { IAuthReducer } from '../Auth/Auth.types';
+
 import GameApi from '../../api/Game.api';
 import { socket } from '../../socket';
 import { GameSettings } from '../GameSettings/GameSettings';
 
 import './Game.scss';
+import { PlayerArea } from '../PlayerArea/PlayerArea';
 
 const {
     CREATED,
@@ -17,6 +22,7 @@ const {
 } = GameState;
 
 export function Game(): JSX.Element {
+    const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
     const { id: gameId } = useParams();
     const [gameState, setGameState] = useState<IGameState>(null);
     const [ _actions, setActions ] = useState<IActionPayload[]>([]);
@@ -54,6 +60,8 @@ export function Game(): JSX.Element {
         }
     }, [gameId]);
 
+    const player = gameState?.players.find(player => player.userId === auth.userId);
+
     return (
         <div className="game-container">
             {gameState?.state === CREATED ?
@@ -61,7 +69,14 @@ export function Game(): JSX.Element {
             }
             {[STARTED, ENDED, CANCELLED].includes(gameState?.state) ?
                 <div className="game">
-                    Game
+                    <div className="">
+
+                        Map
+
+                    </div>
+                    {player &&
+                        <PlayerArea className="bottom" player={player} />
+                    }
                 </div> : null
             }
             <ToastContainer

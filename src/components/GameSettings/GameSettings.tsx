@@ -215,7 +215,8 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                         {tribes.map((tribe, index) =>
                             <Card
                                 key={`tribe-card-${index}`}
-                                tribe={tribe}
+                                // @ts-ignore
+                                card={{tribe}}
                             />
                         )}
                     </Modal>

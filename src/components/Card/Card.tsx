@@ -35,34 +35,38 @@ const tribeImgs = {
     [TribeName.WIZARDS]: wizardImg,
 };
 
-export function Card({tribe}: ICardProps): JSX.Element {
-    const [tribes, setTribes] = useState<ITribe[]>([]);
+const convertToSingularName = (tribeName: TribeName) => {
+    if (tribeName === TribeName.DWARVES) {
+        return 'Dwarf';
+    }
 
-    useEffect(() => {
-        const getTribes = async () => {
-            const response = await TribeApi.getAll();
+    if (tribeName === TribeName.ELVES) {
+        return 'Elf';
+    }
 
-            if (response.ok) {
-                setTribes(await response.json());
-            }
-        };
 
-        getTribes();
-    }, [tribes])
+    return tribeName.replace(/s$/, '');
+}
+
+export function Card(props: ICardProps): JSX.Element {
+    const { color, tribe } = props.card;
 
     return (
         <div
-            className="card"
+            className={`card ${color || ''}`}
             style={{
                 // @ts-ignore
                 backgroundImage: `url(${tribeImgs[tribe.name]})`,
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center'
+                backgroundPosition: 'center',
+                ...(props.customStyles || {})
             }}
+            onMouseEnter={props.onMouseEnter}
+            onMouseLeave={props.onMouseLeave}
         >
             <div className="tribe-name">
-                {tribe.name}
+                {convertToSingularName(tribe.name)}
             </div>
             <div className="tribe-description">
                 {tribe.description}
