@@ -3,17 +3,33 @@
 .game-settings {
     background: white;
     border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     box-sizing: border-box;
     color: $dark-gray;
     margin: 50px auto;
-    max-width: 97%;
+    max-width: 375px;
     padding: 18px 15px;
     position: relative;
     text-align: center;
-    width: 375px;
+    width: 100%;
 
     > * {
         margin-bottom: 15px;
+    }
+
+    .btn-back {
+        box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.3);
+
+        .back-icon {
+            margin-right: 5px;
+            font-size: .9rem;
+        }
+    }
+
+    .btn-outline {
+        position: fixed;
+        left: 20px;
+        top: 15px;
     }
 
     .players {

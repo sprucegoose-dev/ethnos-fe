@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCaretLeft, faChevronLeft, faUser } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import shuffle from 'lodash.shuffle';
 
@@ -79,10 +79,18 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
         const newSelectedTribes = shuffle(tribes).slice(0, 6).map((tribe) => tribe.name);
         setSelectedTribes(newSelectedTribes);
         await GameApi.updateSettings(gameState.id, { tribes: newSelectedTribes});
-    }
+    };
 
     return (
         <div className="game-settings">
+            <Link to="/rooms">
+                <button className="btn btn-outline btn-back">
+                    <FontAwesomeIcon
+                        className="back-icon"
+                        icon={faChevronLeft}
+                    /> Back
+                </button>
+            </Link>
             <div className="room-title">
                 {renderRoomName()}
             </div>
@@ -99,9 +107,9 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                             className="player"
                         >
                             <FontAwesomeIcon
-                            className="player-icon"
-                            icon={faUser}
-                        /> {user.username}
+                                className="player-icon"
+                                icon={faUser}
+                            /> {user.username}
                         </Link>
                     )}
                 </div>
