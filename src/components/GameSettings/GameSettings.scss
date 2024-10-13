@@ -19,6 +19,10 @@
 
     .btn-back {
         box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.3);
+        left: 0;
+        position: absolute;
+        top: -55px;
+        text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
 
         .back-icon {
             margin-right: 5px;
@@ -26,17 +30,26 @@
         }
     }
 
-    .btn-outline {
-        position: fixed;
-        left: 20px;
-        top: 15px;
+    .section {
+        border-top: 1px solid $light-gray-2;
+        margin-bottom: 25px;
+        padding-top: 23px;
+
+        .section-title {
+            background: white;
+            border: 1px solid $light-gray-2;
+            border-radius: 5px;
+            color: $teal;
+            left: 50%;
+            padding: 2px 10px;
+            position: absolute;
+            top: 0;
+            transform: translate(-50%, -50%);
+        }
     }
 
     .players {
         border-radius: 4px;
-        border-top: 1px solid $light-gray-2;
-        margin-bottom: 25px;
-        padding-top: 22px;
         position: relative;
 
         .player {
@@ -48,18 +61,6 @@
             margin-right: 10px;
             padding: 5px;
         }
-
-        .players-title {
-            background: white;
-            border: 1px solid $light-gray-2;
-            border-radius: 5px;
-            color: $teal;
-            left: 50%;
-            padding: 1px 10px;
-            position: absolute;
-            top: 0;
-            transform: translate(-50%, -50%);
-        }
     }
 
     .room-title {
@@ -70,7 +71,6 @@
 
     .settings {
         border-radius: 4px;
-        border-top: 1px solid $light-gray-2;
         margin-bottom: 20px;
         padding-top: 25px;
         position: relative;
@@ -85,18 +85,6 @@
             }
         }
 
-        .settings-title {
-            background: white;
-            border: 1px solid $light-gray-2;
-            border-radius: 5px;
-            color: $teal;
-            left: 50%;
-            padding: 1px 10px;
-            position: absolute;
-            top: 0;
-            transform: translate(-50%, -50%);
-        }
-
         .tribes {
             display: flex;
             flex-wrap: wrap;
@@ -106,6 +94,18 @@
                 flex: 0 0 calc(33.33% - 10px);
                 margin-bottom: 10px;
             }
+        }
+    }
+}
+
+@media only screen and (min-width: $screen-sm) {
+
+    .game-settings {
+
+        .btn-back {
+            position: fixed;
+            left: 20px;
+            top: 15px;
         }
     }
 }

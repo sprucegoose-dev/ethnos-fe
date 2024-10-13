@@ -95,8 +95,8 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                 {renderRoomName()}
             </div>
             <div className="content">
-                <div className="players">
-                    <div className="players-title">
+                <div className="section players">
+                    <div className="section-title players-title">
                         Players
                     </div>
                     {/* TODO: move into 'PlayerLabel' component */}
@@ -114,8 +114,8 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                     )}
                 </div>
                 {tribes.length &&
-                    <div className="settings">
-                        <div className="settings-title">
+                    <div className="section settings">
+                        <div className="section-title settings-title">
                             Settings
                         </div>
                         <div className='instructions'>
