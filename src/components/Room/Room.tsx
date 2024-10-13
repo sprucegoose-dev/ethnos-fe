@@ -56,7 +56,7 @@ export function Room({game}: IRoomProps): JSX.Element {
 
     const userInGame = () => {
         return game.players.find(player => player.userId === auth.userId);
-    }
+    };
 
     const submitJoinGame = async() => {
         if (userInGame()) {
@@ -83,10 +83,27 @@ export function Room({game}: IRoomProps): JSX.Element {
                 toast.error('Error joining game');
             }
         }
-    }
+    };
 
     const submitLeaveGame = async() => {
         await GameApi.leave(game.id);
+    };
+
+    const renderGameState = () => {
+        if (game.state === GameState.CREATED) {
+
+            if (game.players.length === game.maxPlayers) {
+                return 'Ready to start';
+            }
+
+            return 'Waiting for players';
+        }
+
+        if (game.state === GameState.STARTED) {
+            return 'Game in progress';
+        }
+
+        return `${game.state.charAt(0).toUpperCase()}${game.state.slice(1)}`;
     }
 
     const tribes: TribeName[] = Array.from({ length: 6 }, (_, i) => game.settings.tribes[i] || null);
@@ -157,6 +174,9 @@ export function Room({game}: IRoomProps): JSX.Element {
                     )}
                 </div>
             </div>
+            <div className="game-state">
+                {renderGameState()}
+            </div>
             <div className='join-room-wrapper'>
                 {
                     game.state === GameState.CREATED &&
@@ -188,7 +208,6 @@ export function Room({game}: IRoomProps): JSX.Element {
                             Rejoin
                         </button>
                     </>
-
                 }
                 {
                     game.state !== GameState.CREATED &&
