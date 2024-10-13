@@ -1,8 +1,4 @@
-import { useEffect, useState } from 'react';
-
-import TribeApi from '../../api/Tribe.api';
-
-import { ITribe, TribeName } from '../Game/game.types';
+import { TribeName } from '../Game/game.types';
 import { ICardProps } from './Card.types';
 
 import './Card.scss';
@@ -53,7 +49,7 @@ export function Card(props: ICardProps): JSX.Element {
 
     return (
         <div
-            className={`card ${color || ''}`}
+            className={`card ${color || ''} ${tribe.name.toLowerCase()}`}
             style={{
                 // @ts-ignore
                 backgroundImage: `url(${tribeImgs[tribe.name]})`,

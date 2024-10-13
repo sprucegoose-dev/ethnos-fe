@@ -15,13 +15,10 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 150px;
-    height: 250px;
+    width: $card-width;
+    height: $card-height;
     padding: 10px;
-
-    &.hover {
-        z-index: 10;
-    }
+    box-sizing: border-box;
 
     &.blue {
         border-color: $card-blue;
@@ -67,7 +64,15 @@
         border-color: $card-red;
 
         .tribe-name {
-            // background-color: $card-purple;
+            // background-color: $card-red;
+        }
+    }
+
+    &.skeletons {
+        border-color: $card-brown;
+
+        .tribe-name {
+            // background-color: $card-brown;
         }
     }
 

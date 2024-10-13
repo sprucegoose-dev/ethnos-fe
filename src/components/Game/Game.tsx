@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { useSelector } from 'react-redux';
 
-import { GameState, IActionPayload, IGameState } from './game.types';
+import { GameState, IActionPayload, IGameState, IPlayer } from './game.types';
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
 
@@ -60,10 +60,40 @@ export function Game(): JSX.Element {
         }
     }, [gameId]);
 
-    const player = gameState?.players.find(player => player.userId === auth.userId);
+    const getPlayerPositions = (players: IPlayer[]): {[userId: number]: string} => {
+        const positionsByPlayerCount: {[key: number]: string[]} = {
+            2: ['top', 'bottom'],
+            3: ['left', 'right', 'bottom'],
+            4: ['top', 'left', 'right', 'bottom'],
+            5: ['top', 'left-corner', 'right-corner', 'bottom', 'left', 'right'],
+            6: ['top', 'left-corner', 'right-corner', 'bottom', 'left', 'right'],
+        };
+
+        const playerCount = players.length;
+        const positions = positionsByPlayerCount[playerCount] || [];
+        const currentPlayer = players.find(player => player.userId === auth.userId);
+
+        if (!currentPlayer || !positions.length) return {};
+
+        const remainingPositions = positions.filter(pos => pos !== 'bottom');
+
+        const playerPosition = { [currentPlayer.userId]: 'bottom' };
+
+        let index = 0;
+
+        for (const player of players) {
+            if (player.userId !== currentPlayer.userId) {
+                playerPosition[player.userId] = remainingPositions[index++];
+            }
+        }
+
+        return playerPosition;
+    };
+
+    const playerPosition = gameState ? getPlayerPositions(gameState.players) : {};
 
     return (
-        <div className="game-container">
+        <div className={`game-container ${gameState?.state.toLowerCase()}`}>
             {gameState?.state === CREATED ?
                 <GameSettings gameState={gameState} /> : null
             }
@@ -74,9 +104,9 @@ export function Game(): JSX.Element {
                         Map
 
                     </div>
-                    {player &&
-                        <PlayerArea className="bottom" player={player} />
-                    }
+                    {gameState.players.map((player) =>
+                        <PlayerArea key={player.id} className={playerPosition[player.userId]} player={player} />
+                    )}
                 </div> : null
             }
             <ToastContainer

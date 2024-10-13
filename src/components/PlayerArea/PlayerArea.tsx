@@ -22,14 +22,13 @@ export function PlayerArea({className, player}: IPlayerAreaProps): JSX.Element {
         ...player?.cards.filter(card => card.state === CardState.IN_HAND),
         ...player?.cards.filter(card => card.state === CardState.IN_HAND),
         ...player?.cards.filter(card => card.state === CardState.IN_HAND),
-        ...player?.cards.filter(card => card.state === CardState.IN_HAND),
     ];
 
     const calculateCardStyle = (index: number, totalCards: number) => {
         const middle = Math.floor(totalCards / 2);
-        const offset = 6;
+        const offset = 2;
         const translateOffsetX = 80;
-        const translateOffsetY = 15;
+        const translateOffsetY = 8;
         let rotate
         let translateX;
         let translateY;
@@ -45,11 +44,11 @@ export function PlayerArea({className, player}: IPlayerAreaProps): JSX.Element {
         } else {
           rotate = 0;
           translateX = 0;
-          translateY = 5;
+          translateY = className.includes('bottom') ? 5 : 15;
         }
 
         if (hoveredCardIndex === index) {
-            translateY = -125;
+            translateY = -120;
             rotate = 0;
         }
 
@@ -60,11 +59,11 @@ export function PlayerArea({className, player}: IPlayerAreaProps): JSX.Element {
 
     const handleMouseEnter = throttle((index: number) => {
         setHoveredCardIndex(index);
-    }, 300);
+    }, 1000);
 
     const handleMouseLeave = throttle(() => {
         setHoveredCardIndex(null);
-    }, 300);
+    }, 1000);
 
     return (
         <div className={`player-area ${className || ''}`}>

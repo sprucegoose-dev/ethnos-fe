@@ -1,8 +1,8 @@
 @import '../../styles/variables.scss';
 
 .game-container {
-    background-image: url('../../assets/dragon_bkg.png');
-    background-position-x: center;
+    background-image: url('../../assets/map_bkg.png');
+    background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
@@ -10,6 +10,11 @@
     height: auto;
     justify-content: space-between;
     min-height: 100%;
+
+    &.created {
+        background-image: url('../../assets/dragon_bkg.png');
+        background-position-y: top;
+    }
 
     .game {
         display: flex;
