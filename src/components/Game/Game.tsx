@@ -99,11 +99,6 @@ export function Game(): JSX.Element {
             }
             {[STARTED, ENDED, CANCELLED].includes(gameState?.state) ?
                 <div className="game">
-                    <div className="">
-
-                        Map
-
-                    </div>
                     {gameState.players.map((player) =>
                         <PlayerArea key={player.id} className={playerPosition[player.userId]} player={player} />
                     )}

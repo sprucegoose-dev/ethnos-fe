@@ -45,7 +45,7 @@ export function PlayerArea({className, player}: IPlayerAreaProps): JSX.Element {
         }
 
         if (hoveredCardIndex === index) {
-            translateY = -120;
+            translateY = -144;
             rotate = 0;
         }
 
@@ -70,15 +70,13 @@ export function PlayerArea({className, player}: IPlayerAreaProps): JSX.Element {
             <div className="player-hand">
                 <div className="cards">
                     {cardsInHand.map((card, index) =>
-                        <div className="card-wrapper">
-                            <Card
-                                key={`tribe-card-${index}`}
-                                card={card}
-                                customStyles={calculateCardStyle(index, cardsInHand.length)}
-                                onMouseEnter={() => handleMouseEnter(index)}
-                                onMouseLeave={handleMouseLeave}
-                            />
-                        </div>
+                        <Card
+                            key={`tribe-card-${index}`}
+                            card={card}
+                            customStyles={calculateCardStyle(index, cardsInHand.length)}
+                            onMouseEnter={() => handleMouseEnter(index)}
+                            onMouseLeave={handleMouseLeave}
+                        />
                     )}
                 </div>
             </div>
