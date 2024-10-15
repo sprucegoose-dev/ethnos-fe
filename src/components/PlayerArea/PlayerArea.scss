@@ -26,14 +26,18 @@
             position: absolute;
             left: 50%;
 
+            .card-wrapper {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+            }
             > .card {
                 position: absolute;
-                left: -#{$card-width / 2};
                 cursor: pointer;
 
                 &:hover {
                     z-index: 1;
-                    transform: translateY(-50px) rotate(0deg);
+                    // transform: translateY(-50px) rotate(0deg);
                     transition: transform 0.2s ease;
                 }
             }

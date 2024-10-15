@@ -25,13 +25,14 @@ export function PlayerArea({className, player}: IPlayerAreaProps): JSX.Element {
     ];
 
     const calculateCardStyle = (index: number, totalCards: number) => {
-        const middle = Math.floor(totalCards / 2);
+        let middle = (totalCards / 2);
+        middle = middle % 2 ? middle - .5 : middle;
         const offset = 2;
         const translateOffsetX = 80;
         const translateOffsetY = 8;
-        let rotate
-        let translateX;
-        let translateY;
+        let rotate = 0;
+        let translateX = 0;
+        let translateY = className.includes('bottom') ? 5 : 15;
 
         if (index < middle) {
           rotate = (index - middle) * offset;
@@ -41,10 +42,6 @@ export function PlayerArea({className, player}: IPlayerAreaProps): JSX.Element {
           rotate = (index - middle) * offset;
           translateX = (index - middle) * translateOffsetX;
           translateY = translateOffsetY * (index - middle);
-        } else {
-          rotate = 0;
-          translateX = 0;
-          translateY = className.includes('bottom') ? 5 : 15;
         }
 
         if (hoveredCardIndex === index) {
@@ -73,13 +70,15 @@ export function PlayerArea({className, player}: IPlayerAreaProps): JSX.Element {
             <div className="player-hand">
                 <div className="cards">
                     {cardsInHand.map((card, index) =>
-                        <Card
-                            key={`tribe-card-${index}`}
-                            card={card}
-                            customStyles={calculateCardStyle(index, cardsInHand.length)}
-                            onMouseEnter={() => handleMouseEnter(index)}
-                            onMouseLeave={handleMouseLeave}
-                        />
+                        <div className="card-wrapper">
+                            <Card
+                                key={`tribe-card-${index}`}
+                                card={card}
+                                customStyles={calculateCardStyle(index, cardsInHand.length)}
+                                onMouseEnter={() => handleMouseEnter(index)}
+                                onMouseLeave={handleMouseLeave}
+                            />
+                        </div>
                     )}
                 </div>
             </div>
