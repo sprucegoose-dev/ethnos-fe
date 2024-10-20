@@ -28,7 +28,7 @@
 
             > .card {
                 cursor: pointer;
-                left: -#{$card-width / 2};
+                left: -#{calc($card-width / 2)};
                 position: absolute;
 
                 &:hover {

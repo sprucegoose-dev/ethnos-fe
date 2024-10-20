@@ -1,0 +1,26 @@
+@import '../../styles/variables.scss';
+
+.facedown-card {
+    color: rgb(226, 194, 152);
+    background-image: url('../../assets/facedown_card_bkg.png');
+    background-position-x: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid white;
+    box-sizing: border-box;
+    height: calc($card-height / 1.5);
+    padding: 10px;
+    position: relative;
+    width: calc($card-width / 1.5);
+
+    .card-logo {
+        height: auto;
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 60%;
+    }
+}

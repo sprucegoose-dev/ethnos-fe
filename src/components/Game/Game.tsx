@@ -13,6 +13,8 @@ import { GameSettings } from '../GameSettings/GameSettings';
 
 import './Game.scss';
 import { PlayerArea } from '../PlayerArea/PlayerArea';
+import { Deck } from '../Deck/Deck';
+import { Market } from '../Market/Market';
 
 const {
     CREATED,
@@ -26,6 +28,7 @@ export function Game(): JSX.Element {
     const { id: gameId } = useParams();
     const [gameState, setGameState] = useState<IGameState>(null);
     const [ _actions, setActions ] = useState<IActionPayload[]>([]);
+    const [ activePlayer, setActivePlayer ] = useState<IPlayer>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -43,12 +46,14 @@ export function Game(): JSX.Element {
 
         const updateGameState = (payload: IGameState) => {
             setGameState(payload);
-            getActions();
 
             if (payload.state === GameState.CANCELLED) {
                 toast.info('The game has been cancelled');
                 navigate('/rooms');
             }
+
+            getActions();
+            setActivePlayer(payload.players.find(player => player.id === gameState.activePlayerId));
         }
 
         socket.emit('onJoinGame', gameId);
@@ -99,6 +104,8 @@ export function Game(): JSX.Element {
             }
             {[STARTED, ENDED, CANCELLED].includes(gameState?.state) ?
                 <div className="game">
+                    <Market gameState={gameState} activePlayer={activePlayer} />
+                    <Deck gameState={gameState} activePlayer={activePlayer} />
                     {gameState.players.map((player) =>
                         <PlayerArea key={player.id} className={playerPosition[player.userId]} player={player} />
                     )}

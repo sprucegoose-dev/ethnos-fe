@@ -1,0 +1,17 @@
+@import '../../styles/variables.scss';
+
+.deck {
+    height: calc($card-height / 1.5);
+    width: calc($card-width / 1.5);
+
+    .facedown-card {
+        position: absolute;
+    }
+
+    @for $i from 1 through 100 {
+        .facedown-card:nth-child(#{$i}) {
+            transform: translateX(-$i * .1px) translateY($i * .2px);
+            z-index: 100 - $i;
+        }
+    }
+}

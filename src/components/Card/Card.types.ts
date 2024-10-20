@@ -5,4 +5,5 @@ export interface ICardProps {
     customStyles?: Object;
     onMouseEnter?: React.MouseEventHandler<HTMLDivElement>;
     onMouseLeave?: React.MouseEventHandler<HTMLDivElement>;
+    onClick?: (cardId: number) => any;
 }

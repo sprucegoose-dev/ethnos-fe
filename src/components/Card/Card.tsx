@@ -45,7 +45,7 @@ const convertToSingularName = (tribeName: TribeName) => {
 }
 
 export function Card(props: ICardProps): JSX.Element {
-    const { color, tribe } = props.card;
+    const { color, tribe, id } = props.card;
 
     return (
         <div
@@ -58,8 +58,9 @@ export function Card(props: ICardProps): JSX.Element {
                 backgroundPosition: 'center',
                 ...(props.customStyles || {})
             }}
-            onMouseEnter={props.onMouseEnter}
-            onMouseLeave={props.onMouseLeave}
+            onMouseEnter={(event) => props.onMouseEnter ? props.onMouseEnter(event) : null}
+            onMouseLeave={(event) => props.onMouseLeave ? props.onMouseLeave(event) : null}
+            onClick={props.onClick ? props.onClick(id) : null}
         >
             <div className="tribe-name">
                 {convertToSingularName(tribe.name)}
