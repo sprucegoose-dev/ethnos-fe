@@ -32,7 +32,7 @@ export function Deck({activePlayer, gameState}: IDeckProps): JSX.Element {
         <div className="deck" onClick={handleDrawCard}>
             {
                 cardsInDeck.map((_card, index) =>
-                    <FacedownCard topCard={!index} key={`facedown-card-${index}`} />
+                    <FacedownCard showLogo={!index} key={`facedown-card-${index}`} />
                 )
             }
         </div>

@@ -58,8 +58,8 @@ export function Card(props: ICardProps): JSX.Element {
                 backgroundPosition: 'center',
                 ...(props.customStyles || {})
             }}
-            onMouseEnter={(event) => props.onMouseEnter ? props.onMouseEnter(event) : null}
-            onMouseLeave={(event) => props.onMouseLeave ? props.onMouseLeave(event) : null}
+            // onMouseEnter={(event) => props.onMouseEnter ? props.onMouseEnter(event) : null}
+            // onMouseLeave={(event) => props.onMouseLeave ? props.onMouseLeave(event) : null}
             onClick={() => props.onClick ? props.onClick(id) : null}
         >
             <div className="tribe-name">

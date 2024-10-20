@@ -5,6 +5,7 @@ import { CardState } from '../Game/game.types';
 
 import { IPlayerAreaProps } from './PlayerArea.types';
 import { Card } from '../Card/Card';
+import { FacedownCard } from '../FacedownCard/FacedownCard';
 
 import './PlayerArea.scss';
 
@@ -59,13 +60,15 @@ export function PlayerArea({className, player}: IPlayerAreaProps): JSX.Element {
             <div className="player-hand">
                 <div className="cards">
                     {cardsInHand.map((card, index) =>
-                        <Card
-                            key={`tribe-card-${index}`}
-                            card={card}
-                            customStyles={calculateCardStyle(index, cardsInHand.length)}
-                            onMouseEnter={() => handleMouseEnter(index)}
-                            onMouseLeave={handleMouseLeave}
-                        />
+                        className.includes('bottom') ?
+                            <Card
+                                key={`tribe-card-${index}`}
+                                card={card}
+                                customStyles={calculateCardStyle(index, cardsInHand.length)}
+                                onMouseEnter={() => handleMouseEnter(index)}
+                                onMouseLeave={handleMouseLeave}
+                            /> :
+                            <FacedownCard  key={`tribe-card-${index}`} showLogo={true} />
                     )}
                 </div>
             </div>

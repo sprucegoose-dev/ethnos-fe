@@ -104,6 +104,10 @@
     .join-room-wrapper {
         display: flex;
 
+        > * {
+            flex-grow: 1;
+        }
+
         .leave-btn {
             margin-right: 7px;
         }

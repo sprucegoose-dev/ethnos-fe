@@ -1,3 +1,3 @@
 export interface IFacedownCardProps {
-    topCard: boolean;
+    showLogo: boolean;
 }

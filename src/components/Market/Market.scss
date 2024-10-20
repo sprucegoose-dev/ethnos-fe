@@ -10,16 +10,16 @@
 
     .card {
         transform: rotateX(40deg); // Tilt the card to appear flat on the table
-        height: calc($card-height / 1.5);
-        width: calc($card-width / 1.5);
+        height: calc($card-height / 1.6);
+        width: calc($card-width / 1.6);
         margin: 0 7.5px;
 
         .tribe-name {
-            font-size: .7rem;
+            font-size: .65rem;
         }
 
         .tribe-description {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
         }
 
         &:hover {

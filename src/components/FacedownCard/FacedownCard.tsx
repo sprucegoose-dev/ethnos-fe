@@ -8,7 +8,7 @@ export function FacedownCard(props: IFacedownCardProps): JSX.Element {
     return (
         <div className="facedown-card">
             <div className="card-logo-wrapper">
-                {props.topCard &&
+                {props.showLogo &&
                     <img className="card-logo" src={logo} />
                 }
             </div>

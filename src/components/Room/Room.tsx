@@ -219,7 +219,7 @@ export function Room({game}: IRoomProps): JSX.Element {
                     !userInGame() &&
                     <Link to={`/game/${game.id}`}>
                         <button
-                            className="btn btn-primary btn-block spectate-btn"
+                            className="btn btn-primary btn-3d btn-block spectate-btn"
                             type="submit"
                         >
                             Spectate
