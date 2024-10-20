@@ -60,7 +60,7 @@ export function Card(props: ICardProps): JSX.Element {
             }}
             onMouseEnter={(event) => props.onMouseEnter ? props.onMouseEnter(event) : null}
             onMouseLeave={(event) => props.onMouseLeave ? props.onMouseLeave(event) : null}
-            onClick={props.onClick ? props.onClick(id) : null}
+            onClick={() => props.onClick ? props.onClick(id) : null}
         >
             <div className="tribe-name">
                 {convertToSingularName(tribe.name)}

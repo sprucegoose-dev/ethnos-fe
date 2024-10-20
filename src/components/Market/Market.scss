@@ -2,4 +2,30 @@
 
 .market {
     display: flex;
+    position: absolute;
+    bottom: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    perspective: 1000px; // Adds perspective to make the 3D effect more noticeable
+
+    .card {
+        transform: rotateX(40deg); // Tilt the card to appear flat on the table
+        height: calc($card-height / 1.5);
+        width: calc($card-width / 1.5);
+        margin: 0 7.5px;
+
+        .tribe-name {
+            font-size: .7rem;
+        }
+
+        .tribe-description {
+            font-size: 0.7rem;
+        }
+
+        &:hover {
+            transform: rotateX(0deg) scale(1.05); // Slight pop-up effect on hover
+            z-index: 1; // Bring hovered card to front
+            transition: all .15s ease-in-out;
+        }
+    }
 }
