@@ -28,8 +28,9 @@ root.render(
                             <Route path="login" element={<LoginForm />} />
                             <Route path="rooms" element={<RoomList />} />
                             <Route path="/" element={<Home />} />
-                        </Route>
                         <Route path="game/:id" element={<Game />} />
+
+                        </Route>
                     </Routes>
                 </BrowserRouter>
             </PersistGate>

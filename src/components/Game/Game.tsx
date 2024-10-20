@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 
 import { GameState, IActionPayload, IGameState, IPlayer } from './game.types';
@@ -15,6 +15,7 @@ import './Game.scss';
 import { PlayerArea } from '../PlayerArea/PlayerArea';
 import { Deck } from '../Deck/Deck';
 import { Market } from '../Market/Market';
+import { getPlayerPositions } from './helpers';
 
 const {
     CREATED,
@@ -32,6 +33,10 @@ export function Game(): JSX.Element {
     const navigate = useNavigate();
 
     useEffect(() => {
+        if (!auth.userId) {
+            navigate('/rooms');
+        }
+
         const getGameState = async () => {
             const response = await GameApi.getState(Number(gameId));
             setGameState(await response.json());
@@ -53,7 +58,7 @@ export function Game(): JSX.Element {
             }
 
             getActions();
-            setActivePlayer(payload.players.find(player => player.id === gameState.activePlayerId));
+            setActivePlayer(payload.players.find(player => player.id === payload.activePlayerId));
         }
 
         socket.emit('onJoinGame', gameId);
@@ -63,39 +68,10 @@ export function Game(): JSX.Element {
             socket.emit('onLeaveGame', gameId);
             socket.off('onUpdateGameState', updateGameState);
         }
-    }, [gameId]);
+    }, [auth, gameId]);
 
-    const getPlayerPositions = (players: IPlayer[]): {[userId: number]: string} => {
-        const positionsByPlayerCount: {[key: number]: string[]} = {
-            2: ['top', 'bottom'],
-            3: ['left', 'right', 'bottom'],
-            4: ['top', 'left', 'right', 'bottom'],
-            5: ['top', 'left-corner', 'right-corner', 'bottom', 'left', 'right'],
-            6: ['top', 'left-corner', 'right-corner', 'bottom', 'left', 'right'],
-        };
-
-        const playerCount = players.length;
-        const positions = positionsByPlayerCount[playerCount] || [];
-        const currentPlayer = players.find(player => player.userId === auth.userId);
-
-        if (!currentPlayer || !positions.length) return {};
-
-        const remainingPositions = positions.filter(pos => pos !== 'bottom');
-
-        const playerPosition = { [currentPlayer.userId]: 'bottom' };
-
-        let index = 0;
-
-        for (const player of players) {
-            if (player.userId !== currentPlayer.userId) {
-                playerPosition[player.userId] = remainingPositions[index++];
-            }
-        }
-
-        return playerPosition;
-    };
-
-    const playerPosition = gameState ? getPlayerPositions(gameState.players) : {};
+    const currentPlayer = gameState ? gameState.players.find(player => player.userId === auth.userId) : null;
+    const playerPosition = gameState ? getPlayerPositions(currentPlayer, gameState.players) : {};
 
     return (
         <div className={`game-container ${gameState?.state.toLowerCase()}`}>
@@ -111,12 +87,6 @@ export function Game(): JSX.Element {
                     )}
                 </div> : null
             }
-            <ToastContainer
-                autoClose={2000}
-                limit={1}
-                pauseOnFocusLoss={false}
-                theme="dark"
-            />
         </div>
     );
 }

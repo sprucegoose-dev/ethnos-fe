@@ -38,6 +38,10 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
         getTribes();
     }, []);
 
+    useEffect(() => {
+        setSelectedTribes(gameState.settings.tribes);
+    }, [gameState.settings.tribes]);
+
     const renderRoomName = () => {
         const username = gameState.creator.username;
         return `${username}${username.charAt(-1) === 's'? "'" : "'s"} Room`

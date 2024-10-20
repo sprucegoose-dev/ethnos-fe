@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -20,6 +20,7 @@ import './App.scss';
 function App() {
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
     const dispatch = useDispatch();
+    const location = useLocation();
 
     useEffect(() => {
         socket.connect();
@@ -35,15 +36,18 @@ function App() {
         if (auth.userId) {
             validateLoginState();
         }
+
     }, [auth, dispatch]);
+
+    const inGame = location.pathname.startsWith('/game');
 
     return (
         <div className="app">
-            {<Header />}
+            {!inGame && <Header />}
             <div className="content">
                 {<Outlet />}
             </div>
-            { <Footer />}
+            {!inGame && <Footer />}
             <ToastContainer
                 autoClose={2000}
                 limit={1}
