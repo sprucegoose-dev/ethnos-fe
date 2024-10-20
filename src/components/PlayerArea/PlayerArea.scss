@@ -2,6 +2,7 @@
 
 .player-area {
     position: fixed;
+    // display: none;
 
     &.bottom {
         bottom: 0;
@@ -13,6 +14,19 @@
         height: 50px;
         transform: scaleY(-1);
         left: 50%;
+        display: block;
+    }
+
+    &.right {
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%) rotate(-90deg);
+    }
+
+    &.left {
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%) rotate(90deg);
     }
 
     .player-hand {

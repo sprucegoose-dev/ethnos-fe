@@ -80,7 +80,7 @@ export function Game(): JSX.Element {
             }
             {[STARTED, ENDED, CANCELLED].includes(gameState?.state) ?
                 <div className="game">
-                    <Market gameState={gameState} activePlayer={activePlayer} />
+                    {/* <Market gameState={gameState} activePlayer={activePlayer} /> */}
                     <Deck gameState={gameState} activePlayer={activePlayer} />
                     {gameState.players.map((player) =>
                         <PlayerArea key={player.id} className={playerPosition[player.userId]} player={player} />
