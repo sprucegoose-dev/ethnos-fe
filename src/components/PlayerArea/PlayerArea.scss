@@ -2,7 +2,6 @@
 
 .player-area {
     position: fixed;
-    // display: none;
 
     &.bottom {
         bottom: 0;
@@ -14,7 +13,6 @@
         height: 50px;
         transform: scaleY(-1);
         left: 50%;
-        display: block;
     }
 
     &.right {
@@ -23,10 +21,22 @@
         transform: translateY(-50%) rotate(-90deg);
     }
 
+    &.right-corner {
+        top: 35px;
+        right: 35px;
+        transform: translateY(-50%) rotate(225deg);
+    }
+
     &.left {
         top: 50%;
         left: 0;
         transform: translateY(-50%) rotate(90deg);
+    }
+
+    &.left-corner {
+        top: 35px;
+        left: 35px;
+        transform: translateY(-50%) rotate(-225deg);
     }
 
     .player-hand {
@@ -49,6 +59,12 @@
                     z-index: 1;
                     transition: transform 0.2s ease;
                 }
+            }
+
+            > .facedown-card {
+                cursor: default;
+                left: -#{calc($card-width / 1.5 / 2)};
+                position: absolute;
             }
         }
     }

@@ -14,15 +14,15 @@ export function PlayerArea({className, player}: IPlayerAreaProps): JSX.Element {
 
     const cardsInHand = [
         ...player.cards.filter(card => card.state === CardState.IN_HAND),
-        ...player.cards.filter(card => card.state === CardState.IN_HAND),
-        ...player.cards.filter(card => card.state === CardState.IN_HAND),
-        ...player.cards.filter(card => card.state === CardState.IN_HAND),
-        ...player.cards.filter(card => card.state === CardState.IN_HAND),
-        ...player.cards.filter(card => card.state === CardState.IN_HAND),
-        ...player.cards.filter(card => card.state === CardState.IN_HAND),
-        ...player.cards.filter(card => card.state === CardState.IN_HAND),
-        ...player.cards.filter(card => card.state === CardState.IN_HAND),
-        ...player.cards.filter(card => card.state === CardState.IN_HAND),
+        // ...player.cards.filter(card => card.state === CardState.IN_HAND),
+        // ...player.cards.filter(card => card.state === CardState.IN_HAND),
+        // ...player.cards.filter(card => card.state === CardState.IN_HAND),
+        // ...player.cards.filter(card => card.state === CardState.IN_HAND),
+        // ...player.cards.filter(card => card.state === CardState.IN_HAND),
+        // ...player.cards.filter(card => card.state === CardState.IN_HAND),
+        // ...player.cards.filter(card => card.state === CardState.IN_HAND),
+        // ...player.cards.filter(card => card.state === CardState.IN_HAND),
+        // ...player.cards.filter(card => card.state === CardState.IN_HAND),
     ];
 
     const calculateCardStyle = (index: number, totalCards: number) => {
