@@ -8,32 +8,24 @@ import { Card } from '../Card/Card';
 import { FacedownCard } from '../FacedownCard/FacedownCard';
 
 import './PlayerArea.scss';
+import { PlayerWidget } from '../PlayerWidget/PlayerWidget';
 
 export function PlayerArea({className, player}: IPlayerAreaProps): JSX.Element {
     const [hoveredCardIndex, setHoveredCardIndex] = useState(null);
 
     const cardsInHand = [
         ...player.cards.filter(card => card.state === CardState.IN_HAND),
-        // ...player.cards.filter(card => card.state === CardState.IN_HAND),
-        // ...player.cards.filter(card => card.state === CardState.IN_HAND),
-        // ...player.cards.filter(card => card.state === CardState.IN_HAND),
-        // ...player.cards.filter(card => card.state === CardState.IN_HAND),
-        // ...player.cards.filter(card => card.state === CardState.IN_HAND),
-        // ...player.cards.filter(card => card.state === CardState.IN_HAND),
-        // ...player.cards.filter(card => card.state === CardState.IN_HAND),
-        // ...player.cards.filter(card => card.state === CardState.IN_HAND),
-        // ...player.cards.filter(card => card.state === CardState.IN_HAND),
     ];
 
     const calculateCardStyle = (index: number, totalCards: number) => {
         let middle = (totalCards / 2);
         middle = middle % 2 ? middle - .5 : middle;
         const offset = 2;
-        const translateOffsetX = className.includes('bottom') ? 80 : 20;
+        const translateOffsetX = className.includes('bottom') ? 80 : 30;
         const translateOffsetY = className.includes('bottom') ? 8 : 6;
         let rotate = 0;
         let translateX = 0;
-        let translateY = className.includes('bottom') ? 5 : 15;
+        let translateY = 5;
 
         if (index < middle) {
           rotate = (index - middle) * offset;
@@ -87,6 +79,7 @@ export function PlayerArea({className, player}: IPlayerAreaProps): JSX.Element {
                     )}
                 </div>
             </div>
+            <PlayerWidget className={className} player={player} />
         </div>
     );
 }
