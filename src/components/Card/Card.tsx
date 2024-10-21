@@ -49,7 +49,7 @@ export function Card(props: ICardProps): JSX.Element {
 
     return (
         <div
-            className={`card ${color || ''} ${tribe.name.toLowerCase()}`}
+            className={`card ${props.className || ''} ${color || ''} ${tribe.name.toLowerCase()}`}
             style={{
                 // @ts-ignore
                 backgroundImage: `url(${tribeImgs[tribe.name]})`,

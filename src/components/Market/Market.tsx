@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import throttle from 'lodash.throttle';
+import { useState } from 'react';
 
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
@@ -15,6 +17,7 @@ import './Market.scss';
 
 export function Market({activePlayer, gameState}: IDeckProps): JSX.Element {
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
+    const [hoveredCardIndex, setHoveredCardIndex] = useState(null);
 
     const cardsInMarket = gameState.cards
         .filter(card => card.state === CardState.IN_MARKET)
@@ -24,16 +27,31 @@ export function Market({activePlayer, gameState}: IDeckProps): JSX.Element {
         if (activePlayer?.userId === auth.userId) {
             await GameApi.sendAction(gameState.id, { type: ActionType.PICK_UP_CARD, cardId });
         } else {
-            toast.info('Only the active player can draw a card');
+            toast.info('Only the active player can pick up a card');
         }
     };
+
+    const calculateClass = (index: number) => {
+        return hoveredCardIndex === index ? 'hover' :  '';
+    };
+
+    const handleMouseEnter = throttle((index: number) => {
+        setHoveredCardIndex(index);
+    }, 1000);
+
+    const handleMouseLeave = throttle(() => {
+        setHoveredCardIndex(null);
+    }, 1000);
 
     return (
         <div className="market">
             {
                 cardsInMarket.map((card, index) =>
                     <Card
+                        className={calculateClass(index)}
                         onClick={handlePickUpCard}
+                        onMouseEnter={() => handleMouseEnter(index)}
+                        onMouseLeave={handleMouseLeave}
                         card={card}
                         key={`card-${index}`}
                     />

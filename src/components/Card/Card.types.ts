@@ -1,6 +1,7 @@
 import { ICard } from '../Game/game.types';
 
 export interface ICardProps {
+    className?: string;
     card: ICard;
     customStyles?: Object;
     onMouseEnter?: React.MouseEventHandler<HTMLDivElement>;

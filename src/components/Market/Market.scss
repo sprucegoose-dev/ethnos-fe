@@ -3,29 +3,52 @@
 .market {
     display: flex;
     position: absolute;
-    bottom: 12%;
+    bottom: 14%;
     left: 50%;
+    width: 70%;
+    height: 130px;
     transform: translateX(-50%);
-    perspective: 1000px; // Adds perspective to make the 3D effect more noticeable
+    perspective: 1000px;
+    overflow-x: hidden;
 
     .card {
-        transform: rotateX(40deg); // Tilt the card to appear flat on the table
-        height: calc($card-height / 1.6);
-        width: calc($card-width / 1.6);
+        position: absolute;
+        transform: rotateX(40deg);
+        height: calc($card-height / 2);
+        width: calc($card-width / 2);
         margin: 0 7.5px;
 
-        .tribe-name {
-            font-size: .65rem;
+        @for $i from 1 through 100 {
+
+            &:nth-of-type(#{$i + 1}) {
+                left: $i * calc($card-width / 1.75);
+            }
         }
 
-        .tribe-description {
-            font-size: 0.65rem;
+        &:not(.hover) {
+
+            .tribe-name {
+                opacity: 0;
+                font-size: .65rem;
+            }
+
+            .tribe-description {
+                opacity: 0;
+                font-size: 0.65rem;
+            }
         }
 
-        &:hover {
-            transform: rotateX(0deg) scale(1.05); // Slight pop-up effect on hover
-            z-index: 1; // Bring hovered card to front
+        &.hover {
+            height: $card-height;
+            width: $card-width;
+            transform: translateY(-50%) translateX(-25%) rotateX(0deg) scale(1.05);
+            z-index: 10;
             transition: all .15s ease-in-out;
+
+            .tribe-name,
+            .tribe-description {
+                opacity: 1;
+            }
         }
     }
 }
