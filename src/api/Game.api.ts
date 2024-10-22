@@ -73,6 +73,25 @@ export default class GameApi {
         return await api.request(Method.GET, `/game/${gameId}`, options);
     }
 
+    static async getCardsInHand(gameId: number) {
+        const options = {
+            ...requestOptions,
+            authorize: true,
+        };
+
+        return await api.request(Method.GET, `/game/${gameId}/hand`, options);
+    }
+
+
+    static async getPlayerHands(gameId: number) {
+        const options = {
+            ...requestOptions,
+            authorize: true,
+        };
+
+        return await api.request(Method.GET, `/game/${gameId}/playerHands`, options);
+    }
+
     static async getActions(gameId: number) {
         const options = {
             ...requestOptions,

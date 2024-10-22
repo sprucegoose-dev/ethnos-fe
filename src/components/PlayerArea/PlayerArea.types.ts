@@ -1,6 +1,6 @@
-import { IPlayer } from '../Game/game.types';
+import { ICard, IPlayer } from '../Game/game.types';
 
 export interface IPlayerAreaProps {
     className: string;
-    player: IPlayer;
+    player: IPlayer & { cardsInHand: ICard[] };
 }

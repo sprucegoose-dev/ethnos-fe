@@ -135,6 +135,7 @@ export interface IGameState {
     activePlayerId: number;
     age: number;
     cards: ICard[];
+    cardsInDeckCount: number;
     createdAt: string;
     creator: IUser;
     creatorId: number;

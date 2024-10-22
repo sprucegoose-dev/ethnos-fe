@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 
-import { GameState, IActionPayload, IGameState, IPlayer } from './game.types';
+import { GameState, IActionPayload, ICard, IGameState, IPlayer } from './game.types';
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
 
@@ -30,6 +30,7 @@ export function Game(): JSX.Element {
     const [gameState, setGameState] = useState<IGameState>(null);
     const [ _actions, setActions ] = useState<IActionPayload[]>([]);
     const [ activePlayer, setActivePlayer ] = useState<IPlayer>(null);
+    const [ playerHands, setPlayerHands ] = useState<{[playerId: number]: ICard[]}>({});
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -40,14 +41,21 @@ export function Game(): JSX.Element {
         const getGameState = async () => {
             const response = await GameApi.getState(Number(gameId));
             setGameState(await response.json());
-        }
+        };
 
         const getActions = async () => {
             const response = await GameApi.getActions(parseInt(gameId, 10));
             setActions(await response.json());
-        }
+        };
+
+        const getPlayerHands = async () => {
+            const response = await GameApi.getPlayerHands(parseInt(gameId, 10));
+            setPlayerHands(await response.json());
+        };
 
         getGameState();
+        getPlayerHands();
+        getActions();
 
         const updateGameState = (payload: IGameState) => {
             setGameState(payload);
@@ -58,6 +66,7 @@ export function Game(): JSX.Element {
             }
 
             getActions();
+            getPlayerHands();
             setActivePlayer(payload.players.find(player => player.id === payload.activePlayerId));
         }
 
@@ -68,7 +77,7 @@ export function Game(): JSX.Element {
             socket.emit('onLeaveGame', gameId);
             socket.off('onUpdateGameState', updateGameState);
         }
-    }, [auth, gameId]);
+    }, [auth, gameId, navigate]);
 
     const currentPlayer = gameState ? gameState.players.find(player => player.userId === auth.userId) : null;
     const playerPosition = gameState ? getPlayerPositions(currentPlayer, gameState.players) : {};
@@ -83,7 +92,11 @@ export function Game(): JSX.Element {
                     <Market gameState={gameState} activePlayer={activePlayer} />
                     <Deck gameState={gameState} activePlayer={activePlayer} />
                     {gameState.players.map((player) =>
-                        <PlayerArea key={player.id} className={playerPosition[player.userId]} player={player} />
+                        <PlayerArea
+                            key={player.id}
+                            className={playerPosition[player.userId]}
+                            player={{...player, cardsInHand: playerHands[player.id]}}
+                        />
                     )}
                 </div> : null
             }

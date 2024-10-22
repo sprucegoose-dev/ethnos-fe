@@ -13,9 +13,7 @@ import { PlayerWidget } from '../PlayerWidget/PlayerWidget';
 export function PlayerArea({className, player}: IPlayerAreaProps): JSX.Element {
     const [hoveredCardIndex, setHoveredCardIndex] = useState(null);
 
-    const cardsInHand = [
-        ...player.cards.filter(card => card.state === CardState.IN_HAND),
-    ];
+    const cardsInHand = player.cardsInHand || [];
 
     const calculateCardStyle = (index: number, totalCards: number) => {
         let middle = (totalCards / 2);

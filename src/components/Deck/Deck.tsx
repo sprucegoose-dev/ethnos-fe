@@ -6,7 +6,7 @@ import { IAuthReducer } from '../Auth/Auth.types';
 
 import GameApi from '../../api/Game.api';
 
-import { ActionType, CardState } from '../Game/game.types';
+import { ActionType } from '../Game/game.types';
 import { IDeckProps } from './Deck.types';
 
 import { FacedownCard } from '../FacedownCard/FacedownCard';
@@ -16,9 +16,7 @@ import './Deck.scss';
 export function Deck({activePlayer, gameState}: IDeckProps): JSX.Element {
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
 
-    const cardsInDeck = gameState.cards
-        .filter(card => card.state === CardState.IN_DECK)
-        .sort((cardA, cardB) => cardA.index - cardB.index);
+    const cardsInDeck = new Array(gameState.cardsInDeckCount).fill(null);
 
     const handleDrawCard = async () => {
         if (activePlayer?.userId === auth.userId) {
