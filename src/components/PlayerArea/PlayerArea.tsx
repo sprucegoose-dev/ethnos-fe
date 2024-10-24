@@ -1,16 +1,21 @@
 import { useState } from 'react';
 import throttle from 'lodash.throttle';
 
-import { CardState } from '../Game/Game.types';
-
 import { IPlayerAreaProps } from './PlayerArea.types';
+
 import { Card } from '../Card/Card';
 import { FacedownCard } from '../FacedownCard/FacedownCard';
-
-import './PlayerArea.scss';
 import { PlayerWidget } from '../PlayerWidget/PlayerWidget';
 
-export function PlayerArea({className, player}: IPlayerAreaProps): JSX.Element {
+import './PlayerArea.scss';
+
+export function PlayerArea(props: IPlayerAreaProps): JSX.Element {
+    const {
+        className,
+        highestGiantToken,
+        player,
+        tribes
+    } = props;
     const [hoveredCardIndex, setHoveredCardIndex] = useState(null);
 
     const cardsInHand = player.cardsInHand || [];
@@ -77,7 +82,12 @@ export function PlayerArea({className, player}: IPlayerAreaProps): JSX.Element {
                     )}
                 </div>
             </div>
-            <PlayerWidget className={className} player={player} />
+            <PlayerWidget
+                className={className}
+                player={player}
+                highestGiantToken={highestGiantToken}
+                tribes={tribes}
+            />
         </div>
     );
 }

@@ -1,6 +1,6 @@
 import { IPlayer } from './Game.types';
 
-export function sortPlayersByTurnOrder(currentPlayer: IPlayer, players: IPlayer[], turnOrder: number[]) {
+export function sortPlayersByTurnOrder(currentPlayer: IPlayer, players: IPlayer[], turnOrder: number[]): IPlayer[] {
     const otherPlayers = players.filter(player => player.id !== currentPlayer.id)
         .sort((playerA, playerB) =>
             turnOrder.indexOf(playerA.id) - turnOrder.indexOf(playerB.id)
@@ -39,3 +39,10 @@ export function getPlayerPositions(currentPlayer: IPlayer, players: IPlayer[], t
 
     return playerPosition;
 };
+
+export function getHighestGiantTokenValue(players: IPlayer[]): number {
+    return players
+        .sort((playerA, playerB) =>
+            playerB.giantTokenValue - playerA.giantTokenValue
+        )[0].giantTokenValue;
+}

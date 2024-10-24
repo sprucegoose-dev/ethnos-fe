@@ -15,7 +15,7 @@ import './Game.scss';
 import { PlayerArea } from '../PlayerArea/PlayerArea';
 import { Deck } from '../Deck/Deck';
 import { Market } from '../Market/Market';
-import { getPlayerPositions, sortPlayersByTurnOrder } from './helpers';
+import { getHighestGiantTokenValue, getPlayerPositions } from './helpers';
 
 const {
     CREATED,
@@ -65,9 +65,9 @@ export function Game(): JSX.Element {
                 navigate('/rooms');
             }
 
+            setActivePlayer(payload.players.find(player => player.id === payload.activePlayerId));
             getActions();
             getPlayerHands();
-            setActivePlayer(payload.players.find(player => player.id === payload.activePlayerId));
         }
 
         socket.emit('onJoinGame', gameId);
@@ -85,6 +85,7 @@ export function Game(): JSX.Element {
 
     const currentPlayer =  gameState.players.find(player => player.userId === auth.userId);
     const playerPosition = getPlayerPositions(currentPlayer, gameState.players, gameState.turnOrder);
+    const highestGiantToken = getHighestGiantTokenValue(gameState.players);
 
     return (
         <div className={`game-container ${gameState.state.toLowerCase()}`}>
@@ -99,7 +100,9 @@ export function Game(): JSX.Element {
                         <PlayerArea
                             key={player.id}
                             className={playerPosition[player.userId]}
-                            player={{...player, cardsInHand: playerHands[player.id]}}
+                            player={{...player, cardsInHand: playerHands[player.id] || []}}
+                            highestGiantToken={highestGiantToken}
+                            tribes={gameState.settings.tribes}
                         />
                     )}
                 </div> : null
