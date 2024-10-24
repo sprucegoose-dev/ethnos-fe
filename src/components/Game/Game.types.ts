@@ -152,3 +152,15 @@ export interface IGameState {
 export interface IActiveGame extends IGameState {
     hasPassword: boolean;
 }
+
+export interface IPlayer {
+    id: number;
+    userId: number;
+    gameId: number;
+    giantTokenValue: number;
+    orcTokens: Color[];
+    trollTokens: number[];
+    merfolkTrackScore: number;
+    points: number;
+    cardsInHand?: ICard[];
+}

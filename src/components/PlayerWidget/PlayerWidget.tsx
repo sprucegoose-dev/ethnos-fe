@@ -1,4 +1,5 @@
 import { IPlayerWidgetProps } from './PlayerWidget.types';
+import Icon from '../Icon/Icon';
 
 import './PlayerWidget.scss';
 
@@ -6,7 +7,15 @@ export function PlayerWidget({className, player}: IPlayerWidgetProps): JSX.Eleme
 
     return (
         <div className={`player-widget ${className || ''}`}>
-            {player.user.username}
+            <span className="username">
+                {player.user.username}
+            </span>
+            <span className="points">
+                {player.points}VP
+            </span>
+            <span className="cards-in-hand">
+                <Icon icon="cards" /> {player.cardsInHand.length}
+            </span>
             {/* cards in hand count */}
             {/* number of bands */}
             {/* troll token total value */}
