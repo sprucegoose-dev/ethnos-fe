@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faUser } from '@fortawesome/free-solid-svg-icons';
 
 import { IRoomProps } from './Room.types';
-import { GameState, TribeName } from '../Game/game.types';
+import { GameState, TribeName } from '../Game/Game.types';
 
 import GameApi from '../../api/Game.api';
 

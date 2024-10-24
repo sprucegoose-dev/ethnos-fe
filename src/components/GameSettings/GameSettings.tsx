@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import shuffle from 'lodash.shuffle';
 
 import { IGameSettingsProps } from './GameSettings.types';
-import { ITribe, TribeName } from '../Game/game.types';
+import { ITribe, TribeName } from '../Game/Game.types';
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
 

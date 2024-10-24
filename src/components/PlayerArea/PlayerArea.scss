@@ -23,9 +23,8 @@
         }
 
         .player-widget {
-            left: 25%;
-            top: 3.5%;
-            transform: translateX(-50%);
+            right: 25%;
+            top: 6%;
         }
     }
 
@@ -36,6 +35,11 @@
         .player-hand {
             transform: translateY(-50%) rotate(-90deg);
         }
+
+        .player-widget {
+            right: 2.5%;
+            top: 60%;
+        }
     }
 
     &.right-corner {
@@ -44,6 +48,10 @@
 
         .player-hand {
             transform: translateY(-50%) rotate(225deg);
+        }
+
+        .player-widget {
+            right: 2.5%;
         }
     }
 
@@ -54,6 +62,11 @@
         .player-hand {
             transform: translateY(-50%) rotate(90deg);
         }
+
+        .player-widget {
+            top: 60%;
+            left: 2.5%;
+        }
     }
 
     &.left-corner {
@@ -62,6 +75,11 @@
 
         .player-hand {
             transform: translateY(-50%) rotate(-225deg);
+        }
+
+
+        .player-widget {
+            left: 2.5%;
         }
     }
 

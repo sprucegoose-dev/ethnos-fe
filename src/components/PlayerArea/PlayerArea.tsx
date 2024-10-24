@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import throttle from 'lodash.throttle';
 
-import { CardState } from '../Game/game.types';
+import { CardState } from '../Game/Game.types';
 
 import { IPlayerAreaProps } from './PlayerArea.types';
 import { Card } from '../Card/Card';

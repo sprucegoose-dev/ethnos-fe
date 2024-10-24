@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 
-import { GameState, IActionPayload, ICard, IGameState, IPlayer } from './game.types';
+import { GameState, IActionPayload, ICard, IGameState, IPlayer } from './Game.types';
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
 
@@ -15,7 +15,7 @@ import './Game.scss';
 import { PlayerArea } from '../PlayerArea/PlayerArea';
 import { Deck } from '../Deck/Deck';
 import { Market } from '../Market/Market';
-import { getPlayerPositions } from './helpers';
+import { getPlayerPositions, sortPlayersByTurnOrder } from './helpers';
 
 const {
     CREATED,
@@ -79,15 +79,19 @@ export function Game(): JSX.Element {
         }
     }, [auth, gameId, navigate]);
 
-    const currentPlayer = gameState ? gameState.players.find(player => player.userId === auth.userId) : null;
-    const playerPosition = gameState ? getPlayerPositions(currentPlayer, gameState.players) : {};
+    if (!gameState) {
+        return;
+    }
+
+    const currentPlayer =  gameState.players.find(player => player.userId === auth.userId);
+    const playerPosition = getPlayerPositions(currentPlayer, gameState.players, gameState.turnOrder);
 
     return (
-        <div className={`game-container ${gameState?.state.toLowerCase()}`}>
-            {gameState?.state === CREATED ?
+        <div className={`game-container ${gameState.state.toLowerCase()}`}>
+            {gameState.state === CREATED ?
                 <GameSettings gameState={gameState} /> : null
             }
-            {[STARTED, ENDED, CANCELLED].includes(gameState?.state) ?
+            {[STARTED, ENDED, CANCELLED].includes(gameState.state) ?
                 <div className="game">
                     <Market gameState={gameState} activePlayer={activePlayer} />
                     <Deck gameState={gameState} activePlayer={activePlayer} />

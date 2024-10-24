@@ -1,4 +1,4 @@
-import { IGameState } from '../Game/game.types';
+import { IGameState } from '../Game/Game.types';
 
 export interface IGameSettingsProps {
     gameState: IGameState;

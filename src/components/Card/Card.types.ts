@@ -1,4 +1,4 @@
-import { ICard } from '../Game/game.types';
+import { ICard } from '../Game/Game.types';
 
 export interface ICardProps {
     className?: string;

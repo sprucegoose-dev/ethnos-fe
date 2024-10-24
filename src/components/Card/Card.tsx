@@ -1,4 +1,4 @@
-import { TribeName } from '../Game/game.types';
+import { TribeName } from '../Game/Game.types';
 import { ICardProps } from './Card.types';
 
 import './Card.scss';

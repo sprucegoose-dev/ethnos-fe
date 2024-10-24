@@ -1,5 +1,5 @@
 import { Method, requestOptions } from './Api.types';
-import { IActionPayload, IGameSettings } from '../components/Game/game.types';
+import { IActionPayload, IGameSettings } from '../components/Game/Game.types';
 import api from './Api';
 import { ICreateGamePayload } from '../components/RoomForm/RoomForm.types';
 

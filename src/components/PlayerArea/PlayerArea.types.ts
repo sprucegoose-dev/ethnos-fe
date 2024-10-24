@@ -1,4 +1,4 @@
-import { ICard, IPlayer } from '../Game/game.types';
+import { ICard, IPlayer } from '../Game/Game.types';
 
 export interface IPlayerAreaProps {
     className: string;

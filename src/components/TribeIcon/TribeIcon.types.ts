@@ -1,4 +1,4 @@
-import { ITribe, TribeName } from '../Game/game.types';
+import { ITribe, TribeName } from '../Game/Game.types';
 
 export interface ITribeIconProps {
     onSelectTribe?: (tribeName: TribeName) => void;
