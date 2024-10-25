@@ -3,6 +3,7 @@ import Icon from '../Icon/Icon';
 
 import './PlayerWidget.scss';
 import { CardState, TribeName } from '../Game/Game.types';
+import { TribeIcon } from '../TribeIcon/TribeIcon';
 
 export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
     const {
@@ -57,6 +58,12 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
             : null}
             {tribes.includes(TribeName.ORCS) ?
                 <span className="orc-board">
+                    <TribeIcon
+                        showTribeName={false}
+                        tribe={{ name: TribeName.ORCS, id: null, description: ''}}
+                     />
+
+
                     {
                         player.orcTokens.map(color =>
                             <span className="troll-token">

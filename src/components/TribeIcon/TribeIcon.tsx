@@ -33,7 +33,13 @@ const tribeIcons = {
     [TribeName.WIZARDS]: wizardIcon,
 };
 
-export function TribeIcon({onSelectTribe, selected, tribe}: ITribeIconProps): JSX.Element {
+export function TribeIcon(props: ITribeIconProps): JSX.Element {
+    const {
+        onSelectTribe,
+        selected,
+        tribe,
+        showTribeName = true,
+    } = props;
     return (
         <div className="tribe-icon">
             <img
@@ -43,9 +49,11 @@ export function TribeIcon({onSelectTribe, selected, tribe}: ITribeIconProps): JS
                 alt={tribe.name}
                 onClick={() => onSelectTribe ? onSelectTribe(tribe.name) : null}
             />
-            <div className="tribe-name">
-                {tribe.name}
-            </div>
+            {showTribeName ?
+                <div className="tribe-name">
+                    {tribe.name}
+                </div> : null
+            }
 
             {selected ?
                 <FontAwesomeIcon className="selected-icon" icon={faCheckCircle} /> :
