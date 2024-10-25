@@ -19,19 +19,25 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
             <span className="username">
                 {player.user.username}
             </span>
-            <span className="points">
-                {player.points}VP
+            <span className="badge points">
+                <span className="badge-content">
+                    {player.points} VP
+                </span>
             </span>
-            <span className="total-cards-in-hand">
-                <Icon icon="cards" /> {player.cardsInHand.length}
+            <span className="badge total-cards-in-hand">
+                <span className="badge-content">
+                    <Icon icon="cards" /> {player.cardsInHand.length}
+                </span>
             </span>
              {tribes.includes(TribeName.GIANTS) ?
                 <span className={`giant-token ${highestGiantToken && highestGiantToken === player.giantTokenValue ? 'in-lead' : ''}`}>
                     {player.giantTokenValue}
                 </span> : null
             }
-            <span className="total-bands">
-                <Icon icon="helmet" /> {cardsInBands.length}
+            <span className="badge total-bands">
+                <span className="badge-content">
+                    <Icon icon="helmet" /> {cardsInBands.length}
+                </span>
             </span>
             {tribes.includes(TribeName.TROLLS) ?
                 <span className="troll-tokens">

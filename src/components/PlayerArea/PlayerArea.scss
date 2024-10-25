@@ -37,6 +37,7 @@
         }
 
         .player-widget {
+            flex-direction: column;
             right: 2.5%;
             top: 60%;
         }
@@ -51,6 +52,7 @@
         }
 
         .player-widget {
+            flex-direction: column;
             right: 2.5%;
         }
     }
@@ -64,6 +66,7 @@
         }
 
         .player-widget {
+            flex-direction: column;
             top: 60%;
             left: 2.5%;
         }
@@ -79,6 +82,7 @@
 
 
         .player-widget {
+            flex-direction: column;
             left: 2.5%;
         }
     }
