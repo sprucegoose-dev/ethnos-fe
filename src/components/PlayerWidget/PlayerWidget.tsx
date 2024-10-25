@@ -22,7 +22,7 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
             </span>
             <span className="badge points">
                 <span className="badge-content">
-                    {player.points} VP
+                    <span>{player.points}</span> <span className="content-label">VP</span>
                 </span>
             </span>
             <span className="badge total-cards-in-hand">

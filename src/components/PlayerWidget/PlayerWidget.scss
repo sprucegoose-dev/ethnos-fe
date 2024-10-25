@@ -17,6 +17,10 @@
         align-items: center;
     }
 
+    .content-label {
+        margin-left: 2px;
+    }
+
     .points {
         margin-left: 5px;
     }
@@ -30,6 +34,7 @@
         // background-color: rgba(0, 0, 0, 0.7);
         // background-image: radial-gradient(circle at 50% 0,#fefefd, #daaf8c 60%);
         // border: 2px solid $light-gold;
+        position: relative;
         border-radius: 50%;
         color: $light-gold;
         fill: $light-gold;
@@ -45,13 +50,31 @@
         // border-image: linear-gradient(45deg, #b78e6d, #6e533c) 1; /* Set the diagonal gradient */
 
         // &:hover {
-            border-image: linear-gradient(45deg, #fefefd, #daaf8c) 1; /* Set the diagonal gradient */
+            // border-image: linear-gradient(45deg, #fefefd, #daaf8c) 1; /* Set the diagonal gradient */
         // }
 
+        background-image: radial-gradient(circle at 50% 0,#fefefd, #daaf8c 60%);
+
+        &:before {
+            position: absolute;
+            content: '';
+            left: 50%;
+            top: 50%;
+            height: 100%;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
         .badge-content {
+            position: absolute;
             align-items: center;
             align-self: center;
             display: flex;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
 
             .icon {
                 margin-right: 2px;
