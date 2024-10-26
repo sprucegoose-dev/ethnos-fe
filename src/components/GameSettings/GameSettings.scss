@@ -46,7 +46,11 @@
     }
 
     .players {
+        align-items: center;
         border-radius: 4px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
 
         .player-label {
             background-color: white;

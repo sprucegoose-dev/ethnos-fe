@@ -29,6 +29,7 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
     const [selectedTribes, setSelectedTribes] = useState<TribeName[]>(gameState.settings.tribes || []);
     const [showTribsModal, setShowTribesModal] = useState<boolean>(false);
     const [showPasswordModal, setShowPasswordModal] = useState<boolean>(false);
+    const currentPlayer = gameState.players.find(player => player.userId === auth.userId);
 
     useEffect(() => {
         const getTribes = async () => {
@@ -117,18 +118,34 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
         setShowPasswordModal(false);
     }
 
-    const currentPlayer = gameState.players.find(player => player.userId === auth.userId);
-
     const playerCanJoin = () => {
         return !currentPlayer && gameState.players.length < gameState.maxPlayers;
     }
 
     const selectColor = async (color: PlayerColor) => {
+        if (!currentPlayer) {
+            toast.info('Please join the game before selecting a color');
+            return;
+        }
+
+        if (currentPlayer && gameState.players.find(player =>
+                player.id !== currentPlayer.id &&
+                player.color === color)
+        ) {
+            return;
+        }
+
         if (currentPlayer.color === color) {
             color = null;
         }
 
         await GameApi.assignPlayerColor(gameState.id, color);
+    };
+
+    const shouldDisableColor = (color: PlayerColor): boolean => {
+        return Boolean(currentPlayer &&
+            currentPlayer.color !== color &&
+            gameState.players.find(player => player.color === color));
     }
 
     return (
@@ -181,7 +198,8 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                             <TokenIcon
                                 key={`token-icon-${color}`}
                                 color={color}
-                                selected={currentPlayer.color === color}
+                                disabled={shouldDisableColor(color)}
+                                selected={currentPlayer?.color === color}
                                 onSelect={selectColor}
                             />)
                         }

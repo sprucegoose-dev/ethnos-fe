@@ -22,11 +22,18 @@ const tokenIcons = {
     [PlayerColor.YELLOW]: yellowToken,
 };
 
-export function TokenIcon({ color, onSelect, selected }: ITokenIconProps): JSX.Element {
+export function TokenIcon(props: ITokenIconProps): JSX.Element {
+    const {
+        color,
+        disabled,
+        onSelect,
+        selected
+    } = props;
+
     return (
-        <div className={`token-icon ${color}`}>
+        <div className={`token-icon ${color} ${disabled ? 'disabled' : ''}`}>
             <img
-                className={`token-img ${onSelect ? 'selectable' : ''}`}
+                className={`token-img ${onSelect && !disabled ? 'selectable' : ''} ${disabled ? 'disabled' : ''}`}
                 // @ts-ignore
                 src={tokenIcons[color]}
                 alt={`${color} token`}
@@ -34,6 +41,10 @@ export function TokenIcon({ color, onSelect, selected }: ITokenIconProps): JSX.E
             />
             {selected ?
                 <FontAwesomeIcon className="selected-icon" icon={faCheckCircle} /> :
+                null
+            }
+            {disabled ?
+                <span className="disabled-icon"></span> :
                 null
             }
         </div>

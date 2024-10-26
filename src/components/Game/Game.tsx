@@ -32,6 +32,9 @@ export function Game(): JSX.Element {
     const [ activePlayer, setActivePlayer ] = useState<IPlayer>(null);
     const [ playerHands, setPlayerHands ] = useState<{[playerId: number]: ICard[]}>({});
     const navigate = useNavigate();
+    let  currentPlayer: IPlayer;
+    let playerPosition: {[userId: number]: string};
+    let highestGiantToken: number;
 
     useEffect(() => {
         if (!auth.userId) {
@@ -83,9 +86,11 @@ export function Game(): JSX.Element {
         return;
     }
 
-    const currentPlayer =  gameState.players.find(player => player.userId === auth.userId);
-    const playerPosition = getPlayerPositions(currentPlayer, gameState.players, gameState.turnOrder);
-    const highestGiantToken = getHighestGiantTokenValue(gameState.players);
+    if ([STARTED, ENDED, CANCELLED].includes(gameState.state)) {
+        currentPlayer =  gameState.players.find(player => player.userId === auth.userId);
+        playerPosition = getPlayerPositions(currentPlayer, gameState.players, gameState.turnOrder);
+        highestGiantToken = getHighestGiantTokenValue(gameState.players);
+    }
 
     return (
         <div className={`game-container ${gameState.state.toLowerCase()}`}>
