@@ -2,17 +2,78 @@
 
 .player-widget {
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.7);
-    border: 4px solid $light-gold;
+    // background-color: rgba(0, 0, 0, 0.7);
+    // border: 4px solid $light-gold;
     border-radius: 50%;
     display: flex;
     font-family: QuadratDemibold;
-    width: 115px;
-    height: 115px;
+    width: 120px;
+    height: 120px;
     padding: 10px;
     box-sizing: border-box;
 
     // background-image: radial-gradient(circle at 50% 0,#fefefd, #daaf8c 60%);
+
+    .token-icon {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+
+        &:before {
+            content: '';
+            border: 6px solid $light-gold;
+            border-radius: 50%;
+            height: 85%;
+            width: 85%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        &.black {
+
+            &:before {
+                border-color: $token-black;
+            }
+        }
+
+        &.blue {
+
+            &:before {
+                border-color: $token-blue;
+            }
+        }
+
+        &.green {
+
+            &:before {
+                border-color: $token-green;
+            }
+        }
+
+        &.pink {
+
+            &:before {
+                border-color: $token-pink;
+            }
+        }
+
+        &.white {
+
+            &:before {
+                border-color: $token-white;
+            }
+        }
+
+        &.yellow {
+
+            &:before {
+                border-color: $token-yellow;
+            }
+        }
+    }
 
     &:before {
         position: absolute;
@@ -34,12 +95,17 @@
         // border: 3px solid $light-gold;
         // border-image: linear-gradient(45deg, #fefefd, #daaf8c) 1; /* Set the diagonal gradient */
         // border-radius: 4px;
-        color: $light-gold;
+        color: white;
         display: flex;
         // padding: 8px 10px;
         justify-content: center;
         align-items: center;
         font-size: .9rem;
+
+        background: rgba(0, 0, 0, 0.6);
+        padding: 4px 8px;
+        border-radius: 4px;
+        min-width: 75px;
     }
 
     .content-label {
@@ -99,8 +165,8 @@
 
         &.points {
             left: 50%;
-            bottom: -25px;
-            transform: translateX(-50%);
+            bottom: 0;
+            transform: translate(-50%, 60%);
         }
 
         &:before {

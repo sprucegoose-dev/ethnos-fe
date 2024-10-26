@@ -8,6 +8,24 @@ export enum Color {
     RED = 'red',
 }
 
+export enum PlayerColor {
+    BLACK = 'black',
+    BLUE = 'blue',
+    GREEN = 'green',
+    PINK = 'pink',
+    WHITE = 'white',
+    YELLOW = 'yellow',
+}
+
+export const PLAYER_COLORS = [
+    PlayerColor.BLACK,
+    PlayerColor.BLUE,
+    PlayerColor.GREEN,
+    PlayerColor.PINK,
+    PlayerColor.WHITE,
+    PlayerColor.YELLOW,
+]
+
 export enum TribeName {
     CENTAURS = 'Centaurs',
     DWARVES = 'Dwarves',
@@ -155,6 +173,7 @@ export interface IActiveGame extends IGameState {
 
 export interface IPlayer {
     id: number;
+    color: PlayerColor;
     userId: number;
     gameId: number;
     giantTokenValue: number;

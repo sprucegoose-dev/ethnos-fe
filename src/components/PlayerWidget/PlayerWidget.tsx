@@ -4,6 +4,7 @@ import Icon from '../Icon/Icon';
 import './PlayerWidget.scss';
 import { CardState, TribeName } from '../Game/Game.types';
 import { TribeIcon } from '../TribeIcon/TribeIcon';
+import { TokenIcon } from '../TokenIcon/TokenIcon';
 
 export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
     const {
@@ -19,6 +20,7 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
 
     return (
         <div className={`player-widget ${className || ''}`}>
+            <TokenIcon color={player.color} />
             <span className="username">
                 {player.user.username}
             </span>

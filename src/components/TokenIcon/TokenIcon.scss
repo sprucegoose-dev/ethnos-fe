@@ -1,0 +1,21 @@
+@import '../../styles/variables.scss';
+
+.token-icon {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+
+    .token-img {
+        border-radius: 50%;
+        display: block;
+        height: 70px;
+        width: 70px;
+
+        &.selectable {
+            cursor: pointer;
+        }
+    }
+}
+
