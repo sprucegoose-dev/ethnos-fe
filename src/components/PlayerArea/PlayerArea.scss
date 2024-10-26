@@ -8,8 +8,8 @@
         left: 50%;
 
         .player-widget {
-            left: 5%;
-            bottom: 6%;
+            left: 4%;
+            bottom: 10%;
         }
     }
 
@@ -23,37 +23,8 @@
         }
 
         .player-widget {
-            right: 25%;
-            top: 6%;
-        }
-    }
-
-    &.right {
-        top: 50%;
-        right: 0;
-
-        .player-hand {
-            transform: translateY(-50%) rotate(-90deg);
-        }
-
-        .player-widget {
-            flex-direction: column;
-            right: 2.5%;
-            top: 60%;
-        }
-    }
-
-    &.right-corner {
-        top: 35px;
-        right: 35px;
-
-        .player-hand {
-            transform: translateY(-50%) rotate(225deg);
-        }
-
-        .player-widget {
-            flex-direction: column;
-            right: 2.5%;
+            right: 27%;
+            top: 8%;
         }
     }
 
@@ -69,7 +40,23 @@
             flex-direction: column;
             top: 50%;
             transform: translateY(-50%);
-            left: 2.5%;
+            left: 7%;
+        }
+    }
+
+    &.right {
+        top: 50%;
+        right: 0;
+
+        .player-hand {
+            transform: translateY(-50%) rotate(-90deg);
+        }
+
+        .player-widget {
+            flex-direction: column;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 7%;
         }
     }
 
@@ -82,11 +69,27 @@
         }
 
         .player-widget {
-            top: 5%;
             flex-direction: column;
-            left: 2.5%;
+            left: 8%;
+            top: 12%;
         }
     }
+
+    &.right-corner {
+        top: 35px;
+        right: 35px;
+
+        .player-hand {
+            transform: translateY(-50%) rotate(225deg);
+        }
+
+        .player-widget {
+            flex-direction: column;
+            right: 8%;
+            top: 12%;
+        }
+    }
+
 
     .player-widget {
         position: fixed;
