@@ -10,12 +10,26 @@
     .token-img {
         border-radius: 50%;
         display: block;
-        height: 60px;
-        width: 60px;
+        height: 100%;
+        width: 100%;
+        max-height: 60px;
+        max-width: 60px;
 
         &.selectable {
             cursor: pointer;
         }
+    }
+
+    .selected-icon {
+        background: $off-white;
+        border: 1px solid $light-gray;
+        border-radius: 50%;
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6);
+        color: $green;
+        font-size: 1.1rem;
+        position: absolute;
+        right: -4px;
+        top: -4px;
     }
 }
 

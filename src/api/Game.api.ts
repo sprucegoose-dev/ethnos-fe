@@ -1,9 +1,21 @@
 import { Method, requestOptions } from './Api.types';
-import { IActionPayload, IGameSettings } from '../components/Game/Game.types';
+import { IActionPayload, IGameSettings, PlayerColor } from '../components/Game/Game.types';
 import api from './Api';
 import { ICreateGamePayload } from '../components/RoomForm/RoomForm.types';
 
 export default class GameApi {
+
+    static async assignPlayerColor(gameId: number, color: PlayerColor) {
+        const options = {
+            ...requestOptions,
+            authorize: true,
+            payload: {
+                color
+            }
+        };
+
+        return await api.request(Method.POST, `/game/${gameId}/assignColor`, options);
+    }
 
     static async getActiveGames() {
         const options = {

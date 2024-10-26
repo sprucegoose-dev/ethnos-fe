@@ -1,3 +1,6 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+
 import { ITokenIconProps } from './TokenIcon.types';
 
 import blackToken from '../../assets/token_black.png';
@@ -19,15 +22,20 @@ const tokenIcons = {
     [PlayerColor.YELLOW]: yellowToken,
 };
 
-export function TokenIcon({ color }: ITokenIconProps): JSX.Element {
+export function TokenIcon({ color, onSelect, selected }: ITokenIconProps): JSX.Element {
     return (
         <div className={`token-icon ${color}`}>
             <img
-                className="token-img"
+                className={`token-img ${onSelect ? 'selectable' : ''}`}
                 // @ts-ignore
                 src={tokenIcons[color]}
                 alt={`${color} token`}
+                onClick={() => onSelect ? onSelect(color) : null}
             />
+            {selected ?
+                <FontAwesomeIcon className="selected-icon" icon={faCheckCircle} /> :
+                null
+            }
         </div>
     );
 }

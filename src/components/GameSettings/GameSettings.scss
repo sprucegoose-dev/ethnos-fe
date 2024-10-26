@@ -6,7 +6,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     box-sizing: border-box;
     color: $dark-gray;
-    margin: 50px auto;
+    margin: 70px auto 85px;
     max-width: 375px;
     padding: 25px 15px 28px;
     position: relative;
@@ -29,7 +29,8 @@
     .section {
         border-top: 1px solid $light-gray-2;
         margin-bottom: 20px;
-        padding-top: 23px;
+        padding-top: 20px;
+        position: relative;
 
         .section-title {
             background: white;
@@ -46,17 +47,24 @@
 
     .players {
         border-radius: 4px;
-        position: relative;
 
-        .player {
+        .player-label {
             background-color: white;
             border-radius: 4px;
             box-sizing: border-box;
             color: $dark-gray;
-            display: inline-block;
+            display: inline-flex;
             margin-right: 10px;
             margin-bottom: 5px;
             padding: 5px;
+            align-items: center;
+            min-height: 35px;
+
+            .token-icon {
+                height: 25px;
+                margin-right: 5px;
+                width: 25px;
+            }
         }
     }
 
@@ -66,11 +74,20 @@
         margin-bottom: 20px;
     }
 
+    .colors {
+        display: flex;
+        justify-content: space-evenly;
+        padding: 14px 10px 4px;
+        box-sizing: border-box;
+
+        .token-icon {
+            width: 14%;
+        }
+    }
+
     .settings {
-        border-radius: 4px;
         margin-bottom: 20px;
         padding-top: 25px;
-        position: relative;
 
         .instructions {
             position: relative;
@@ -174,6 +191,7 @@
 @media only screen and (min-width: $screen-sm) {
 
     .game-settings {
+        margin-top: 50px;
         max-width: 600px;
 
         .settings {
@@ -183,6 +201,14 @@
                 .tribe-icon {
                     flex: 0 0 calc(18% - 10px);
                 }
+            }
+        }
+
+
+        .colors {
+
+            .token-icon {
+                width: 13.5%;
             }
         }
 

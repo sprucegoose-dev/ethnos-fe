@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import shuffle from 'lodash.shuffle';
 
 import { IGameSettingsProps } from './GameSettings.types';
-import { ITribe, TribeName } from '../Game/Game.types';
+import { ITribe, PLAYER_COLORS, PlayerColor, TribeName } from '../Game/Game.types';
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
 
@@ -20,6 +20,7 @@ import './GameSettings.scss';
 import { Modal } from '../Modal/Modal';
 import { Card } from '../Card/Card';
 import { PasswordForm } from '../PasswordForm/PasswordForm';
+import { TokenIcon } from '../TokenIcon/TokenIcon';
 
 export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
@@ -116,9 +117,18 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
         setShowPasswordModal(false);
     }
 
+    const currentPlayer = gameState.players.find(player => player.userId === auth.userId);
+
     const playerCanJoin = () => {
-        return !gameState.players.find(player => player.userId === auth.userId) &&
-            gameState.players.length < gameState.maxPlayers;
+        return !currentPlayer && gameState.players.length < gameState.maxPlayers;
+    }
+
+    const selectColor = async (color: PlayerColor) => {
+        if (currentPlayer.color === color) {
+            color = null;
+        }
+
+        await GameApi.assignPlayerColor(gameState.id, color);
     }
 
     return (
@@ -140,16 +150,17 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                         Players
                     </div>
                     {/* TODO: move into 'PlayerLabel' component */}
-                    {gameState.players.map(({ user }, index) =>
+                    {gameState.players.map(({ color, user }, index) =>
                         <Link
                             to={`/matches/${decodeURIComponent(user.username)}`}
                             key={`player-${index}`}
-                            className="player"
+                            className="player-label"
                         >
-                            <FontAwesomeIcon
-                                className="player-icon"
-                                icon={faUser}
-                            /> {user.username}
+                         {color ?
+                            <TokenIcon
+                                color={color}
+                            /> : null
+                        } {user.username}
                         </Link>
                     )}
                     {playerCanJoin() &&
@@ -160,6 +171,21 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                             Join
                         </button>
                     }
+                </div>
+                <div className="section colors">
+                    <div className="section-title settings-title">
+                        Choose color
+                    </div>
+                    <div className="colors">
+                        {PLAYER_COLORS.map(color =>
+                            <TokenIcon
+                                key={`token-icon-${color}`}
+                                color={color}
+                                selected={currentPlayer.color === color}
+                                onSelect={selectColor}
+                            />)
+                        }
+                    </div>
                 </div>
                 {tribes.length &&
                     <div className="section settings">
