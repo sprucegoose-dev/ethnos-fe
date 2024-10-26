@@ -18,10 +18,40 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
 
     const trollTokensTotal = player.trollTokens.reduce((total, currentValue) => total + currentValue, 0);
 
+    const visibleTokens: {[key: string]: boolean} = {
+        [TribeName.GIANTS]: highestGiantToken && highestGiantToken === player.giantTokenValue,
+        [TribeName.MERFOLK]: tribes.includes(TribeName.MERFOLK),
+        [TribeName.TROLLS]: tribes.includes(TribeName.TROLLS),
+        [TribeName.ORCS]: tribes.includes(TribeName.ORCS),
+    };
+
+    const getTokenPositions = (): {[key: string]: string} => {
+        const positionsByTokenCount: {[key: number]: string[]} = {
+            0: [],
+            1: ['middle'],
+            2: ['middle-left', 'middle-right'],
+            3: ['far-middle-left', 'middle', 'far-middle-right'],
+            4: ['left', 'middle-left', 'middle-right', 'right'],
+        };
+
+        const filteredTokens = Object.keys(visibleTokens).filter(key => visibleTokens[key]);
+        const tokenCount = filteredTokens.length;
+        const positions = positionsByTokenCount[tokenCount] || [];
+        const tokenPositions: {[key: string]: string} = {};
+
+        for (let i = 0; i < positions.length; i++) {
+            tokenPositions[filteredTokens[i]] = positions[i];
+        }
+
+        return tokenPositions;
+    };
+
+    const tokenPositions = getTokenPositions();
+
     return (
         <div className={`player-widget ${className || ''}`}>
             <TokenIcon color={player.color} />
-            <span className="username">
+            <span className={`username ${player.color}`}>
                 {player.user.username}
             </span>
             <div className="badges">
@@ -32,8 +62,9 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
                 </span>
                 <span className="badge points">
                     <span className="badge-content">
-                        <span>{player.points}</span> <span className="content-label">VP</span>
+                        <span>{player.points}</span>
                     </span>
+                    <Icon icon="wreath" />
                 </span>
                 <span className="badge total-bands">
                     <span className="badge-content">
@@ -42,8 +73,8 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
                 </span>
             </div>
             <div className="tribe-tokens">
-                {tribes.includes(TribeName.GIANTS) ?
-                    <span className={`tribe-token giant-token ${highestGiantToken && highestGiantToken === player.giantTokenValue ? 'in-lead' : ''}`}>
+                {visibleTokens[TribeName.GIANTS] ?
+                    <span className={`tribe-token giant-token ${tokenPositions[TribeName.GIANTS]}`}>
                         <TribeIcon
                             showTribeName={false}
                             tribe={{ name: TribeName.GIANTS, id: null, description: ''}}
@@ -53,15 +84,15 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
                         </span>
                     </span> : null
                 }
-                {tribes.includes(TribeName.TROLLS) ?
-                    <span className="tribe-token troll-tokens">
+                {visibleTokens[TribeName.TROLLS] ?
+                    <span className={`tribe-token troll-tokens ${tokenPositions[TribeName.TROLLS]}`}>
                         <TribeIcon
                             showTribeName={false}
                             tribe={{ name: TribeName.TROLLS, id: null, description: ''}}
                         />
                         {
                             player.trollTokens.map(token =>
-                                <span className="troll-token">
+                                <span className="troll-token" key={`troll-token-${token}`}>
                                     {token}
                                 </span>
                             )
@@ -71,8 +102,8 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
                         </span>
                     </span> : null
                 }
-                {tribes.includes(TribeName.MERFOLK) ?
-                    <span className="tribe-token merfolk-track-score">
+                {visibleTokens[TribeName.MERFOLK] ?
+                    <span className={`tribe-token merfolk-track-score ${tokenPositions[TribeName.MERFOLK]}`}>
                         <TribeIcon
                             showTribeName={false}
                             tribe={{ name: TribeName.MERFOLK, id: null, description: ''}}
@@ -82,15 +113,15 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
                         </span>
                     </span>
                 : null}
-                {tribes.includes(TribeName.ORCS) ?
-                    <span className="tribe-token orc-board">
+                {visibleTokens[TribeName.ORCS] ?
+                    <span className={`tribe-token orc-board ${tokenPositions[TribeName.ORCS]}`}>
                         <TribeIcon
                             showTribeName={false}
                             tribe={{ name: TribeName.ORCS, id: null, description: ''}}
                         />
                         {
                             player.orcTokens.map(color =>
-                                <span className="troll-token">
+                                <span className="orc-token" key={`orc-token-${color}`}>
                                     {color}
                                 </span>
                             )

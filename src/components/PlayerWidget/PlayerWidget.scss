@@ -7,8 +7,8 @@
     border-radius: 50%;
     display: flex;
     font-family: QuadratDemibold;
-    width: 120px;
-    height: 120px;
+    width: 95px;
+    height: 95px;
     padding: 10px;
     box-sizing: border-box;
 
@@ -20,9 +20,14 @@
         top: 50%;
         transform: translate(-50%, -50%);
 
+        .token-img {
+            height: 60px;
+            width: 60px;
+        }
+
         &:before {
             content: '';
-            border: 6px solid $light-gold;
+            border: 4px solid $light-gold;
             border-radius: 50%;
             height: 85%;
             width: 85%;
@@ -82,7 +87,6 @@
         top: 50%;
         height: 100%;
         width: 100%;
-        // background: rgba(0, 0, 0, 0.7);
         border-radius: 50%;
         transform: translate(-50%, -50%);
     }
@@ -92,20 +96,42 @@
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        // border: 3px solid $light-gold;
-        // border-image: linear-gradient(45deg, #fefefd, #daaf8c) 1; /* Set the diagonal gradient */
-        // border-radius: 4px;
         color: white;
         display: flex;
-        // padding: 8px 10px;
         justify-content: center;
         align-items: center;
-        font-size: .9rem;
+        font-size: .8rem;
 
         background: rgba(0, 0, 0, 0.6);
-        padding: 4px 8px;
+        padding: 3px 4px;
         border-radius: 4px;
-        min-width: 75px;
+        min-width: 45px;
+
+        &.black {
+            background: $token-black;
+        }
+
+        &.blue {
+            background: $token-blue;
+        }
+
+        &.green {
+            background: $token-green;
+        }
+
+        &.pink {
+            background: $token-pink;
+        }
+
+        &.white {
+            background: $token-white;
+            color: $dark-gray;
+        }
+
+        &.yellow {
+            background: $token-yellow;
+            color: $dark-gray;
+        }
     }
 
     .content-label {
@@ -120,53 +146,54 @@
     .badges {
         display: flex;
         position: absolute;
-        top: 100%;
+        top: 105%;
         left: 50%;
         transform: translate(-50%, -50%);
         width: 100%;
     }
 
     .badge {
-        background-color: rgba(0, 0, 0, 0.7);
-        background-image: radial-gradient(circle at 50% 0,#fefefd, #daaf8c 60%);
-        border: 2px solid $light-gold;
         position: absolute;
         border-radius: 50%;
         color: $light-gold;
         fill: $light-gold;
         display: flex;
-        min-height: 50px;
-        min-width: 50px;
+        min-height: 45px;
+        min-width: 45px;
         justify-content: center;
-        font-size: .9rem;
+        font-size: .8rem;
         box-sizing: border-box;
-        // margin: 4px 5px;
-        border: 3px solid transparent; /* Set a transparent border to allow gradient to show */
-        border-radius: 50%; /* Create a circular border */
-        // border-image: linear-gradient(45deg, #b78e6d, #6e533c) 1; /* Set the diagonal gradient */
-        // bottom: 10px;
-        // &:hover {
-            // border-image: linear-gradient(45deg, #fefefd, #daaf8c) 1; /* Set the diagonal gradient */
-        // }
-
-        // background-image: radial-gradient(circle at 50% 0,#fefefd, #daaf8c 60%);
+        border: 3px solid transparent;
+        border-radius: 50%;
 
         &.total-cards-in-hand {
-            bottom: -5px;
+            bottom: 0;
             left: 0;
-            transform: translateX(-50%);
+            transform: translate(-55%, 15%);
         }
 
         &.total-bands {
-            bottom: -5px;
+            bottom: 0;
             right: 0;
-            transform: translateX(50%);
+            transform: translate(55%, 15%);
         }
 
         &.points {
             left: 50%;
             bottom: 0;
-            transform: translate(-50%, 60%);
+            transform: translate(-50%, 65%);
+
+            .icon {
+
+                &.wreath {
+                    position: absolute;
+                    left: 50%;
+                    top: 54%;
+                    transform: translate(-50%, -50%);
+                    height: 125%;
+                    width: 125%;
+                }
+            }
         }
 
         &:before {
@@ -191,7 +218,14 @@
             transform: translate(-50%, -50%);
 
             .icon {
+                height: 15px;
+                width: 15px;
                 margin-right: 2px;
+
+                &.helmet {
+                    height: 14px;
+                    width: 14px;
+                }
             }
         }
     }
@@ -199,14 +233,49 @@
     .tribe-tokens {
         display: flex;
         position: absolute;
-        top: -30px;
+        top: 15%;
         left: 50%;
         transform: translateX(-50%);
-
+        width: 100%;
         align-items: center;
 
         .tribe-token {
-            position: relative;
+            position: absolute;
+
+            &.left {
+                left: 0;
+                transform: translate(-75%, 20%);
+            }
+
+            &.middle-left {
+                left: 13.5%;
+                transform: translate(-25%, -62%);
+            }
+
+            &.middle {
+                left: 50%;
+                transform: translate(-50%, -70%);
+            }
+
+            &.far-middle-left {
+                left: 0;
+                transform: translate(-55%, -20%);
+            }
+
+            &.far-middle-right {
+                right: 0;
+                transform: translate(55%, -20%);
+            }
+
+            &.middle-right {
+                right: 13.5%;
+                transform: translate(25%, -62%);
+            }
+
+            &.right {
+                right: 0;
+                transform: translate(75%, 20%);
+            }
 
             .value {
                 position: absolute;
@@ -225,12 +294,11 @@
 
     .tribe-icon {
         .tribe-img {
-            background-image: radial-gradient(circle at 50% 0,#000000b3, #0000004d 60%);
             border-radius: 50%;
             border: none;
-            padding: 3px;
-            height: 50px;
-            width: 50px;
+            padding: 1px;
+            height: 40px;
+            width: 40px;
 
             // &:hover {
                 background-image: radial-gradient(circle at 50% 0,#fefefd, #daaf8c 60%);
