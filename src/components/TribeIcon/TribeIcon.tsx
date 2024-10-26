@@ -54,7 +54,6 @@ export function TribeIcon(props: ITribeIconProps): JSX.Element {
                     {tribe.name}
                 </div> : null
             }
-
             {selected ?
                 <FontAwesomeIcon className="selected-icon" icon={faCheckCircle} /> :
                 null

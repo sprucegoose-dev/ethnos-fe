@@ -67,7 +67,8 @@
 
         .player-widget {
             flex-direction: column;
-            top: 60%;
+            top: 50%;
+            transform: translateY(-50%);
             left: 2.5%;
         }
     }
@@ -80,8 +81,8 @@
             transform: translateY(-50%) rotate(-225deg);
         }
 
-
         .player-widget {
+            top: 5%;
             flex-direction: column;
             left: 2.5%;
         }
