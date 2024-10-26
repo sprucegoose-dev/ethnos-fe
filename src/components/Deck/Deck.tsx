@@ -33,6 +33,9 @@ export function Deck({activePlayer, gameState}: IDeckProps): JSX.Element {
                     <FacedownCard showLogo={!index} key={`facedown-card-${index}`} />
                 )
             }
+            <span className="total-cards-in-deck">
+                {gameState.cardsInDeckCount}
+            </span>
         </div>
     );
 }
