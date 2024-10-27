@@ -62,7 +62,7 @@ export function Card(props: ICardProps): JSX.Element {
             onMouseLeave={(event) => props.onMouseLeave ? props.onMouseLeave(event) : null}
             onClick={() => props.onClick ? props.onClick(id) : null}
         >
-            <div className="tribe-name">
+           <div className="tribe-name">
                 {convertToSingularName(tribe.name)}
             </div>
             <div className="tribe-description">

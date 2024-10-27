@@ -108,7 +108,7 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
                             tribe={{ name: TribeName.MERFOLK, id: null, description: ''}}
                         />
                         <span className="value">
-                            {player.merfolkTrackScore}
+                            {player.merfolkTrackScore || ''}
                         </span>
                     </span>
                 : null}
