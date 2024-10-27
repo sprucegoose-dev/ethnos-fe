@@ -410,7 +410,7 @@
             background-image: radial-gradient(circle at 50% 0, $medium-gray-3, $dark-gray 60%);
 
             &:hover {
-                background-image: radial-gradient(circle at 50% 0,#fefefd, $bronze 60%);
+                background-image: radial-gradient(circle at 50% 0,$off-white-2, $bronze 60%);
             }
         }
     }

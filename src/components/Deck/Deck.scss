@@ -22,16 +22,12 @@
                     transform: translate(-50%, -50%);
                     border: 3px solid $selectable-main;
                     box-sizing: border-box;
-                    // animation: width-pulsate 1s infinite alternate,
-                    //     color-pulsate 1s infinite alternate,
-                    //     glow-pulsate 1s infinite alternate;
                 }
             }
         }
     }
 
     .facedown-card {
-        // border: 2px solid transparent;
         position: absolute;
     }
 
@@ -43,14 +39,16 @@
     }
 
     .total-cards-in-deck {
-        background: rgba(255, 255, 255, .5);
+        background: rgba(0, 0, 0, .6);
         position: absolute;
         left: 50%;
         top: 90%;
         z-index: 101;
         transform: translate(-50%, -75%);
-        padding: 2px 4px;
+        padding: 3px 6px;
         border-radius: 4px;
         font-size: .9rem;
+        font-weight: bold;
+        color: $off-white-2;
     }
 }

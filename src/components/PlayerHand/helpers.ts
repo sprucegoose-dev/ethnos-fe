@@ -31,7 +31,7 @@ export const calculateCardStyle = ({
     }
 
     if (hoveredCardIndex === index) {
-        translateY = -144;
+        translateY = -170;
         rotate = 0;
     }
 
