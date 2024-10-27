@@ -12,10 +12,11 @@ import { socket } from '../../socket';
 import { GameSettings } from '../GameSettings/GameSettings';
 
 import './Game.scss';
-import { PlayerArea } from '../PlayerArea/PlayerArea';
 import { Deck } from '../Deck/Deck';
 import { Market } from '../Market/Market';
 import { getHighestGiantTokenValue, getPlayerPositions } from './helpers';
+import { PlayerWidget } from '../PlayerWidget/PlayerWidget';
+import { PlayerHand } from '../PlayerHand/PlayerHand';
 
 const {
     CREATED,
@@ -28,7 +29,7 @@ export function Game(): JSX.Element {
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
     const { id: gameId } = useParams();
     const [gameState, setGameState] = useState<IGameState>(null);
-    const [ _actions, setActions ] = useState<IActionPayload[]>([]);
+    const [ actions, setActions ] = useState<IActionPayload[]>([]);
     const [ activePlayer, setActivePlayer ] = useState<IPlayer>(null);
     const [ playerHands, setPlayerHands ] = useState<{[playerId: number]: ICard[]}>({});
     const navigate = useNavigate();
@@ -100,15 +101,21 @@ export function Game(): JSX.Element {
             {[STARTED, ENDED, CANCELLED].includes(gameState.state) ?
                 <div className="game">
                     <Market gameState={gameState} activePlayer={activePlayer} />
-                    <Deck gameState={gameState} activePlayer={activePlayer} />
+                    <Deck gameState={gameState} activePlayer={activePlayer} actions={actions}/>
                     {gameState.players.map((player) =>
-                        <PlayerArea
-                            key={player.id}
-                            className={playerPosition[player.userId]}
-                            player={{...player, cardsInHand: playerHands[player.id] || []}}
-                            highestGiantToken={highestGiantToken}
-                            tribes={gameState.settings.tribes}
-                        />
+                        <>
+                            <PlayerHand
+                                key={player.id}
+                                className={playerPosition[player.userId]}
+                                player={{...player, cardsInHand: playerHands[player.id] || []}}
+                            />
+                            <PlayerWidget
+                                className={playerPosition[player.userId]}
+                                player={{...player, cardsInHand: playerHands[player.id] || []}}
+                                highestGiantToken={highestGiantToken}
+                                tribes={gameState.settings.tribes}
+                            />
+                        </>
                     )}
                 </div> : null
             }

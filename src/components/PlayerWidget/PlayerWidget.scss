@@ -9,6 +9,43 @@
     height: 95px;
     padding: 10px;
     box-sizing: border-box;
+    position: absolute;
+
+    &.bottom {
+        left: 4%;
+        bottom: 10%;
+    }
+
+    &.top {
+        right: 27%;
+        top: 8%;
+    }
+
+    &.left {
+        flex-direction: column;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 7%;
+    }
+
+    &.left-corner {
+        flex-direction: column;
+        left: 8%;
+        top: 12%;
+    }
+
+    &.right-corner {
+        flex-direction: column;
+        right: 8%;
+        top: 12%;
+    }
+
+    &.right {
+        flex-direction: column;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 7%;
+    }
 
     .token-icon {
         position: absolute;

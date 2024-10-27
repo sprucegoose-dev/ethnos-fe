@@ -1,8 +1,6 @@
 import { ICard, IPlayer, TribeName } from '../Game/Game.types';
 
-export interface IPlayerAreaProps {
+export interface IPlayerHandProps {
     className: string;
-    highestGiantToken: number;
     player: IPlayer & { cardsInHand: ICard[] };
-    tribes: TribeName[];
 }

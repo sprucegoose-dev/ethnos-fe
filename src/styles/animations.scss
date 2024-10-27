@@ -1,8 +1,31 @@
-@keyframes move {
+@import './variables.scss';
+
+@keyframes width-pulsate {
     from {
-        transform: translateX(0);
+        border-width: 2px;
     }
+
     to {
-        transform: translateX(-500%);
+        border-width: 3px;
+    }
+}
+
+@keyframes color-pulsate {
+    from {
+        border-color: $selectable-alt;
+    }
+
+    to {
+        border-color: $selectable-main;
+    }
+}
+
+@keyframes glow-pulsate {
+    from {
+        box-shadow: 0 0 6px 2px $selectable-alt;
+    }
+
+    to {
+        box-shadow: 0 0 7px 3px $selectable-main;
     }
 }

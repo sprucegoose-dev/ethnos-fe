@@ -1,10 +1,37 @@
+@import '../../styles/animations.scss';
 @import '../../styles/variables.scss';
 
 .deck {
     height: calc($card-height / 1.5);
     width: calc($card-width / 1.5);
 
+    &.selectable {
+        cursor: pointer;
+
+        .facedown-card:first-child {
+
+            &:hover {
+                &:after {
+                    content: '';
+                    position: absolute;
+                    width: 102%;
+                    height: 102%;
+                    border-radius: 8px;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    border: 3px solid $selectable-main;
+                    box-sizing: border-box;
+                    // animation: width-pulsate 1s infinite alternate,
+                    //     color-pulsate 1s infinite alternate,
+                    //     glow-pulsate 1s infinite alternate;
+                }
+            }
+        }
+    }
+
     .facedown-card {
+        // border: 2px solid transparent;
         position: absolute;
     }
 

@@ -13,21 +13,28 @@ import { FacedownCard } from '../FacedownCard/FacedownCard';
 
 import './Deck.scss';
 
-export function Deck({activePlayer, gameState}: IDeckProps): JSX.Element {
+export function Deck(props: IDeckProps): JSX.Element {
+    const {
+        actions = [],
+        activePlayer,
+        gameState
+    } = props;
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
 
     const cardsInDeck = new Array(gameState.cardsInDeckCount).fill(null);
+
+    const selectable = actions.find(action => action.type === ActionType.DRAW_CARD);
 
     const handleDrawCard = async () => {
         if (activePlayer?.userId === auth.userId) {
             await GameApi.sendAction(gameState.id, { type: ActionType.DRAW_CARD });
         } else {
-            toast.info('Only the active player can draw a card');
+            toast.info('Please wait for your turn');
         }
     };
 
     return (
-        <div className="deck" onClick={handleDrawCard}>
+        <div className={`deck ${selectable ? 'selectable' : ''}`} onClick={handleDrawCard}>
             {
                 cardsInDeck.map((_card, index) =>
                     <FacedownCard showLogo={!index} key={`facedown-card-${index}`} />

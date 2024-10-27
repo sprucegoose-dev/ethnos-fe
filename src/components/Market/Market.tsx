@@ -27,7 +27,7 @@ export function Market({activePlayer, gameState}: IDeckProps): JSX.Element {
         if (activePlayer?.userId === auth.userId) {
             await GameApi.sendAction(gameState.id, { type: ActionType.PICK_UP_CARD, cardId });
         } else {
-            toast.info('Only the active player can pick up a card');
+            toast.info('Please wait for your turn');
         }
     };
 
