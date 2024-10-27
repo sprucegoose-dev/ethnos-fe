@@ -16,7 +16,7 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
 
     const cardsInBands = player.cards.filter(card => card.state === CardState.IN_BAND);
 
-    const trollTokensTotal = player.trollTokens.reduce((total, currentValue) => total + currentValue, 0);
+    // const trollTokensTotal = player.trollTokens.reduce((total, currentValue) => total + currentValue, 0);
 
     const visibleTokens: {[key: string]: boolean} = {
         [TribeName.GIANTS]: highestGiantToken && highestGiantToken === player.giantTokenValue,
@@ -90,16 +90,15 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
                             showTribeName={false}
                             tribe={{ name: TribeName.TROLLS, id: null, description: ''}}
                         />
-                        {
-                            player.trollTokens.map(token =>
-                                <span className="troll-token" key={`troll-token-${token}`}>
-                                    {token}
-                                </span>
-                            )
-                        }
-                        <span className="value">
-                            {trollTokensTotal}
-                        </span>
+                        <div className="token-elements">
+                            {
+                                player.trollTokens.map((token, index) =>
+                                    <span className="token-element troll-token" key={`troll-token-${token}`}>
+                                        {token}
+                                    </span>
+                                )
+                            }
+                        </div>
                     </span> : null
                 }
                 {visibleTokens[TribeName.MERFOLK] ?

@@ -330,7 +330,82 @@
                 position: absolute;
                 pointer-events: none;
                 top: 0;
+                background: rgba(0, 0, 0, 0.9);
+                border-radius: 50%;
+                width: 13.5px;
+                height: 13.5px;
+                text-align: center;
+                border: 1px solid $dark-bronze;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: white;
+                font-size: .75rem;
             }
+
+            .token-elements {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                height: 110%;
+                width: 110%;
+
+                .token-element {
+                    position: absolute;
+
+                    &:nth-child(1) {
+                        top: 0;
+                        left: 25%;
+                        transform: translate(-50%, -35%);
+                    }
+
+                    &:nth-child(2) {
+                        top: 0;
+                        right: 25%;
+                        transform: translate(50%, -35%);
+                    }
+
+                    &:nth-child(3) {
+                        top: 50%;
+                        right: 0;
+                        transform: translate(50%, -50%);
+                    }
+
+                    &:nth-child(4) {
+                        top: 100%;
+                        right: 25%;
+                        transform: translate(50%, -65%);
+                    }
+
+                    &:nth-child(5) {
+                        top: 100%;
+                        left: 25%;
+                        transform: translate(-50%, -65%);
+                    }
+
+                    &:nth-child(6) {
+                        top: 50%;
+                        left: 0;
+                        transform: translate(-50%, -50%);
+                    }
+
+
+
+                    // &:nth-child(5) {
+                    //     top: 5%;
+                    //     left: 50%;
+                    //     transform: translateX(-50%);
+                    // }
+
+                    // &:nth-child(6) {
+                    //     top: 50%;
+                    //     left: 50%;
+                    //     transform: translate(-50%, -50%);
+                    // }
+                }
+            }
+
         }
     }
 
@@ -346,7 +421,7 @@
             background-image: radial-gradient(circle at 50% 0, $medium-gray-3, $dark-gray 60%);
 
             &:hover {
-                background-image: radial-gradient(circle at 50% 0,#fefefd, #daaf8c 60%);
+                background-image: radial-gradient(circle at 50% 0,#fefefd, $bronze 60%);
             }
         }
     }

@@ -103,19 +103,20 @@ export function Game(): JSX.Element {
                     <Market gameState={gameState} activePlayer={activePlayer} />
                     <Deck gameState={gameState} activePlayer={activePlayer} actions={actions}/>
                     {gameState.players.map((player) =>
-                        <>
+                        <div key={`player-area-${player.id}`}>
                             <PlayerHand
-                                key={player.id}
+                                key={`player-hand-${player.id}`}
                                 className={playerPosition[player.userId]}
                                 player={{...player, cardsInHand: playerHands[player.id] || []}}
                             />
                             <PlayerWidget
+                                key={`player-widget-${player.id}`}
                                 className={playerPosition[player.userId]}
                                 player={{...player, cardsInHand: playerHands[player.id] || []}}
                                 highestGiantToken={highestGiantToken}
                                 tribes={gameState.settings.tribes}
                             />
-                        </>
+                        </div>
                     )}
                 </div> : null
             }
