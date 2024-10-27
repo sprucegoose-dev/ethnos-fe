@@ -79,20 +79,20 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
                             showTribeName={false}
                             tribe={{ name: TribeName.GIANTS, id: null, description: ''}}
                         />
-                        <span className="value">
+                        <span className="tribe-token-value">
                             {player.giantTokenValue}
                         </span>
                     </span> : null
                 }
                 {visibleTokens[TribeName.TROLLS] ?
-                    <span className={`tribe-token troll-tokens ${tokenPositions[TribeName.TROLLS]}`}>
+                    <span className={`tribe-token troll-token-container ${tokenPositions[TribeName.TROLLS]}`}>
                         <TribeIcon
                             showTribeName={false}
                             tribe={{ name: TribeName.TROLLS, id: null, description: ''}}
                         />
                         <div className="token-elements">
                             {
-                                player.trollTokens.map((token, index) =>
+                                player.trollTokens.map(token =>
                                     <span className="token-element troll-token" key={`troll-token-${token}`}>
                                         {token}
                                     </span>
@@ -107,7 +107,7 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
                             showTribeName={false}
                             tribe={{ name: TribeName.MERFOLK, id: null, description: ''}}
                         />
-                        <span className="value">
+                        <span className="tribe-token-value">
                             {player.merfolkTrackScore || ''}
                         </span>
                     </span>
@@ -118,13 +118,14 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
                             showTribeName={false}
                             tribe={{ name: TribeName.ORCS, id: null, description: ''}}
                         />
-                        {
-                            player.orcTokens.map(color =>
-                                <span className="orc-token" key={`orc-token-${color}`}>
-                                    {color}
-                                </span>
-                            )
-                        }
+                        <div className="token-elements">
+                            {
+                                player.orcTokens.map((color, index) =>
+                                        <span className={`token-element slice slice${index + 1} orc-token ${color}`} key={`orc-token-${color}`}>
+                                        </span>
+                                )
+                            }
+                        </div>
                     </span>
                 : null}
             </div>
