@@ -14,8 +14,8 @@ export const calculateCardStyle = ({
     let middle = (totalCards / 2);
     middle = middle % 2 ? middle - .5 : middle;
     const offset = 2;
-    const translateOffsetX = bottomPosition ? 80 : 30;
-    const translateOffsetY = bottomPosition ? 8 : 6;
+    const translateOffsetX = 10;
+    const translateOffsetY = 3;
     let rotate = 0;
     let translateX = 0;
     let translateY = 5;
@@ -31,11 +31,11 @@ export const calculateCardStyle = ({
     }
 
     if (hoveredCardIndex === index) {
-        translateY = -170;
+        translateY = -52;
         rotate = 0;
     }
 
     return {
-      transform: `translateX(${translateX}px) translateY(${translateY}px) rotate(${rotate}deg)`,
+      transform: `translateX(${translateX}%) translateY(${translateY}%) rotate(${rotate}deg)`,
     };
 };

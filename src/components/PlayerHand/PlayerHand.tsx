@@ -17,7 +17,15 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
     const [hoveredCardIndex, setHoveredCardIndex] = useState<number>(null);
     const [selectedCardIds, setSelectedCardIds] = useState<number[]>([]);
 
-    const cardsInHand = (player.cardsInHand || []).sort((cardA, cardB) => cardA.index - cardB.index);
+    let cardsInHand = (player.cardsInHand || []).sort((cardA, cardB) => cardA.index - cardB.index);
+
+    cardsInHand = [
+        ...cardsInHand,
+        ...cardsInHand,
+        ...cardsInHand,
+        ...cardsInHand,
+        ...cardsInHand,
+    ]
 
     const handleMouseEnter = throttle((index: number) => {
         setHoveredCardIndex(index);
@@ -37,36 +45,37 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
     };
 
     return (
-        <div className={`player-hand-container ${className || ''}`}>
-            <div className="player-hand">
-                <div className="cards">
-                    {cardsInHand.map((card, index) =>
-                        className.includes('bottom') ?
-                            <Card
-                                key={`tribe-card-${index}`}
-                                card={card}
-                                customStyles={calculateCardStyle({
-                                    index,
-                                    totalCards: cardsInHand.length,
-                                    bottomPosition: className.includes('bottom'),
-                                    hoveredCardIndex
-                                })}
-                                onMouseEnter={() => handleMouseEnter(index)}
-                                onMouseLeave={handleMouseLeave}
-                                onClick={selectCard}
-                            /> :
-                            <FacedownCard
-                                customStyles={calculateCardStyle(({
-                                    index,
-                                    totalCards: cardsInHand.length,
-                                    bottomPosition: className.includes('bottom'),
-                                }))}
-                                key={`tribe-card-${index}`}
-                                showLogo={true}
-                            />
-                    )}
+        <div className={`player-hand ${className || ''}`}>
+            {cardsInHand.map((card, index) =>
+                <div
+                    className={`card-wrapper ${hoveredCardIndex === index ? 'hover' : ''}`}
+                    onMouseEnter={() => handleMouseEnter(index)}
+                    onMouseLeave={handleMouseLeave}
+                >
+                    {className.includes('bottom') ?
+                        <Card
+                            key={`tribe-card-${index}`}
+                            card={card}
+                            customStyles={calculateCardStyle({
+                                index,
+                                totalCards: cardsInHand.length,
+                                bottomPosition: className.includes('bottom'),
+                                hoveredCardIndex
+                            })}
+                            onClick={selectCard}
+                        /> :
+                        <FacedownCard
+                            customStyles={calculateCardStyle(({
+                                index,
+                                totalCards: cardsInHand.length,
+                                bottomPosition: className.includes('bottom'),
+                            }))}
+                            key={`tribe-card-${index}`}
+                            showLogo={true}
+                        />
+                    }
                 </div>
-            </div>
+            )}
         </div>
     );
 }
