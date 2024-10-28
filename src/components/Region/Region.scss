@@ -1,0 +1,48 @@
+@import '../../styles/variables.scss';
+
+.region {
+    position: absolute;
+
+    &.blue {
+        top: 25%;
+        left: 20%;
+    }
+
+    &.red {
+        top: 20%;
+        right: 40%;
+    }
+
+    &.gray {
+        top: 25%;
+        right: 15%;
+    }
+
+    &.purple {
+        top: 50%;
+        left: 29%;
+    }
+
+    &.orange {
+        top: 50%;
+        left: 51%;
+    }
+
+    &.green {
+        top: 50%;
+        right: 23%;
+    }
+
+    .region-value {
+        color: white;
+        font-family: QuadratDemibold;
+        margin-right: 15px;
+        font-size: 1rem;
+        border: 2px solid white;
+        padding: 5px 10px;
+
+        &:last-of-type {
+            margin-right: 0;
+        }
+    }
+}

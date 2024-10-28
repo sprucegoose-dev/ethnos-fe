@@ -149,6 +149,13 @@ export interface ICard {
     tribeId: number;
 }
 
+export interface IRegion {
+    color: Color;
+    gameId: number;
+    id: number;
+    values: number[];
+}
+
 export interface IGameState {
     activePlayerId: number;
     age: number;
@@ -165,6 +172,7 @@ export interface IGameState {
     turnOrder: number[];
     updatedAt: string;
     winnerId: number;
+    regions: IRegion[];
 }
 
 export interface IActiveGame extends IGameState {

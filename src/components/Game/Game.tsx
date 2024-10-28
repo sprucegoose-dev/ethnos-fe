@@ -3,7 +3,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 
-import { GameState, IActionPayload, ICard, IGameState, IPlayer } from './Game.types';
+import {
+    GameState,
+    IActionPayload,
+    ICard,
+    IGameState,
+    IPlayer,
+} from './Game.types';
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
 
@@ -14,6 +20,7 @@ import { GameSettings } from '../GameSettings/GameSettings';
 import './Game.scss';
 import { Deck } from '../Deck/Deck';
 import { Market } from '../Market/Market';
+import { Region } from '../Region/Region';
 import { getHighestGiantTokenValue, getPlayerPositions } from './helpers';
 import { PlayerWidget } from '../PlayerWidget/PlayerWidget';
 import { PlayerHand } from '../PlayerHand/PlayerHand';
@@ -100,6 +107,10 @@ export function Game(): JSX.Element {
             }
             {[STARTED, ENDED, CANCELLED].includes(gameState.state) ?
                 <div className="game">
+
+                    {gameState.regions.map(region =>
+                        <Region region={region} key={`region-${region.color}`} />
+                    )}
                     <Market gameState={gameState} activePlayer={activePlayer} />
                     <Deck gameState={gameState} activePlayer={activePlayer} actions={actions}/>
                     {gameState.players.map((player) =>
