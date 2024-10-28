@@ -26,7 +26,6 @@
 
         .card {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
             height: 100%;
             width: 100%;
             border-radius: 5px;
@@ -47,8 +46,12 @@
     width: 100vw;
 
     .card-wrapper {
-        transform: translateY(58%);
-        width: calc(10% * 1.5);
+        transform: translateY(60%);
+        width: calc(10% * 1.6);
+
+        .card {
+            cursor: pointer;
+        }
     }
 }
 

@@ -40,13 +40,13 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
         <div className={`player-hand ${className || ''}`}>
             {cardsInHand.map((card, index) =>
                 <div
+                    key={`tribe-card-${index}`}
                     className={`card-wrapper ${hoveredCardIndex === index ? 'hover' : ''}`}
                     onMouseEnter={() => handleMouseEnter(index)}
                     onMouseLeave={handleMouseLeave}
                 >
                     {className.includes('bottom') ?
                         <Card
-                            key={`tribe-card-${index}`}
                             card={card}
                             customStyles={calculateCardStyle({
                                 index,
