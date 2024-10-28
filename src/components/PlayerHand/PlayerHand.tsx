@@ -17,15 +17,7 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
     const [hoveredCardIndex, setHoveredCardIndex] = useState<number>(null);
     const [selectedCardIds, setSelectedCardIds] = useState<number[]>([]);
 
-    let cardsInHand = (player.cardsInHand || []).sort((cardA, cardB) => cardA.index - cardB.index);
-
-    cardsInHand = [
-        ...cardsInHand,
-        ...cardsInHand,
-        ...cardsInHand,
-        ...cardsInHand,
-        ...cardsInHand,
-    ]
+    const cardsInHand = (player.cardsInHand || []).sort((cardA, cardB) => cardA.index - cardB.index);
 
     const handleMouseEnter = throttle((index: number) => {
         setHoveredCardIndex(index);

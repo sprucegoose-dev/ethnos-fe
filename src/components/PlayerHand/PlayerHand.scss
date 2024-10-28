@@ -2,20 +2,19 @@
 
 
 .player-hand {
-    width: 100vw;
     display: flex;
     justify-content: center;
     position: absolute;
-    bottom: -15%;
-    left: 50%;
     transform: translateX(-50%);
     flex-wrap: nowrap;
+    pointer-events: none;
 
     .card-wrapper {
-        width: calc(10% * 1.5);
+        width: calc(10%);
         aspect-ratio: 180 / 265;
         position: relative;
         margin-right: -#{calc(((12% * 1.5) / 2))};
+        pointer-events: all;
 
         &.hover {
             z-index: 1;
@@ -42,12 +41,64 @@
     }
 }
 
+.player-hand.bottom {
+    bottom: 0;
+    left: 50%;
+    width: 100vw;
+
+    .card-wrapper {
+        transform: translateY(58%);
+        width: calc(10% * 1.5);
+    }
+}
+
+.player-hand.top {
+    top: 0;
+    left: 50%;
+    transform: rotate(180deg) translateX(50%) translateY(68%);
+    width: 100vw;
+
+    .card-wrapper {
+        width: calc(10% * 1.2);
+    }
+}
+
+.player-hand.left {
+    top: 50%;
+    left: 0;
+    transform: translateX(-53%) translateY(-50%) rotate(90deg);
+    width: 100vw;
+}
+
+.player-hand.right {
+    top: 50%;
+    left: 0;
+    transform: translateX(53%) translateY(-50%) rotate(-90deg);
+    width: 100vw;
+}
+
+.player-hand.left-corner {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    transform: translateX(-50%) translateY(-50%) rotate(-225deg);
+}
+
+.player-hand.right-corner {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    transform: translateX(50%) translateY(-50%) rotate(225deg);
+}
 
 @media only screen and (min-width: $screen-sm) {
 
     .player-hand {
-        width: 85vw;
-        bottom: -18%;
+
+        &.bottom,
+        &.top {
+            width: 85vw;
+        }
 
         .card-wrapper {
 
@@ -59,82 +110,5 @@
                 }
             }
         }
-    }
-}
-
-.player-hand.top {
-    top: 0;
-    height: 50px;
-    left: 50%;
-
-    .player-hand {
-        transform: translateY(-50%) rotate(180deg);
-    }
-
-    .player-widget {
-        right: 27%;
-        top: 8%;
-    }
-}
-
-.player-hand.left {
-    top: 50%;
-    left: 0;
-
-    .player-hand {
-        transform: translateY(-50%) rotate(90deg);
-    }
-
-    .player-widget {
-        flex-direction: column;
-        top: 50%;
-        transform: translateY(-50%);
-        left: 7%;
-    }
-}
-
-.player-hand.right {
-    top: 50%;
-    right: 0;
-
-    .player-hand {
-        transform: translateY(-50%) rotate(-90deg);
-    }
-
-    .player-widget {
-        flex-direction: column;
-        top: 50%;
-        transform: translateY(-50%);
-        right: 7%;
-    }
-}
-
-.player-hand.left-corner {
-    top: 35px;
-    left: 35px;
-
-    .player-hand {
-        transform: translateY(-50%) rotate(-225deg);
-    }
-
-    .player-widget {
-        flex-direction: column;
-        left: 8%;
-        top: 12%;
-    }
-}
-
-.player-hand.right-corner {
-    top: 35px;
-    right: 35px;
-
-    .player-hand {
-        transform: translateY(-50%) rotate(225deg);
-    }
-
-    .player-widget {
-        flex-direction: column;
-        right: 8%;
-        top: 12%;
     }
 }
