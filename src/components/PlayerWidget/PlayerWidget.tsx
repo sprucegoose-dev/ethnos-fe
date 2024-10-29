@@ -2,9 +2,24 @@ import { IPlayerWidgetProps } from './PlayerWidget.types';
 import Icon from '../Icon/Icon';
 
 import './PlayerWidget.scss';
-import { CardState, TribeName } from '../Game/Game.types';
+import { CardState, Color, TribeName } from '../Game/Game.types';
 import { TribeIcon } from '../TribeIcon/TribeIcon';
 import { TokenIcon } from '../TokenIcon/TokenIcon';
+import orcTokenGreen from '../../assets/orc_token_green.png';
+import orcTokenGray from '../../assets/orc_token_gray.png';
+import orcTokenPurple from '../../assets/orc_token_purple.png';
+import orcTokenOrange from '../../assets/orc_token_orange.png';
+import orcTokenRed from '../../assets/orc_token_red.png';
+import orcTokenBlue from '../../assets/orc_token_blue.png';
+
+const orcTokens = {
+    [Color.GREEN]: orcTokenGreen,
+    [Color.GRAY]: orcTokenGray,
+    [Color.BLUE]: orcTokenBlue,
+    [Color.ORANGE]: orcTokenOrange,
+    [Color.RED]: orcTokenRed,
+    [Color.PURPLE]: orcTokenPurple,
+};
 
 export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
     const {
@@ -121,8 +136,13 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
                         <div className="token-elements">
                             {
                                 player.orcTokens.map((color, index) =>
-                                        <span className={`token-element slice slice${index + 1} orc-token ${color}`} key={`orc-token-${color}`}>
-                                        </span>
+                                    <span className={`token-element orc-token ${color}`} key={`orc-token-${color}`}>
+                                        <img
+                                            className="orc-token-img"
+                                            src={orcTokens[color]}
+                                            alt={`orc token ${color}`}
+                                        />
+                                    </span>
                                 )
                             }
                         </div>
