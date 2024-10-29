@@ -29,7 +29,7 @@ export const PLAYER_COLORS = [
 export enum TribeName {
     CENTAURS = 'Centaurs',
     DWARVES = 'Dwarves',
-    DRAGON = 'Dragons',
+    DRAGON = 'Dragon',
     ELVES = 'Elves',
     GIANTS = 'Giants',
     HALFLINGS = 'Halflings',

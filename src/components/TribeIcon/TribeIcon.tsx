@@ -3,6 +3,7 @@ import { ITribeIconProps } from './TribeIcon.types';
 import './TribeIcon.scss';
 
 import centaurIcon from '../../assets/circle_icon_centaur_2.png';
+import dragonIcon from '../../assets/circle_icon_dragon.png';
 import dwarfIcon from '../../assets/circle_icon_dwarf_2.png';
 import elfIcon from '../../assets/circle_icon_elf_2.png';
 import giantIcon from '../../assets/circle_icon_giant_2.png';
@@ -20,6 +21,7 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 const tribeIcons = {
     [TribeName.CENTAURS]: centaurIcon,
+    [TribeName.DRAGON]: dragonIcon,
     [TribeName.DWARVES]: dwarfIcon,
     [TribeName.ELVES]: elfIcon,
     [TribeName.GIANTS]: giantIcon,

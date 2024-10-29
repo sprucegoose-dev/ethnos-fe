@@ -6,13 +6,14 @@ import { IAuthReducer } from '../Auth/Auth.types';
 
 import GameApi from '../../api/Game.api';
 
-import { ActionType } from '../Game/Game.types';
+import { ActionType, CardState, TribeName } from '../Game/Game.types';
 import { IDeckProps } from './Deck.types';
 
 import { FacedownCard } from '../FacedownCard/FacedownCard';
 
 import './Deck.scss';
 import Icon from '../Icon/Icon';
+import { TribeIcon } from '../TribeIcon/TribeIcon';
 
 export function Deck(props: IDeckProps): JSX.Element {
     const {
@@ -34,6 +35,11 @@ export function Deck(props: IDeckProps): JSX.Element {
         }
     };
 
+    const revealedDragons = gameState.cards.filter(card =>
+        card.tribe.name === TribeName.DRAGON &&
+        card.state === CardState.REVEALED
+    );
+
     return (
         <div className={`deck ${selectable ? 'selectable' : ''}`} onClick={handleDrawCard}>
             {
@@ -41,6 +47,16 @@ export function Deck(props: IDeckProps): JSX.Element {
                     <FacedownCard showLogo={!index} key={`facedown-card-${index}`} />
                 )
             }
+            <div className="dragons-container">
+                {
+                    revealedDragons.map(dragon =>
+                        <TribeIcon
+                            key={`dragon-${dragon.id}`}
+                            tribe={dragon.tribe}
+                            showTribeName={false}
+                        />
+                )}
+            </div>
             <span className="deck-info age">
                 AGE {'I'.repeat(gameState.age)}
             </span>

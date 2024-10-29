@@ -3,7 +3,7 @@
 
 .deck {
     position: relative;
-    width: 9vw;
+    width: 9.5vw;
     aspect-ratio: 180 / 265;
     display: inline-block;
 
@@ -48,7 +48,6 @@
     }
 
     .deck-info {
-        // background: rgba(0, 0, 0, .6);
         border-radius: 4px;
         color: $off-white-2;
         padding: 3px 6px;
@@ -56,14 +55,32 @@
         font-weight: bold;
     }
 
+    .dragons-container {
+        position: absolute;
+        z-index: 101;
+        display: flex;
+        top: 60%;
+        left: 50%;
+        transform: translateX(-50%);
+
+        .tribe-icon {
+            margin: 0 2.5px;
+
+            .tribe-img {
+                height: 15px;
+                width: 15px;
+            }
+        }
+    }
+
     .age {
         font-family: QuadratDemibold;
         position: absolute;
-        bottom: 4%;
+        bottom: 4.5%;
         left: 50%;
         transform: translateX(-50%);
         z-index: 101;
-        font-size: 1rem;
+        font-size: .8rem;
         width: 100%;
         text-align: center;
         text-shadow: 1px 1px 2px $dark-gray;
@@ -75,6 +92,7 @@
         position: absolute;
         top: 4%;
         z-index: 101;
+        font-size: .8rem;
 
         .count {
             text-shadow: 1px 1px 2px $dark-gray;
@@ -97,6 +115,33 @@
                 }
             }
         }
+    }
+}
 
+
+@media only screen and (min-width: $screen-sm) {
+
+    .deck {
+
+        .dragons-container {
+            top: 20%;
+
+            .tribe-icon {
+                margin: 0 3px;
+
+                .tribe-img {
+                    height: 30px;
+                    width: 30px;
+                }
+            }
+        }
+
+        .age {
+            font-size: 1rem;
+        }
+
+        .total-cards-in-deck {
+            font-size: .9rem;
+        }
     }
 }
