@@ -135,10 +135,10 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
                         />
                         <div className="token-elements">
                             {
-                                player.orcTokens.map((color, index) =>
+                                player.orcTokens.map(color =>
                                     <span className={`token-element orc-token ${color}`} key={`orc-token-${color}`}>
                                         <img
-                                            className="orc-token-img"
+                                            className={`orc-token-img ${color}`}
                                             src={orcTokens[color]}
                                             alt={`orc token ${color}`}
                                         />

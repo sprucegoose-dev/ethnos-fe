@@ -12,6 +12,7 @@ import { IDeckProps } from './Deck.types';
 import { FacedownCard } from '../FacedownCard/FacedownCard';
 
 import './Deck.scss';
+import Icon from '../Icon/Icon';
 
 export function Deck(props: IDeckProps): JSX.Element {
     const {
@@ -40,8 +41,15 @@ export function Deck(props: IDeckProps): JSX.Element {
                     <FacedownCard showLogo={!index} key={`facedown-card-${index}`} />
                 )
             }
-            <span className="total-cards-in-deck">
-                {gameState.cardsInDeckCount}
+            <span className="deck-info age">
+                AGE {'I'.repeat(gameState.age)}
+            </span>
+            <span className="deck-info total-cards-in-deck">
+                <span className="icons-wrapper">
+                    <Icon icon="cards" className="cards-shadow" />
+                    <Icon icon="cards" />
+                </span>
+                <span className="count">{gameState.cardsInDeckCount}</span>
             </span>
         </div>
     );

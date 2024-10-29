@@ -11,11 +11,13 @@
     justify-content: space-between;
     min-height: 100%;
     position: relative;
+    overflow: hidden;
 
     &.created {
         background-image: url('../../assets/dragon_bkg.png');
         background-position-y: top;
         background-size: cover;
+        overflow: visible;
     }
 
     .game {

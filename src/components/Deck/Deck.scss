@@ -47,17 +47,56 @@
         }
     }
 
-    .total-cards-in-deck {
-        background: rgba(0, 0, 0, .6);
-        position: absolute;
-        left: 50%;
-        top: 90%;
-        z-index: 101;
-        transform: translate(-50%, -75%);
-        padding: 3px 6px;
+    .deck-info {
+        // background: rgba(0, 0, 0, .6);
         border-radius: 4px;
+        color: $off-white-2;
+        padding: 3px 6px;
         font-size: .9rem;
         font-weight: bold;
-        color: $off-white-2;
+    }
+
+    .age {
+        font-family: QuadratDemibold;
+        position: absolute;
+        bottom: 4%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 101;
+        font-size: 1rem;
+        width: 100%;
+        text-align: center;
+        text-shadow: 1px 1px 2px $dark-gray;
+    }
+
+    .total-cards-in-deck {
+        display: flex;
+        right: 4%;
+        position: absolute;
+        top: 4%;
+        z-index: 101;
+
+        .count {
+            text-shadow: 1px 1px 2px $dark-gray;
+        }
+
+        .icons-wrapper {
+            position: relative;
+
+            .icon {
+                height: 15px;
+                width: 15px;
+                margin-right: 5px;
+                fill: $off-white-2;
+                position: absolute;
+                right: 90%;
+
+                &.cards-shadow {
+                    fill: rgba(0, 0, 0, 0.4);
+                    transform: translate(-1px, .5px);
+                }
+            }
+        }
+
     }
 }

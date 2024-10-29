@@ -4,7 +4,7 @@ import { IconData, IconProps } from './Icon.types';
 
 import './Icon.scss';
 
-export function Icon({icon}: IconProps): JSX.Element {
+export function Icon({className = '', icon}: IconProps): JSX.Element {
   const toObjectKey = (text: string): string => {
     return text
       .split('-')
@@ -18,7 +18,7 @@ export function Icon({icon}: IconProps): JSX.Element {
 
   return (
     <svg
-      className={`icon custom-svg-icon ${icon}`}
+      className={`icon custom-svg-icon ${icon} ${className}`}
       data-name="icon"
       xmlns="http://www.w3.org/2000/svg"
       viewBox={iconData.viewBox}
