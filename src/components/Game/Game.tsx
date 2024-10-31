@@ -117,6 +117,7 @@ export function Game(): JSX.Element {
                         <div key={`player-area-${player.id}`}>
                             <PlayerHand
                                 key={`player-hand-${player.id}`}
+                                actions={actions}
                                 className={playerPosition[player.userId]}
                                 player={{...player, cardsInHand: playerHands[player.id] || []}}
                             />

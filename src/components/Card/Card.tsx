@@ -40,16 +40,35 @@ const convertToSingularName = (tribeName: TribeName) => {
         return 'Elf';
     }
 
-
     return tribeName.replace(/s$/, '');
-}
+};
 
 export function Card(props: ICardProps): JSX.Element {
-    const { color, tribe, id } = props.card;
+    const {
+        card: {
+            color,
+            tribe,
+            id
+        },
+        className,
+        pauseAnimation,
+        selectable,
+        selected,
+    } = props;
+
+    const classNames = [
+        'card',
+        className || '',
+        color || '',
+        tribe.name.toLowerCase(),
+        selectable ? 'selectable' : '',
+        pauseAnimation ? 'paused' : '',
+        selected ? 'selected' : '',
+    ].filter(Boolean).join(' ');
 
     return (
         <div
-            className={`card ${props.className || ''} ${color || ''} ${tribe.name.toLowerCase()}`}
+            className={classNames}
             style={{
                 // @ts-ignore
                 backgroundImage: `url(${tribeImgs[tribe.name]})`,
