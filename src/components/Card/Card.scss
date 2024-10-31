@@ -20,7 +20,23 @@
     padding: 10px;
     box-sizing: border-box;
 
-    &.selectable,
+    &.selectable:not(.paused) {
+        &:after {
+            content: '';
+            position: absolute;
+            width: 107%;
+            height: 105%;
+            border-radius: 8px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 3px solid $selectable-main;
+            box-sizing: border-box;
+            animation: color-pulsate 1s infinite alternate,
+                glow-pulsate 1s infinite alternate;
+        }
+    }
+
     &.selected {
         &:after {
             content: '';
@@ -31,23 +47,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            border: 3px solid transparent;
+            border: 3.5px solid $selected;
             box-sizing: border-box;
-        }
-    }
-
-    &.selectable:not(.paused) {
-        &:after {
-            border-color: $selectable-main;
-            animation: width-pulsate 1s infinite alternate,
-                color-pulsate 1s infinite alternate,
-                glow-pulsate 1s infinite alternate;
-        }
-    }
-
-    &.selected{
-        &:after {
-            border-color: $selected;
         }
     }
 
@@ -89,10 +90,37 @@
     }
 
     .tribe-description {
+        margin-top: auto;
         background: rgba(255, 255, 255, 0.9);
         border-radius: 5px;
         color: black;
         font-size: 0.9rem;
         padding: 6px;
+    }
+
+    .set-leader-btn-wrapper {
+        margin-top: 5px;
+        z-index: 100;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 85%;
+    }
+
+    .leader-icon {
+        color: $gold-alt;
+        font-size: 1.5rem;
+        left: 50%;
+        position: absolute;
+        top: -13%;
+        transform: translateX(-50%);
+
+        &.shadow {
+            color: rgba(0, 0, 0, 0.8);
+            top: -12.5%;
+            transform: translateX(-55%);
+            font-size: 1.5rem;
+        }
     }
 }

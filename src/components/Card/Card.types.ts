@@ -4,9 +4,11 @@ export interface ICardProps {
     className?: string;
     card: ICard;
     customStyles?: Object;
+    isLeader?: boolean;
     onMouseEnter?: React.MouseEventHandler<HTMLDivElement>;
     onMouseLeave?: React.MouseEventHandler<HTMLDivElement>;
-    onClick?: (cardId: number) => any;
+    onSelect?: (cardId: number) => void;
+    onSetLeader?: (cardId: number) => void;
     pauseAnimation?: boolean;
     selectable?: boolean;
     selected?: boolean;

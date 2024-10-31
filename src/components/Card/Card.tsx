@@ -15,6 +15,9 @@ import skeletonImg from '../../assets/skeletons.png';
 import trollImg from '../../assets/trolls.png';
 import wingfolkImg from '../../assets/wingfolk.png';
 import wizardImg from '../../assets/wizards.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCrown } from '@fortawesome/free-solid-svg-icons';
+import { MouseEventHandler } from 'react';
 
 const tribeImgs = {
     [TribeName.CENTAURS]: centaurImg,
@@ -51,6 +54,7 @@ export function Card(props: ICardProps): JSX.Element {
             id
         },
         className,
+        isLeader,
         pauseAnimation,
         selectable,
         selected,
@@ -66,6 +70,11 @@ export function Card(props: ICardProps): JSX.Element {
         selected ? 'selected' : '',
     ].filter(Boolean).join(' ');
 
+    const handleSetLeader = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation();
+        props.onSetLeader(id)
+    }
+
     return (
         <div
             className={classNames}
@@ -79,7 +88,7 @@ export function Card(props: ICardProps): JSX.Element {
             }}
             onMouseEnter={(event) => props.onMouseEnter ? props.onMouseEnter(event) : null}
             onMouseLeave={(event) => props.onMouseLeave ? props.onMouseLeave(event) : null}
-            onClick={() => props.onClick ? props.onClick(id) : null}
+            onClick={() => props.onSelect ? props.onSelect(id) : null}
         >
            <div className="tribe-name">
                 {convertToSingularName(tribe.name)}
@@ -87,6 +96,32 @@ export function Card(props: ICardProps): JSX.Element {
             <div className="tribe-description">
                 {tribe.description}
             </div>
+            {!isLeader && selected ?
+                <div className="set-leader-btn-wrapper">
+                    <button
+                        className="btn btn-action btn-3d btn-block btn-medium"
+                        onClick={handleSetLeader}
+                    >
+                        Make Leader <FontAwesomeIcon
+                            icon={faCrown}
+                        />
+                    </button>
+                </div>
+                : null
+            }
+            {isLeader ?
+                <>
+                    <FontAwesomeIcon
+                        className="leader-icon shadow"
+                        icon={faCrown}
+                    />
+                    <FontAwesomeIcon
+                        className="leader-icon"
+                        icon={faCrown}
+                    />
+                </>
+                 : null
+            }
         </div>
     );
 }

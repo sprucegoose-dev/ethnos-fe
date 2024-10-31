@@ -9,7 +9,6 @@ export const calculateCardStyle = ({
     index,
     hoveredCardIndex,
     totalCards,
-    bottomPosition,
 }: ICalculateCardStyleParams) => {
     let middle = (totalCards / 2);
     middle = middle % 2 ? middle - .5 : middle;
@@ -31,7 +30,7 @@ export const calculateCardStyle = ({
     }
 
     if (hoveredCardIndex === index) {
-        translateY = -60;
+        translateY = -61.5;
         rotate = 0;
     }
 

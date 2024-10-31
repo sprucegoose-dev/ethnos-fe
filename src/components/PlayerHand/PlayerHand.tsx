@@ -8,7 +8,7 @@ import { FacedownCard } from '../FacedownCard/FacedownCard';
 import { calculateCardStyle } from './helpers';
 
 import './PlayerHand.scss';
-import { ActionType, IPlayBandPayload } from '../Game/Game.types';
+import { ActionType, IPlayBandPayload, TribeName } from '../Game/Game.types';
 
 export function PlayerHand(props: IPlayerHandProps): JSX.Element {
     const {
@@ -21,7 +21,6 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
     const [selectedLeaderId, setSelectedLeaderId] = useState<number>(null);
     const [pauseAnimation, setPauseAnimation] = useState<boolean>(false);
     const playBandActions = actions.filter(action => action.type === ActionType.PLAY_BAND) as IPlayBandPayload[];
-
     const cardsInHand = (player.cardsInHand || []).sort((cardA, cardB) => cardA.index - cardB.index);
 
     const handleMouseEnter = throttle((index: number) => {
@@ -32,12 +31,25 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
         setHoveredCardIndex(null);
     }, 1000);
 
+    const assignFallbackLeader = (removedCardId: number) => {
+        const fallbackCard = cardsInHand
+            .find(card => selectedCardIds.includes(card.id) &&
+                card.id !== removedCardId &&
+                card.tribe.name !== TribeName.SKELETONS
+        );
+
+        if (fallbackCard) {
+            setSelectedLeaderId(fallbackCard.id);
+        }
+    }
+
     const selectCard = (selectedCardId: number) => {
         if (selectedCardIds.includes(selectedCardId)) {
             setPauseAnimation(true);
 
             if (selectedLeaderId === selectedCardId) {
                 setSelectedLeaderId(null);
+                assignFallbackLeader(selectedCardId);
             }
 
             setSelectedCardIds(selectedCardIds.filter((cardId) => cardId !== selectedCardId));
@@ -81,16 +93,18 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
                     {className.includes('bottom') ?
                         <Card
                             card={card}
-                            pauseAnimation={pauseAnimation}
-                            selectable={isSelectable(card.id)}
-                            selected={selectedCardIds.includes(card.id)}
                             customStyles={calculateCardStyle({
                                 index,
                                 totalCards: cardsInHand.length,
                                 bottomPosition: className.includes('bottom'),
                                 hoveredCardIndex
                             })}
-                            onClick={selectCard}
+                            isLeader={selectedLeaderId && selectedLeaderId === card.id}
+                            pauseAnimation={pauseAnimation}
+                            selectable={selectedCardIds.length && isSelectable(card.id)}
+                            selected={selectedCardIds.includes(card.id)}
+                            onSelect={selectCard}
+                            onSetLeader={setSelectedLeaderId}
                         /> :
                         <FacedownCard
                             customStyles={calculateCardStyle(({

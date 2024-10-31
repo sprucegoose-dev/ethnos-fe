@@ -49,7 +49,7 @@ export function Market({activePlayer, gameState}: IDeckProps): JSX.Element {
                 cardsInMarket.map((card, index) =>
                     <div className={`card-wrapper ${calculateClass(index)}`} key={`card-${index}`}>
                         <Card
-                            onClick={handlePickUpCard}
+                            onSelect={handlePickUpCard}
                             onMouseEnter={() => handleMouseEnter(index)}
                             onMouseLeave={handleMouseLeave}
                             card={card}

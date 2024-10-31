@@ -2,35 +2,56 @@
 
 .region {
     position: absolute;
+    border: 2px solid transparent;
+    height: 150px;
+    width: 150px;
 
     &.blue {
-        top: 25%;
+        border-color: $card-blue;
         left: 20%;
+        top: 20%;
+        transform: translate(-20%, -20%);
     }
 
     &.red {
-        top: 20%;
-        right: 40%;
+        border-color: $card-red;
+        right: 45%;
+        top: 15%;
+        transform: translate(45%, -15%);
     }
 
     &.gray {
-        top: 25%;
+        border-color: $card-gray;
         right: 15%;
+        top: 20%;
+        transform: translate(15%, -20%);
     }
 
     &.purple {
+        border-color: $card-purple;
+        left: 33%;
         top: 50%;
-        left: 29%;
+        transform: translate(-33%, -50%);
     }
 
     &.orange {
+        border-color: $card-orange;
+        left: 56.5%;
         top: 50%;
-        left: 51%;
+        transform: translate(-56.5%, -50%);
     }
 
     &.green {
-        top: 50%;
+        border-color: $card-green;
         right: 23%;
+        top: 50%;
+    }
+
+    .region-values {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
     }
 
     .region-value {

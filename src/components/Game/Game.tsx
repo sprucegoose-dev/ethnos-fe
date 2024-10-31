@@ -9,6 +9,7 @@ import {
     ICard,
     IGameState,
     IPlayer,
+    IRegion,
 } from './Game.types';
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
@@ -39,6 +40,7 @@ export function Game(): JSX.Element {
     const [ actions, setActions ] = useState<IActionPayload[]>([]);
     const [ activePlayer, setActivePlayer ] = useState<IPlayer>(null);
     const [ playerHands, setPlayerHands ] = useState<{[playerId: number]: ICard[]}>({});
+    const [ actionPayload, setActionPayload ] = useState<IActionPayload>({ type: null});
     const navigate = useNavigate();
     let  currentPlayer: IPlayer;
     let playerPosition: {[userId: number]: string};
@@ -90,6 +92,11 @@ export function Game(): JSX.Element {
         }
     }, [auth, gameId, navigate]);
 
+    const onSelectRegion = (_region: IRegion) => {
+
+
+    }
+
     if (!gameState) {
         return;
     }
@@ -109,7 +116,11 @@ export function Game(): JSX.Element {
                 <div className="game">
 
                     {gameState.regions.map(region =>
-                        <Region region={region} key={`region-${region.color}`} />
+                        <Region
+                            key={`region-${region.color}`}
+                            region={region}
+                            onClick={onSelectRegion}
+                        />
                     )}
                     <Market gameState={gameState} activePlayer={activePlayer} />
                     <Deck gameState={gameState} activePlayer={activePlayer} actions={actions}/>
