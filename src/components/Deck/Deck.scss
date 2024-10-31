@@ -55,28 +55,28 @@
         font-weight: bold;
     }
 
-    .dragons-container {
+    .revealed-dragon {
         position: absolute;
+        height: auto;
+        width: 30%;
         z-index: 101;
-        display: flex;
-        top: 60%;
-        left: 50%;
-        transform: translateX(-50%);
 
-        .tribe-icon {
-            margin: 0 2.5px;
+        &.dragon-1 {
+            bottom: 1.5px;
+            right: 1.5px;
+        }
 
-            .tribe-img {
-                height: 15px;
-                width: 15px;
-            }
+        &.dragon-2 {
+            bottom: 1.5px;
+            left: 1.5px;
+            transform: scaleX(-1);
         }
     }
 
     .age {
         font-family: QuadratDemibold;
         position: absolute;
-        bottom: 4.5%;
+        bottom: 26%;
         left: 50%;
         transform: translateX(-50%);
         z-index: 101;
@@ -123,25 +123,17 @@
 
     .deck {
 
-        .dragons-container {
-            top: 62%;
-
-            .tribe-icon {
-                margin: 0 3px;
-
-                .tribe-img {
-                    height: 30px;
-                    width: 30px;
-                }
-            }
-        }
-
         .age {
             font-size: 1rem;
         }
 
         .total-cards-in-deck {
             font-size: .9rem;
+        }
+
+        .revealed-dragon {
+            height: auto;
+            width: 32%;
         }
     }
 }

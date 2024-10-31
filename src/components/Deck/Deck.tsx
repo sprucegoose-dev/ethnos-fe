@@ -13,7 +13,7 @@ import { FacedownCard } from '../FacedownCard/FacedownCard';
 
 import './Deck.scss';
 import Icon from '../Icon/Icon';
-import { TribeIcon } from '../TribeIcon/TribeIcon';
+import dragonImg from '../../assets/dragon_trans_4_outlined.png';
 
 export function Deck(props: IDeckProps): JSX.Element {
     const {
@@ -47,16 +47,17 @@ export function Deck(props: IDeckProps): JSX.Element {
                     <FacedownCard showLogo={!index} key={`facedown-card-${index}`} />
                 )
             }
-            <div className="dragons-container">
+            {/* <div className="dragons-container"> */}
                 {
-                    revealedDragons.map(dragon =>
-                        <TribeIcon
+                    revealedDragons.map((dragon, index) =>
+                        <img
                             key={`dragon-${dragon.id}`}
-                            tribe={dragon.tribe}
-                            showTribeName={false}
+                            className={`revealed-dragon dragon-${index + 1}`}
+                            src={dragonImg}
+                            alt="Revealed Dragon"
                         />
                 )}
-            </div>
+            {/* </div> */}
             <span className="deck-info age">
                 AGE {'I'.repeat(gameState.age)}
             </span>
