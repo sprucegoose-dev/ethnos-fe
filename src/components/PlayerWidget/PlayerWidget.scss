@@ -43,8 +43,13 @@
     }
 
     &.top {
-        right: 27%;
+        right: 22%;
         top: 8%;
+
+        &.player-count-4,
+        .player-count-2 {
+            right: 4%;
+        }
     }
 
     .token-icon {

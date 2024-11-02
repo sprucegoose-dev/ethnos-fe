@@ -153,6 +153,7 @@ export function Game(): JSX.Element {
                                 key={`player-widget-${player.id}`}
                                 className={playerPosition[player.userId]}
                                 player={{...player, cardsInHand: playerHands[player.id] || []}}
+                                playerCount={gameState.players.length}
                                 highestGiantToken={highestGiantToken}
                                 tribes={gameState.settings.tribes}
                             />

@@ -4,5 +4,6 @@ export interface IPlayerWidgetProps {
     className: string;
     highestGiantToken: number;
     player: IPlayer;
+    playerCount: number;
     tribes: TribeName[];
 }

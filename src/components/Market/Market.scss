@@ -1,28 +1,25 @@
 @import '../../styles/variables.scss';
 
 .market {
+    margin: 0 auto;
     width: 70vw;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
-    gap: 0 10px;
+    gap: 0 .5%;
     position: absolute;
-    bottom: 8%;
+    bottom: 14.5%;
     left: 50%;
     transform: translateX(-50%);
     perspective: 1000px;
-    display: none;
 
     .card-wrapper {
-        width: clamp(60px, 10vw, 90px);
-        height: calc(clamp(60px, 10vw, 90px) * 1.47);
-        border-radius: 5px;
+        aspect-ratio: 180 / 265;
         transition: transform 0.3s ease;
         display: flex;
         cursor: pointer;
         position: relative;
         transform: rotateX(40deg);
-        margin-bottom: -14px;
 
         .tribe-name,
         .tribe-description {
@@ -32,13 +29,14 @@
 
         .card {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            height: 100%;
+            height: auto;
             width: 100%;
             z-index: 1;
+            border-width: 4px;
         }
 
         &.hover {
-            transform: translateY(-100%) translateX(-25%) rotateX(0deg) scale(.9);
+            transform: translateY(-110%) translateX(-25%) rotateX(0deg) scale(.9);
             z-index: 10;
 
             .card {

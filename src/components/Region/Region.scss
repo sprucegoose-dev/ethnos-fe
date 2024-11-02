@@ -32,15 +32,56 @@
     }
 
     .region-value {
+        background: rgba(0, 0, 0, .5);
         color: white;
         font-family: QuadratDemibold;
         margin-right: 15px;
-        font-size: 1rem;
-        border: 2px solid white;
-        padding: 5px 10px;
+        font-size: .9rem;
+        // border: 2px solid white;
+        padding: 4px 8px;
+        text-shadow: .5px .5px 3px black;
+        border-radius: 50%;
 
         &:last-of-type {
             margin-right: 0;
         }
     }
+
+    &.red {
+        .region-values {
+            left: 46%;
+            top: 34%;
+        }
+    }
+
+    &.blue {
+
+        .region-values {
+            left: 55%;
+            top: 30%;
+        }
+    }
+
+    &.gray {
+    }
+
+    &.orange {
+
+        .region-values {
+            top: 28%;
+        }
+    }
+
+    &.green {
+
+        .region-values {
+            top: 24.5%;
+        }
+    }
+
+    &.purple {
+        left: -5.7%;
+        top: -31%;
+    }
+
 }
