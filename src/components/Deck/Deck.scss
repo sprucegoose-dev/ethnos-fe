@@ -71,6 +71,12 @@
             left: 1.5px;
             transform: scaleX(-1);
         }
+
+        &.dragon-3 {
+            top: 1.5px;
+            left: 1.5px;
+            transform: scale(-1, -1);
+        }
     }
 
     .age {

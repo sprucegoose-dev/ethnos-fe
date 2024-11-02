@@ -1,7 +1,7 @@
 @import '../../styles/variables.scss';
 
 .game-container {
-    background-image: url('../../assets/map_bkg.png');
+    background-image: url('../../assets/backgrounds/map_bkg.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -14,7 +14,7 @@
     overflow: hidden;
 
     &.created {
-        background-image: url('../../assets/dragon_bkg.png');
+        background-image: url('../../assets/backgrounds/dragon_bkg.png');
         background-position-y: top;
         background-size: cover;
         overflow: visible;
@@ -26,6 +26,19 @@
         justify-content: space-between;
         flex-grow: 1;
         overflow: hidden;
+    }
+
+    .regions {
+        height: 50vw;
+        display: flex;
+        width: 70vw;
+        flex-wrap: wrap;
+        margin: 5% auto;
+
+        .region {
+            flex-basis: 33.33%;
+            box-sizing: border-box;
+        }
     }
 
     .deck {

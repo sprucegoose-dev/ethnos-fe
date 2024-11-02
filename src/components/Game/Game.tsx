@@ -114,14 +114,15 @@ export function Game(): JSX.Element {
             }
             {[STARTED, ENDED, CANCELLED].includes(gameState.state) ?
                 <div className="game">
-
-                    {gameState.regions.map(region =>
-                        <Region
-                            key={`region-${region.color}`}
-                            region={region}
-                            onClick={onSelectRegion}
-                        />
-                    )}
+                    <div className="regions">
+                        {gameState.regions.map(region =>
+                            <Region
+                                key={`region-${region.color}`}
+                                region={region}
+                                onClick={onSelectRegion}
+                            />
+                        )}
+                    </div>
                     <Market gameState={gameState} activePlayer={activePlayer} />
                     <Deck gameState={gameState} activePlayer={activePlayer} actions={actions}/>
                     {gameState.players.map((player) =>

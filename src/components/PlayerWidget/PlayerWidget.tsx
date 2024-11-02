@@ -5,12 +5,12 @@ import './PlayerWidget.scss';
 import { CardState, Color, TribeName } from '../Game/Game.types';
 import { TribeIcon } from '../TribeIcon/TribeIcon';
 import { TokenIcon } from '../TokenIcon/TokenIcon';
-import orcTokenGreen from '../../assets/orc_token_green.png';
-import orcTokenGray from '../../assets/orc_token_gray.png';
-import orcTokenPurple from '../../assets/orc_token_purple.png';
-import orcTokenOrange from '../../assets/orc_token_orange.png';
-import orcTokenRed from '../../assets/orc_token_red.png';
-import orcTokenBlue from '../../assets/orc_token_blue.png';
+import orcTokenGreen from '../../assets/orc_tokens/orc_token_green.png';
+import orcTokenGray from '../../assets/orc_tokens/orc_token_gray.png';
+import orcTokenPurple from '../../assets/orc_tokens/orc_token_purple.png';
+import orcTokenOrange from '../../assets/orc_tokens/orc_token_orange.png';
+import orcTokenRed from '../../assets/orc_tokens/orc_token_red.png';
+import orcTokenBlue from '../../assets/orc_tokens/orc_token_blue.png';
 
 const orcTokens = {
     [Color.GREEN]: orcTokenGreen,

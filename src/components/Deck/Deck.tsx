@@ -47,17 +47,15 @@ export function Deck(props: IDeckProps): JSX.Element {
                     <FacedownCard showLogo={!index} key={`facedown-card-${index}`} />
                 )
             }
-            {/* <div className="dragons-container"> */}
-                {
-                    revealedDragons.map((dragon, index) =>
-                        <img
-                            key={`dragon-${dragon.id}`}
-                            className={`revealed-dragon dragon-${index + 1}`}
-                            src={dragonImg}
-                            alt="Revealed Dragon"
-                        />
-                )}
-            {/* </div> */}
+            {
+                revealedDragons.map((dragon, index) =>
+                    <img
+                        key={`dragon-${dragon.id}`}
+                        className={`revealed-dragon dragon-${index + 1}`}
+                        src={dragonImg}
+                        alt="Revealed Dragon"
+                    />
+            )}
             <span className="deck-info age">
                 AGE {'I'.repeat(gameState.age)}
             </span>

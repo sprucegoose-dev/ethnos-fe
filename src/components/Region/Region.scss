@@ -1,51 +1,70 @@
 @import '../../styles/variables.scss';
 
 .region {
-    position: absolute;
     border: 2px solid transparent;
-    height: 150px;
-    width: 150px;
+    position: relative;
+    // height: 150px;
+    // width: 150px;
 
-    &.blue {
-        border-color: $card-blue;
-        left: 20%;
-        top: 20%;
-        transform: translate(-20%, -20%);
+    .region-img,
+    .region-img-outlined {
+        height: auto;
+        width: 100%;
     }
 
-    &.red {
-        border-color: $card-red;
-        right: 45%;
-        top: 15%;
-        transform: translate(45%, -15%);
+    &:hover {
+        .region-img {
+            display: none;
+        }
     }
 
-    &.gray {
-        border-color: $card-gray;
-        right: 15%;
-        top: 20%;
-        transform: translate(15%, -20%);
+    &:not(:hover) {
+
+        .region-img-outlined {
+            display: none;
+        }
     }
 
-    &.purple {
-        border-color: $card-purple;
-        left: 33%;
-        top: 50%;
-        transform: translate(-33%, -50%);
-    }
+    // &.blue {
+    //     // border-color: $card-blue;
+    //     left: 20%;
+    //     top: 20%;
+    //     transform: translate(-20%, -20%);
+    // }
 
-    &.orange {
-        border-color: $card-orange;
-        left: 56.5%;
-        top: 50%;
-        transform: translate(-56.5%, -50%);
-    }
+    // &.red {
+    //     // border-color: $card-red;
+    //     right: 45%;
+    //     top: 15%;
+    //     transform: translate(45%, -15%);
+    // }
 
-    &.green {
-        border-color: $card-green;
-        right: 23%;
-        top: 50%;
-    }
+    // &.gray {
+    //     // border-color: $card-gray;
+    //     right: 15%;
+    //     top: 20%;
+    //     transform: translate(15%, -20%);
+    // }
+
+    // &.purple {
+    //     // border-color: $card-purple;
+    //     left: 33%;
+    //     top: 50%;
+    //     transform: translate(-33%, -50%);
+    // }
+
+    // &.orange {
+    //     // border-color: $card-orange;
+    //     left: 56.5%;
+    //     top: 50%;
+    //     transform: translate(-56.5%, -50%);
+    // }
+
+    // &.green {
+    //     // border-color: $card-green;
+    //     right: 23%;
+    //     top: 50%;
+    // }
 
     .region-values {
         position: absolute;
