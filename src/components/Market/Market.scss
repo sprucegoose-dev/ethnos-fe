@@ -11,6 +11,7 @@
     left: 50%;
     transform: translateX(-50%);
     perspective: 1000px;
+    display: none;
 
     .card-wrapper {
         width: clamp(60px, 10vw, 90px);

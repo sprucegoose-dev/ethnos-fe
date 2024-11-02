@@ -25,6 +25,7 @@ import { Region } from '../Region/Region';
 import { getHighestGiantTokenValue, getPlayerPositions } from './helpers';
 import { PlayerWidget } from '../PlayerWidget/PlayerWidget';
 import { PlayerHand } from '../PlayerHand/PlayerHand';
+import { regionOrder } from '../Region/Region.types';
 
 const {
     CREATED,
@@ -107,6 +108,10 @@ export function Game(): JSX.Element {
         highestGiantToken = getHighestGiantTokenValue(gameState.players);
     }
 
+    const sortedRegions = gameState.regions.sort((regionA, regionB) =>
+        regionOrder[regionA.color] - regionOrder[regionB.color]
+    );
+
     return (
         <div className={`game-container ${gameState.state.toLowerCase()}`}>
             {gameState.state === CREATED ?
@@ -114,14 +119,25 @@ export function Game(): JSX.Element {
             }
             {[STARTED, ENDED, CANCELLED].includes(gameState.state) ?
                 <div className="game">
-                    <div className="regions">
-                        {gameState.regions.map(region =>
-                            <Region
-                                key={`region-${region.color}`}
-                                region={region}
-                                onClick={onSelectRegion}
-                            />
-                        )}
+                    <div className="regions-container">
+                        <div className="regions-row">
+                            {sortedRegions.slice(0, 3).map(region =>
+                                <Region
+                                    key={`region-${region.color}`}
+                                    region={region}
+                                    onClick={onSelectRegion}
+                                />
+                            )}
+                        </div>
+                        <div className="regions-row">
+                            {sortedRegions.slice(3).map(region =>
+                                <Region
+                                    key={`region-${region.color}`}
+                                    region={region}
+                                    onClick={onSelectRegion}
+                                />
+                            )}
+                        </div>
                     </div>
                     <Market gameState={gameState} activePlayer={activePlayer} />
                     <Deck gameState={gameState} activePlayer={activePlayer} actions={actions}/>
