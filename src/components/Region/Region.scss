@@ -55,6 +55,10 @@
 
     &.red {
 
+        .player-tokens-container {
+            bottom: 30%;
+        }
+
         .region-values {
             left: 46%;
             top: 30%;
@@ -66,6 +70,11 @@
     }
 
     &.blue {
+
+        .player-tokens-container {
+            bottom: 32%;
+            left: 57%;
+        }
 
         .region-values {
             left: 55%;
@@ -79,6 +88,11 @@
 
     &.gray {
 
+        .player-tokens-container {
+            bottom: 34%;
+            left: 58%;
+        }
+
         .region-values {
             left: 35%;
             top: 30%;
@@ -91,6 +105,11 @@
 
     &.orange {
 
+        .player-tokens-container {
+            bottom: 30%;
+            left: 55%;
+        }
+
         .region-values {
             top: 28%;
 
@@ -101,6 +120,11 @@
     }
 
     &.green {
+
+        .player-tokens-container {
+            bottom: 65%;
+            left: 48%;
+        }
 
         .region-values {
             left: 55%;
@@ -116,12 +140,60 @@
         left: -5.7%;
         top: -31%;
 
+        .player-tokens-container {
+            bottom: 37%;
+            left: 48%;
+            width: 66%;
+        }
+
         .region-values {
             top: 30%;
 
             .region-value {
                 background: rgba(67, 33, 80, 0.35);
             }
+        }
+    }
+
+    .player-tokens-container {
+        position: absolute;
+        bottom: 25%;
+        left: 50%;
+        z-index: 10;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 0 5%;
+        width: 68%;
+    }
+
+    .player-tokens {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 0;
+    }
+
+    @for $i from 2 through 100 {
+        .player-token:nth-child(#{$i}) {
+            position: absolute;
+            transform: translateX(calc($i - 1) * 5%)  translateY(calc($i - 1) * -10%);;
+            transform-origin: center;
+            z-index: $i;
+        }
+    }
+
+    .player-token {
+        border: .5px solid white;
+        border-radius: 50%;
+        width: 100%;
+        height: auto;
+        max-width: 35px;
+        margin: 2px 0;
+        box-shadow: -1px 1px 3px rgba(0, 0, 0, .3);
+
+        &.white,
+        &.yellow {
+            border-color: $dark-gray-2;
         }
     }
 }

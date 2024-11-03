@@ -1,15 +1,24 @@
+import { IPlayer } from '../Game/Game.types';
 import { Color } from '../Game/Shared.types';
+
+export interface IPlayerRegion {
+    regionId: number;
+    playerId: number;
+    tokens: number;
+}
 
 export interface IRegion {
     color: Color;
     gameId: number;
     id: number;
     values: number[];
+    playerTokens: IPlayerRegion[];
 }
 
 export interface IRegionProps {
     onSelect: (region: IRegion) => void;
     region: IRegion;
+    players: IPlayer[];
 }
 
 export const regionOrder: { [key: string]: number } = {

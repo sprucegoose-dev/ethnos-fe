@@ -24,14 +24,16 @@ const tokenIcons = {
 
 export function TokenIcon(props: ITokenIconProps): JSX.Element {
     const {
+        className,
         color,
         disabled,
         onSelect,
-        selected
+        selected,
+        text
     } = props;
 
     return (
-        <div className={`token-icon ${color} ${disabled ? 'disabled' : ''}`}>
+        <div className={`token-icon ${color} ${disabled ? 'disabled' : ''} ${className ?? ''}`}>
             <img
                 className={`token-img ${onSelect && !disabled ? 'selectable' : ''} ${disabled ? 'disabled' : ''}`}
                 // @ts-ignore
@@ -46,6 +48,13 @@ export function TokenIcon(props: ITokenIconProps): JSX.Element {
             {disabled ?
                 <span className="disabled-icon"></span> :
                 null
+            }
+            {
+                text ?
+                    <span className="token-text">
+                        {text}
+                    </span>
+                    : null
             }
         </div>
     );

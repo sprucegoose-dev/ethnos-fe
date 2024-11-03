@@ -179,6 +179,7 @@ export function Game(): JSX.Element {
                                     key={`region-${region.color}`}
                                     region={region}
                                     onSelect={onSelectRegion}
+                                    players={gameState.players}
                                 />
                             )}
                         </div>
@@ -188,6 +189,7 @@ export function Game(): JSX.Element {
                                     key={`region-${region.color}`}
                                     region={region}
                                     onSelect={onSelectRegion}
+                                    players={gameState.players}
                                 />
                             )}
                         </div>
