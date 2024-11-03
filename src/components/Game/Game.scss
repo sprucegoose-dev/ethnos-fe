@@ -29,7 +29,8 @@
     }
 
     .regions-container {
-        width: 70vw;
+        // width: 70vw;
+        width: 60vw;
         margin: 5% auto;
         display: flex;
         flex-direction: column;
@@ -84,3 +85,12 @@
     }
 }
 
+@media screen and (orientation: portrait) {
+
+    .game-container {
+
+        .regions-container {
+            width: 70vh;
+        }
+    }
+}

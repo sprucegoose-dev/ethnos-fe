@@ -13,7 +13,7 @@ import { FacedownCard } from '../FacedownCard/FacedownCard';
 
 import './Deck.scss';
 import Icon from '../Icon/Icon';
-import dragonImg from '../../assets/dragon_trans_4_outlined.png';
+import dragonImg from '../../assets/dragon_trans_outlined.png';
 
 export function Deck(props: IDeckProps): JSX.Element {
     const {

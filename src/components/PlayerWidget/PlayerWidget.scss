@@ -10,41 +10,57 @@
     padding: 10px;
     position: absolute;
     width: 95px;
+    transform: scale(0.6);
+    transform-origin: center;
 
     &.bottom {
-        bottom: 10%;
-        left: 4%;
+        // bottom: 10%;
+        // left: 4%;
+        bottom: 4%;
+        left: 2%;
     }
 
     &.left {
         flex-direction: column;
-        left: 7%;
+        left: 6%;
+        // left: 7%;
         top: 50%;
-        transform: translateY(-50%);
+        transform: translateY(-50%)  scale(0.6);
     }
 
     &.left-corner {
         flex-direction: column;
-        left: 8%;
-        top: 12%;
+        left: 6%;
+        // left: 8%;
+        // top: 12%;
+        top: 6%;
     }
 
     &.right-corner {
         flex-direction: column;
-        right: 8%;
-        top: 12%;
+        // right: 8%;
+        // top: 12%;
+        right: 6%;
+        top: 6%;
     }
 
     &.right {
         flex-direction: column;
-        right: 7%;
+        // right: 7%;
+        // top: 50%;
+        // transform: translateY(-50%);
+
+        right: 6%;
+        // left: 7%;
         top: 50%;
-        transform: translateY(-50%);
+        transform: translateY(-50%)  scale(0.6);
     }
 
     &.top {
-        right: 22%;
-        top: 8%;
+        // right: 22%;
+        // top: 8%;
+        right: 18%;
+        top: 6%;
 
         &.player-count-4,
         .player-count-2 {
@@ -457,6 +473,53 @@
 
             &:hover {
                 background-image: radial-gradient(circle at 50% 0,$off-white-2, $bronze 60%);
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: $screen-sm) {
+
+    .player-widget {
+        transform: scale(1);
+        transform-origin: center;
+
+        &.bottom {
+            bottom: 10%;
+            left: 4%;
+        }
+
+        &.left {
+            flex-direction: column;
+            left: 7%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        &.left-corner {
+            left: 8%;
+            top: 12%;
+        }
+
+        &.right-corner {
+            right: 8%;
+            top: 12%;
+        }
+
+        &.right {
+            flex-direction: column;
+            right: 7%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        &.top {
+            right: 20%;
+            top: 8%;
+
+            &.player-count-4,
+            .player-count-2 {
+                right: 4%;
             }
         }
     }

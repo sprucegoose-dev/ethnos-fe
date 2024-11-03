@@ -30,6 +30,8 @@
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
+        display: flex;
+        flex-wrap: nowrap;
     }
 
     .region-value {
@@ -37,11 +39,11 @@
         color: white;
         font-family: QuadratDemibold;
         margin-right: 15px;
-        font-size: .9rem;
+        font-size: .7rem;
         text-shadow: .5px .5px 3px black;
         border-radius: 50%;
-        height: 25px;
-        width: 25px;
+        height: 20px;
+        width: 20px;
         display: inline-flex;
         justify-content: center;
         align-items: center;
@@ -122,5 +124,16 @@
             }
         }
     }
+}
 
+@media only screen and (min-width: $screen-sm) {
+
+    .region {
+
+        .region-value {
+            height: 25px;
+            font-size: .9rem;
+            width: 25px;
+        }
+    }
 }
