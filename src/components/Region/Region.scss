@@ -183,7 +183,7 @@
     }
 
     .player-token {
-        border: .5px solid white;
+        border: .5px solid rgba(255, 255, 255, .7);
         border-radius: 50%;
         width: 100%;
         height: auto;
@@ -193,7 +193,7 @@
 
         &.white,
         &.yellow {
-            border-color: $dark-gray-2;
+            border-color: rgba(50, 50, 50, .7);
         }
     }
 }

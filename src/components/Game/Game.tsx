@@ -209,6 +209,7 @@ export function Game(): JSX.Element {
                                 className={playerPosition[player.userId]}
                                 player={{...player, cardsInHand: playerHands[player.id] || []}}
                                 playerCount={gameState.players.length}
+                                isActivePlayer={player.id === currentPlayer.id}
                                 highestGiantToken={highestGiantToken}
                                 tribes={gameState.settings.tribes}
                             />

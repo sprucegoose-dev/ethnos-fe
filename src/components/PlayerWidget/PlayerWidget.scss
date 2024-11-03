@@ -14,8 +14,6 @@
     transform-origin: center;
 
     &.bottom {
-        // bottom: 10%;
-        // left: 4%;
         bottom: 4%;
         left: 2%;
     }
@@ -23,7 +21,6 @@
     &.left {
         flex-direction: column;
         left: 6%;
-        // left: 7%;
         top: 50%;
         transform: translateY(-50%)  scale(0.6);
     }
@@ -31,40 +28,40 @@
     &.left-corner {
         flex-direction: column;
         left: 6%;
-        // left: 8%;
-        // top: 12%;
         top: 6%;
     }
 
     &.right-corner {
         flex-direction: column;
-        // right: 8%;
-        // top: 12%;
         right: 6%;
         top: 6%;
     }
 
     &.right {
         flex-direction: column;
-        // right: 7%;
-        // top: 50%;
-        // transform: translateY(-50%);
-
         right: 6%;
-        // left: 7%;
         top: 50%;
         transform: translateY(-50%)  scale(0.6);
     }
 
     &.top {
-        // right: 22%;
-        // top: 8%;
         right: 18%;
         top: 6%;
 
         &.player-count-4,
         .player-count-2 {
             right: 4%;
+        }
+    }
+
+    &.active-player {
+
+        .token-icon,
+        .username-backdrop {
+            border: 2px solid white;
+            box-shadow: 0 0 2px rgba(255, 223, 186, 0.8),
+                    0 0 18px rgba(255, 223, 186, 0.6),
+                    0 0 24px rgba(255, 255, 255, 0.4);
         }
     }
 

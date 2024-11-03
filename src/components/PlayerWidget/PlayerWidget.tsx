@@ -26,6 +26,7 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
     const {
         className,
         highestGiantToken,
+        isActivePlayer,
         player,
         playerCount,
         tribes
@@ -65,7 +66,10 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
     const tokenPositions = getTokenPositions();
 
     return (
-        <div className={`player-widget ${className || ''} player-count-${playerCount}`}>
+        <div className={`player-widget ${className || ''} player-count-${playerCount} ${isActivePlayer ? 'active-player' : ''}`}>
+            <span className={`username ${player.color} username-backdrop`}>
+                {player.user.username}
+            </span>
             <TokenIcon color={player.color} />
             <span className={`username ${player.color}`}>
                 {player.user.username}
