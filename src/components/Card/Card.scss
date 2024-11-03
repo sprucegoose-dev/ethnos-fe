@@ -12,13 +12,11 @@
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     width: $card-width;
     height: $card-height;
-    padding: 10px;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 
     &.selectable:not(.paused) {
         &:after {
@@ -26,7 +24,7 @@
             position: absolute;
             width: 107%;
             height: 105%;
-            border-radius: 8px;
+            border-radius: 4px;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -43,7 +41,7 @@
             position: absolute;
             width: 109%;
             height: 106%;
-            border-radius: 8px;
+            border-radius: 4px;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -53,27 +51,69 @@
     }
 
     &.blue {
+        background: $card-blue;
         border-color: $card-blue;
+        border-width: 0;
+        padding: 5px;;
+        // background-image: url('../../assets/cards/card_blue_bkg.png');
+        // background-position-x: center;
+        // background-repeat: no-repeat;
+        // background-size: cover;
     }
 
     &.gray {
+        background: $card-gray;
         border-color: $card-gray;
+        border-width: 0;
+        padding: 5px;;
+        // background-image: url('../../assets/cards/card_gray_bkg.png');
+        // background-position-x: center;
+        // background-repeat: no-repeat;
+        // background-size: cover;
     }
 
     &.green {
+        background: $card-green;
         border-color: $card-green;
+        border-width: 0;
+        padding: 5px;;
+        // background-image: url('../../assets/cards/card_green_bkg.png');
+        // background-position-x: center;
+        // background-repeat: no-repeat;
+        // background-size: cover;
     }
 
     &.orange {
+        background: $card-orange;
         border-color: $card-orange;
+        border-width: 0;
+        padding: 5px;;
+        // background-image: url('../../assets/cards/card_orange_bkg.png');
+        // background-position-x: center;
+        // background-repeat: no-repeat;
+        // background-size: cover;
     }
 
     &.purple {
+        background: $card-purple;
         border-color: $card-purple;
+        border-width: 0;
+        padding: 5px;;
+        // background-image: url('../../assets/cards/card_purple_bkg.png');
+        // background-position-x: center;
+        // background-repeat: no-repeat;
+        // background-size: cover;
     }
 
     &.red {
+        background: $card-red;
         border-color: $card-red;
+        border-width: 0;
+        padding: 5px;;
+        // background-image: url('../../assets/cards/card_red_bkg.png');
+        // background-position-x: center;
+        // background-repeat: no-repeat;
+        // background-size: cover;
     }
 
     &.skeletons {
@@ -122,5 +162,14 @@
             transform: translateX(-55%);
             font-size: 1.5rem;
         }
+    }
+
+    .card-content {
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 10px;
+        flex-grow: 1;
     }
 }

@@ -78,19 +78,22 @@ export function Card(props: ICardProps): JSX.Element {
     return (
         <div
             className={classNames}
-            style={{
-                // @ts-ignore
-                backgroundImage: `url(${tribeImgs[tribe.name]})`,
-                backgroundSize: 'cover',
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center',
-                ...(props.customStyles || {})
-            }}
+            style={(props.customStyles || {})}
             onMouseEnter={(event) => props.onMouseEnter ? props.onMouseEnter(event) : null}
             onMouseLeave={(event) => props.onMouseLeave ? props.onMouseLeave(event) : null}
             onClick={() => props.onSelect ? props.onSelect(id) : null}
         >
-           <div className="tribe-name">
+            <div className="card-content"
+                style={{
+                    // @ts-ignore
+                    backgroundImage: `url(${tribeImgs[tribe.name]})`,
+                    backgroundSize: 'cover',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center',
+                }}
+
+            >
+            <div className="tribe-name">
                 {convertToSingularName(tribe.name)}
             </div>
             <div className="tribe-description">
@@ -122,6 +125,7 @@ export function Card(props: ICardProps): JSX.Element {
                 </>
                  : null
             }
+            </div>
         </div>
     );
 }

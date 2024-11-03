@@ -23,7 +23,7 @@
 
         .tribe-name,
         .tribe-description {
-            opacity: 0;
+            display: none;
             font-size: .8rem;
         }
 
@@ -32,7 +32,6 @@
             height: auto;
             width: 100%;
             z-index: 1;
-            border-width: 4px;
         }
 
         &.hover {
@@ -46,7 +45,7 @@
 
                 .tribe-name,
                 .tribe-description {
-                    opacity: 1;
+                    display: block;
                 }
             }
         }
