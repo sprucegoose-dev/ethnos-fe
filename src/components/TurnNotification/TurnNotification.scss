@@ -1,0 +1,80 @@
+
+@import '../../styles/variables.scss';
+
+
+.turn-notification {
+    background: white;
+    box-sizing: border-box;
+    box-shadow: 0px 1px 3px -1px #8f8e8e;
+    color: $dark-brown;
+    font-family: 'RobotoSlab', 'Arial';
+    font-size: 1rem;
+    padding: 10px 15px;
+    position: fixed;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 100%;
+    z-index: 200;
+    border-left: 5px solid transparent;
+    box-shadow: 0px 1px 3px 1px rgba(123,125,125,0.25);
+    right: 25px;
+    right: 5%;
+    top: 5%;
+    width: auto;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
+
+    &.slide-in-right {
+        animation-name: slide-in-right;
+    }
+
+    &.slide-out-right {
+        animation-name: slide-out-right;
+    }
+
+
+    &.black {
+        border-left-color: $token-black;
+    }
+
+    &.blue {
+        border-left-color: $token-blue;
+    }
+
+    &.green {
+        border-left-color: $token-green;
+    }
+
+    &.pink {
+        border-left-color: $token-pink;
+    }
+
+    &.white {
+        border-left-color: $token-white;
+    }
+
+    &.yellow {
+        border-left-color: $token-yellow;
+    }
+
+    .player-icon-wrapper {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 10px;
+
+        .token-icon {
+            height: auto;
+            height: 30px;
+            width: 30px;
+            vertical-align: middle;
+            width: auto;
+        }
+    }
+
+    .notification-text {
+        display: inline-block;
+        vertical-align: middle;
+        text-transform: uppercase;
+    }
+}
