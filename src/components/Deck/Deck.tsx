@@ -6,7 +6,8 @@ import { IAuthReducer } from '../Auth/Auth.types';
 
 import GameApi from '../../api/Game.api';
 
-import { ActionType, CardState, TribeName } from '../Game/Game.types';
+import { ActionType } from '../Game/Action.types';
+import { CardState, TribeName } from '../Game/Game.types';
 import { IDeckProps } from './Deck.types';
 
 import { FacedownCard } from '../FacedownCard/FacedownCard';

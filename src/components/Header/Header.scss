@@ -15,7 +15,7 @@
         text-shadow: 2px 2px $dark-gray;
     }
 
-    .title {
+    .logo-wrapper {
         color: white;
         font-size: 2rem;
         font-family: QuadratDemibold;
@@ -28,8 +28,8 @@
         top: 60%;
 
         img {
-            height: 35px;
-            width: auto;
+            height: auto;
+            width: 110px;
         }
 
         a,
@@ -40,12 +40,13 @@
             color: white;
         }
 
-        .subtitle {
-            font-size: 1.5rem;
+        .online {
+            font-family: 'EndOfTheDream';
+            font-size: 1.2rem;
             position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
+            right: -20px;
             text-shadow: none;;
+            bottom: 5px;
         }
     }
 

@@ -41,3 +41,14 @@
     font-weight: normal;
     font-style: normal;
 }
+
+@font-face {
+    font-family: 'EndOfTheDream';
+    src: url('../assets/fonts/EndOfTheDream.eot');
+    src: url('../assets/fonts/EndOfTheDream.eot?#iefix') format('embedded-opentype'),
+         url('../assets/fonts/EndOfTheDream.woff2') format('woff2'),
+         url('../assets/fonts/EndOfTheDream.woff') format('woff'),
+         url('../assets/fonts/EndOfTheDream.ttf')  format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

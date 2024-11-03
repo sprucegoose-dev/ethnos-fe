@@ -31,10 +31,10 @@ const regionImages = {
 };
 
 export function Region(props: IRegionProps): JSX.Element {
-    const { onClick, region } = props;
+    const { onSelect, region } = props;
 
     return (
-        <div className={`region ${region.color}`} onClick={() => onClick(region)}>
+        <div className={`region ${region.color}`} onClick={() => onSelect(region)}>
             <img className="region-img" src={regionImages[region.color]} alt={`${region.color} region`}/>
             <img className="region-img-outlined" src={regionImages[`${region.color}_outlined`]} alt={`${region.color} region - outlined`}/>
             <div className="region-values">

@@ -1,7 +1,7 @@
 import { Color, IRegion } from '../Game/Game.types';
 
 export interface IRegionProps {
-    onClick: (region: IRegion) => void;
+    onSelect: (region: IRegion) => void;
     region: IRegion;
 }
 

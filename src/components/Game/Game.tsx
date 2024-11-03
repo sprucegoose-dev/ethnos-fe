@@ -5,14 +5,19 @@ import { useSelector } from 'react-redux';
 
 import {
     GameState,
-    IActionPayload,
     ICard,
     IGameState,
     IPlayer,
     IRegion,
 } from './Game.types';
+import {
+    ActionType,
+    IActionPayload,
+    IAddFreeTokenPayload,
+} from './Action.types';
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
+import { IGameReducer } from './Game.reducer.types';
 
 import GameApi from '../../api/Game.api';
 import { socket } from '../../socket';
@@ -36,6 +41,10 @@ const {
 
 export function Game(): JSX.Element {
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
+    const {
+        selectedCardIds,
+        selectedLeaderId,
+    } = useSelector<IRootReducer>((state) => state.game) as IGameReducer;
     const { id: gameId } = useParams();
     const [gameState, setGameState] = useState<IGameState>(null);
     const [ actions, setActions ] = useState<IActionPayload[]>([]);
@@ -93,11 +102,6 @@ export function Game(): JSX.Element {
         }
     }, [auth, gameId, navigate]);
 
-    const onSelectRegion = (_region: IRegion) => {
-
-
-    }
-
     if (!gameState) {
         return;
     }
@@ -106,6 +110,52 @@ export function Game(): JSX.Element {
         currentPlayer =  gameState.players.find(player => player.userId === auth.userId);
         playerPosition = getPlayerPositions(currentPlayer, gameState.players, gameState.turnOrder);
         highestGiantToken = getHighestGiantTokenValue(gameState.players);
+    }
+
+    const onSelectRegion = async (region: IRegion) => {
+        let payload: IActionPayload;
+
+        if (gameState.activePlayerId !== currentPlayer.id) {
+            toast.info('Please wait for your turn');
+            return;
+        }
+
+        const addFreeTokenAction = actions.find(action =>
+            action.type === ActionType.ADD_FREE_TOKEN
+        ) as IAddFreeTokenPayload;
+
+        if (addFreeTokenAction) {
+            payload = {
+                type: ActionType.ADD_FREE_TOKEN,
+                nextActionId: addFreeTokenAction.nextActionId,
+                regionColor: region.color
+            };
+        } else {
+
+            if (!selectedCardIds.length) {
+                toast.info('Please first select cards in your hand');
+                return;
+            }
+
+            if (!selectedLeaderId) {
+                toast.info('Please first select a leader for your band');
+                return;
+            }
+
+            payload = {
+                type: ActionType.PLAY_BAND,
+                nextActionId: actions.find(action =>
+                    action.type === ActionType.PLAY_BAND &&
+                    action.nextActionId
+                // @ts-ignore
+                )?.nextActionId,
+                regionColor: region.color,
+                leaderId: selectedLeaderId,
+                cardIds: selectedCardIds,
+            };
+        }
+
+        await GameApi.sendAction(gameState.id, payload);
     }
 
     const sortedRegions = gameState.regions.sort((regionA, regionB) =>
@@ -125,7 +175,7 @@ export function Game(): JSX.Element {
                                 <Region
                                     key={`region-${region.color}`}
                                     region={region}
-                                    onClick={onSelectRegion}
+                                    onSelect={onSelectRegion}
                                 />
                             )}
                         </div>
@@ -134,7 +184,7 @@ export function Game(): JSX.Element {
                                 <Region
                                     key={`region-${region.color}`}
                                     region={region}
-                                    onClick={onSelectRegion}
+                                    onSelect={onSelectRegion}
                                 />
                             )}
                         </div>

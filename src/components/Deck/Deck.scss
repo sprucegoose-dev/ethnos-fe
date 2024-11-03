@@ -25,7 +25,7 @@
                     position: absolute;
                     width: 103%;
                     height: 103%;
-                    border-radius: 8px;
+                    border-radius: $card-border-radius;
                     top: 50%;
                     left: 50%;
                     transform: translate(-50%, -50%);

@@ -8,7 +8,8 @@ import { IAuthReducer } from '../Auth/Auth.types';
 
 import GameApi from '../../api/Game.api';
 
-import { ActionType, CardState } from '../Game/Game.types';
+import { CardState } from '../Game/Game.types';
+import { ActionType } from '../Game/Action.types';
 import { IDeckProps } from './Market.types';
 
 import { Card } from '../Card/Card';

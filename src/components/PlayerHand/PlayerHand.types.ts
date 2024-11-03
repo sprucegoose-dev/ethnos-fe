@@ -1,4 +1,5 @@
-import { IActionPayload, ICard, IPlayBandPayload, IPlayer, TribeName } from '../Game/Game.types';
+import { ICard, IPlayer } from '../Game/Game.types';
+import { IActionPayload } from '../Game/Action.types';
 
 export interface IPlayerHandProps {
     className: string;

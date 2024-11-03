@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import throttle from 'lodash.throttle';
 
 import { IPlayerHandProps } from './PlayerHand.types';
@@ -8,17 +9,24 @@ import { FacedownCard } from '../FacedownCard/FacedownCard';
 import { calculateCardStyle } from './helpers';
 
 import './PlayerHand.scss';
-import { ActionType, IPlayBandPayload, TribeName } from '../Game/Game.types';
+import { TribeName } from '../Game/Game.types';
+import { ActionType, IPlayBandPayload,  } from '../Game/Action.types';
+import { setSelectedCardIds, setSelectedLeaderId } from '../Game/Game.reducer';
+import { IRootReducer } from '../../reducers/reducers.types';
+import { IGameReducer } from '../Game/Game.reducer.types';
 
 export function PlayerHand(props: IPlayerHandProps): JSX.Element {
+    const dispatch = useDispatch();
+    const {
+        selectedCardIds,
+        selectedLeaderId,
+    } = useSelector<IRootReducer>((state) => state.game) as IGameReducer;
     const {
         className,
         player,
         actions = [],
     } = props;
     const [hoveredCardIndex, setHoveredCardIndex] = useState<number>(null);
-    const [selectedCardIds, setSelectedCardIds] = useState<number[]>([]);
-    const [selectedLeaderId, setSelectedLeaderId] = useState<number>(null);
     const [pauseAnimation, setPauseAnimation] = useState<boolean>(false);
     const playBandActions = actions.filter(action => action.type === ActionType.PLAY_BAND) as IPlayBandPayload[];
     const cardsInHand = (player.cardsInHand || []).sort((cardA, cardB) => cardA.index - cardB.index);
@@ -31,6 +39,14 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
         setHoveredCardIndex(null);
     }, 1000);
 
+    const dispatchSetSelectedLeaderId = (leaderId: number) => {
+        dispatch(setSelectedLeaderId({ leaderId }));
+    }
+
+    const dispatchSetSelectedCardIds = (cardIds: number[]) => {
+        dispatch(setSelectedCardIds({ cardIds }));
+    }
+
     const assignFallbackLeader = (removedCardId: number) => {
         const fallbackCard = cardsInHand
             .find(card => selectedCardIds.includes(card.id) &&
@@ -39,7 +55,7 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
         );
 
         if (fallbackCard) {
-            setSelectedLeaderId(fallbackCard.id);
+            dispatchSetSelectedLeaderId(fallbackCard.id);
         }
     }
 
@@ -48,17 +64,17 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
             setPauseAnimation(true);
 
             if (selectedLeaderId === selectedCardId) {
-                setSelectedLeaderId(null);
+                dispatchSetSelectedLeaderId(null);
                 assignFallbackLeader(selectedCardId);
             }
 
-            setSelectedCardIds(selectedCardIds.filter((cardId) => cardId !== selectedCardId));
+            dispatchSetSelectedCardIds(selectedCardIds.filter((cardId) => cardId !== selectedCardId));
         } else {
             if (!selectedCardIds.length) {
-                setSelectedLeaderId(selectedCardId);
+                dispatchSetSelectedLeaderId(selectedCardId);
             }
 
-            setSelectedCardIds([...selectedCardIds, selectedCardId]);
+            dispatchSetSelectedCardIds([...selectedCardIds, selectedCardId]);
         }
 
         setTimeout(() => {
@@ -104,7 +120,7 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
                             selectable={selectedCardIds.length && isSelectable(card.id)}
                             selected={selectedCardIds.includes(card.id)}
                             onSelect={selectCard}
-                            onSetLeader={setSelectedLeaderId}
+                            onSetLeader={dispatchSetSelectedLeaderId}
                         /> :
                         <FacedownCard
                             customStyles={calculateCardStyle(({
