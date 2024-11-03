@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
     GameState,
@@ -31,6 +31,7 @@ import { getHighestGiantTokenValue, getPlayerPositions } from './helpers';
 import { PlayerWidget } from '../PlayerWidget/PlayerWidget';
 import { PlayerHand } from '../PlayerHand/PlayerHand';
 import { regionOrder } from '../Region/Region.types';
+import { setSelectedCardIds, setSelectedLeaderId } from './Game.reducer';
 
 const {
     CREATED,
@@ -45,12 +46,12 @@ export function Game(): JSX.Element {
         selectedCardIds,
         selectedLeaderId,
     } = useSelector<IRootReducer>((state) => state.game) as IGameReducer;
+    const dispatch = useDispatch();
     const { id: gameId } = useParams();
     const [gameState, setGameState] = useState<IGameState>(null);
     const [ actions, setActions ] = useState<IActionPayload[]>([]);
     const [ activePlayer, setActivePlayer ] = useState<IPlayer>(null);
     const [ playerHands, setPlayerHands ] = useState<{[playerId: number]: ICard[]}>({});
-    const [ actionPayload, setActionPayload ] = useState<IActionPayload>({ type: null});
     const navigate = useNavigate();
     let  currentPlayer: IPlayer;
     let playerPosition: {[userId: number]: string};
@@ -91,6 +92,8 @@ export function Game(): JSX.Element {
             setActivePlayer(payload.players.find(player => player.id === payload.activePlayerId));
             getActions();
             getPlayerHands();
+            dispatch(setSelectedCardIds({ cardIds: [] }));
+            dispatch(setSelectedLeaderId({ leaderId: null }));
         }
 
         socket.emit('onJoinGame', gameId);
