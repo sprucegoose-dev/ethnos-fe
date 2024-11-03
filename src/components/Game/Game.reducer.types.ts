@@ -1,5 +1,3 @@
-import { Color } from './Game.types';
-
 export interface IGameReducer {
     selectedCardIds: number[];
     selectedLeaderId: number;

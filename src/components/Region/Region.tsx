@@ -12,7 +12,7 @@ import purpleRegion from '../../assets/regions/purple_region.png';
 import purpleRegionOutlined from '../../assets/regions/purple_region_outlined.png';
 import redRegion from '../../assets/regions/red_region.png';
 import redRegionOutlined from '../../assets/regions/red_region_outlined.png';
-import { Color } from '../Game/Game.types';
+import { Color } from '../Game/Shared.types';
 import './Region.scss';
 
 const regionImages = {

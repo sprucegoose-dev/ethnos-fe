@@ -1,12 +1,5 @@
-
-export enum Color {
-    BLUE = 'blue',
-    GRAY = 'gray',
-    GREEN = 'green',
-    ORANGE = 'orange',
-    PURPLE = 'purple',
-    RED = 'red',
-}
+import { IRegion } from '../Region/Region.types';
+import { Color } from './Shared.types';
 
 export enum PlayerColor {
     BLACK = 'black',
@@ -100,13 +93,6 @@ export interface ICard {
     state: CardState;
     tribe: ITribe;
     tribeId: number;
-}
-
-export interface IRegion {
-    color: Color;
-    gameId: number;
-    id: number;
-    values: number[];
 }
 
 export interface IGameState {

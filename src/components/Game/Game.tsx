@@ -3,12 +3,16 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { getHighestGiantTokenValue, getPlayerPositions } from './helpers';
+import GameApi from '../../api/Game.api';
+import { socket } from '../../socket';
+import { setSelectedCardIds, setSelectedLeaderId } from './Game.reducer';
+
 import {
     GameState,
     ICard,
     IGameState,
     IPlayer,
-    IRegion,
 } from './Game.types';
 import {
     ActionType,
@@ -18,20 +22,16 @@ import {
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
 import { IGameReducer } from './Game.reducer.types';
+import { IRegion, regionOrder } from '../Region/Region.types';
 
-import GameApi from '../../api/Game.api';
-import { socket } from '../../socket';
 import { GameSettings } from '../GameSettings/GameSettings';
-
-import './Game.scss';
 import { Deck } from '../Deck/Deck';
 import { Market } from '../Market/Market';
 import { Region } from '../Region/Region';
-import { getHighestGiantTokenValue, getPlayerPositions } from './helpers';
 import { PlayerWidget } from '../PlayerWidget/PlayerWidget';
 import { PlayerHand } from '../PlayerHand/PlayerHand';
-import { regionOrder } from '../Region/Region.types';
-import { setSelectedCardIds, setSelectedLeaderId } from './Game.reducer';
+
+import './Game.scss';
 
 const {
     CREATED,

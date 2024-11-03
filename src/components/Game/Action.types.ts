@@ -1,4 +1,4 @@
-import { Color } from './Game.types';
+import { Color } from './Shared.types';
 
 export enum ActionType {
     ADD_FREE_TOKEN = 'add_free_token',

@@ -1,4 +1,11 @@
-import { Color, IRegion } from '../Game/Game.types';
+import { Color } from '../Game/Shared.types';
+
+export interface IRegion {
+    color: Color;
+    gameId: number;
+    id: number;
+    values: number[];
+}
 
 export interface IRegionProps {
     onSelect: (region: IRegion) => void;

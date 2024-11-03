@@ -2,7 +2,8 @@ import { IPlayerWidgetProps } from './PlayerWidget.types';
 import Icon from '../Icon/Icon';
 
 import './PlayerWidget.scss';
-import { CardState, Color, TribeName } from '../Game/Game.types';
+import { CardState, TribeName } from '../Game/Game.types';
+import { Color } from '../Game/Shared.types';
 import { TribeIcon } from '../TribeIcon/TribeIcon';
 import { TokenIcon } from '../TokenIcon/TokenIcon';
 import orcTokenGreen from '../../assets/orc_tokens/orc_token_green.png';
