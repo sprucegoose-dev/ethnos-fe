@@ -6,7 +6,6 @@ interface ICalculateCardStyleParams {
 }
 
 export const calculateCardStyle = ({
-    dragging,
     hoveredCardIndex,
     index,
     totalCards,
@@ -30,7 +29,7 @@ export const calculateCardStyle = ({
       translateY = translateOffsetY * (index - middle);
     }
 
-    if (!dragging && hoveredCardIndex === index) {
+    if (hoveredCardIndex === index) {
         translateY = -61.5;
         rotate = 0;
     }

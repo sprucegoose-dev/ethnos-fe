@@ -65,11 +65,11 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
 
     const dispatchSetSelectedLeaderId = (leaderId: number) => {
         dispatch(setSelectedLeaderId({ leaderId }));
-    }
+    };
 
     const dispatchSetSelectedCardIds = (cardIds: number[]) => {
         dispatch(setSelectedCardIds({ cardIds }));
-    }
+    };
 
     const assignFallbackLeader = (removedCardId: number) => {
         const fallbackCard = cardsInHand
@@ -81,7 +81,39 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
         if (fallbackCard) {
             dispatchSetSelectedLeaderId(fallbackCard.id);
         }
-    }
+    };
+
+    const sortCards = (cardA: ICard, cardB: ICard) => cardsOrder.indexOf(`${cardA.id}`) - cardsOrder.indexOf(`${cardB.id}`);
+
+    const handleDragEnd = async (event: DragEndEvent) => {
+        if (!className.includes('bottom')) {
+            return;
+        }
+
+        const {active, over} = event;
+
+        setDragging(false);
+
+        if (active.id !== over.id) {
+            const oldIndex = cardsOrder.indexOf(active.id);
+            const newIndex = cardsOrder.indexOf(over.id);
+            const orderedCardIds = arrayMove(cardsOrder, oldIndex, newIndex);
+
+            if (orderedCardIds.filter(Boolean).length) {
+                setCardsOrder(orderedCardIds);
+
+                await GameApi.orderCards(player.gameId, orderedCardIds.map(cardId => parseInt(cardId as string)));
+            }
+        }
+    };
+
+    const handleDragStart = (_event: DragEndEvent) => {
+        if (!className.includes('bottom')) {
+            return;
+        }
+
+        setDragging(true);
+    };
 
     const selectCard = (selectedCardId: number) => {
         if (selectedCardIds.includes(selectedCardId)) {
@@ -121,32 +153,6 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
         );
     }
 
-    const sortCards = (cardA: ICard, cardB: ICard) => cardsOrder.indexOf(`${cardA.id}`) - cardsOrder.indexOf(`${cardB.id}`);
-
-
-    const handleDragEnd = async (event: DragEndEvent) => {
-        const {active, over} = event;
-
-        setTimeout(() => {
-            setDragging(false);
-        }, 500);
-
-        if (active.id !== over.id) {
-            const oldIndex = cardsOrder.indexOf(active.id);
-            const newIndex = cardsOrder.indexOf(over.id);
-            const orderedCardIds = arrayMove(cardsOrder, oldIndex, newIndex);
-
-            if (orderedCardIds.filter(Boolean).length) {
-                setCardsOrder(orderedCardIds);
-
-                await GameApi.orderCards(player.gameId, orderedCardIds.map(cardId => parseInt(cardId as string)));
-            }
-        }
-    }
-    const handleDragStart = (_event: DragEndEvent) => {
-        setDragging(true);
-    }
-
     const sortedCardsInHand = cardsInHand.sort(sortCards);
 
     return (
@@ -159,6 +165,7 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
             <SortableContext
                 items={cardsOrder}
                 strategy={horizontalListSortingStrategy}
+                disabled={!className.includes('bottom')}
             >
             <div className={`player-hand ${className || ''}`} ref={setNodeRef} style={droppableStyle}>
                     {sortedCardsInHand.map((card, index) =>

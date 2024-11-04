@@ -80,7 +80,7 @@ export function Card(props: ICardProps): JSX.Element {
             style={(props.customStyles || {})}
             onMouseEnter={(event) => props.onMouseEnter ? props.onMouseEnter(event) : null}
             onMouseLeave={(event) => props.onMouseLeave ? props.onMouseLeave(event) : null}
-            onClick={() => props.onSelect ? props.onSelect(id) : null}
+            onMouseUp={() => props.onSelect ? props.onSelect(id) : null}
         >
             <div className="card-content"
                 style={{
