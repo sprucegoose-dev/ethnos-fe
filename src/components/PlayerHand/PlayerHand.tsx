@@ -1,6 +1,16 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import throttle from 'lodash.throttle';
+import {
+    closestCenter,
+    DndContext,
+    DragEndEvent,
+    PointerSensor,
+    UniqueIdentifier,
+    useSensor,
+    useSensors
+} from '@dnd-kit/core';
+import {useDroppable} from '@dnd-kit/core';
 
 import { IPlayerHandProps } from './PlayerHand.types';
 
@@ -9,11 +19,14 @@ import { FacedownCard } from '../FacedownCard/FacedownCard';
 import { calculateCardStyle } from './helpers';
 
 import './PlayerHand.scss';
-import { TribeName } from '../Game/Game.types';
+import { ICard, TribeName } from '../Game/Game.types';
 import { ActionType, IPlayBandPayload,  } from '../Game/Action.types';
 import { setSelectedCardIds, setSelectedLeaderId } from '../Game/Game.reducer';
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IGameReducer } from '../Game/Game.reducer.types';
+import { DraggableCard } from '../DraggableCard/DraggableCard';
+import { arrayMove, horizontalListSortingStrategy, SortableContext } from '@dnd-kit/sortable';
+import GameApi from '../../api/Game.api';
 
 export function PlayerHand(props: IPlayerHandProps): JSX.Element {
     const dispatch = useDispatch();
@@ -30,6 +43,17 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
     const [pauseAnimation, setPauseAnimation] = useState<boolean>(false);
     const playBandActions = actions.filter(action => action.type === ActionType.PLAY_BAND) as IPlayBandPayload[];
     const cardsInHand = (player.cardsInHand || []).sort((cardA, cardB) => cardA.index - cardB.index);
+    const [cardsOrder, setCardsOrder] = useState<UniqueIdentifier[]>(cardsInHand.map(card => `${card.id}`));
+    const [dragging, setDragging] = useState<boolean>(false);
+    const sensors = useSensors(
+        useSensor(PointerSensor),
+    );
+    const {isOver, setNodeRef} = useDroppable({
+        id: 'droppable',
+    });
+    const droppableStyle = {
+        color: isOver ? 'green' : undefined,
+    };
 
     const handleMouseEnter = throttle((index: number) => {
         setHoveredCardIndex(index);
@@ -97,43 +121,83 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
         );
     }
 
+    const sortCards = (cardA: ICard, cardB: ICard) => cardsOrder.indexOf(`${cardA.id}`) - cardsOrder.indexOf(`${cardB.id}`);
+
+
+    const handleDragEnd = async (event: DragEndEvent) => {
+        const {active, over} = event;
+
+        setTimeout(() => {
+            setDragging(false);
+        }, 500);
+
+        if (active.id !== over.id) {
+            const oldIndex = cardsOrder.indexOf(active.id);
+            const newIndex = cardsOrder.indexOf(over.id);
+            const orderedCardIds = arrayMove(cardsOrder, oldIndex, newIndex);
+
+            if (orderedCardIds.filter(Boolean).length) {
+                setCardsOrder(orderedCardIds);
+
+                await GameApi.orderCards(player.gameId, orderedCardIds.map(cardId => parseInt(cardId as string)));
+            }
+        }
+    }
+    const handleDragStart = (_event: DragEndEvent) => {
+        setDragging(true);
+    }
+
+    const sortedCardsInHand = cardsInHand.sort(sortCards);
+
     return (
-        <div className={`player-hand ${className || ''}`}>
-            {cardsInHand.map((card, index) =>
-                <div
-                    key={`tribe-card-${index}`}
-                    className={`card-wrapper ${hoveredCardIndex === index ? 'hover' : ''}`}
-                    onMouseEnter={() => handleMouseEnter(index)}
-                    onMouseLeave={handleMouseLeave}
-                >
-                    {className.includes('bottom') ?
-                        <Card
-                            card={card}
-                            customStyles={calculateCardStyle({
-                                index,
-                                totalCards: cardsInHand.length,
-                                bottomPosition: className.includes('bottom'),
-                                hoveredCardIndex
-                            })}
-                            isLeader={selectedLeaderId && selectedLeaderId === card.id}
-                            pauseAnimation={pauseAnimation}
-                            selectable={selectedCardIds.length && isSelectable(card.id)}
-                            selected={selectedCardIds.includes(card.id)}
-                            onSelect={selectCard}
-                            onSetLeader={dispatchSetSelectedLeaderId}
-                        /> :
-                        <FacedownCard
-                            customStyles={calculateCardStyle(({
-                                index,
-                                totalCards: cardsInHand.length,
-                                bottomPosition: className.includes('bottom'),
-                            }))}
+        <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+            onDragStart={handleDragStart}
+        >
+            <SortableContext
+                items={cardsOrder}
+                strategy={horizontalListSortingStrategy}
+            >
+            <div className={`player-hand ${className || ''}`} ref={setNodeRef} style={droppableStyle}>
+                    {sortedCardsInHand.map((card, index) =>
+                        <DraggableCard
+                            id={`${card.id}`}
                             key={`tribe-card-${index}`}
-                            showLogo={true}
-                        />
-                    }
-                </div>
-            )}
-        </div>
+                            className={`card-wrapper ${hoveredCardIndex === index ? 'hover' : ''}`}
+                            onMouseEnter={() => handleMouseEnter(index)}
+                            onMouseLeave={handleMouseLeave}
+                        >
+                            {className.includes('bottom') ?
+                                <Card
+                                    card={card}
+                                    customStyles={calculateCardStyle({
+                                        index,
+                                        totalCards: cardsInHand.length,
+                                        hoveredCardIndex,
+                                        dragging,
+                                    })}
+                                    isLeader={selectedLeaderId && selectedLeaderId === card.id}
+                                    pauseAnimation={pauseAnimation}
+                                    selectable={selectedCardIds.length && isSelectable(card.id)}
+                                    selected={selectedCardIds.includes(card.id)}
+                                    onSelect={selectCard}
+                                    onSetLeader={dispatchSetSelectedLeaderId}
+                                /> :
+                                <FacedownCard
+                                    customStyles={calculateCardStyle(({
+                                        index,
+                                        totalCards: cardsInHand.length,
+                                    }))}
+                                    key={`tribe-card-${index}`}
+                                    showLogo={true}
+                                />
+                            }
+                        </DraggableCard>
+                    )}
+            </div>
+            </SortableContext>
+        </DndContext>
     );
 }

@@ -114,6 +114,18 @@ export default class GameApi {
         return await api.request(Method.GET, `/game/${gameId}/actions`, options);
     }
 
+    static async orderCards(gameId: number, cardIds: number[]) {
+        const options = {
+            ...requestOptions,
+            authorize: true,
+            payload: {
+                cardIds,
+            },
+        };
+
+        return await api.request(Method.POST, `/game/${gameId}/orderCards`, options);
+    }
+
     static async sendAction(gameId: number, payload: IActionPayload) {
         const options = {
             ...requestOptions,

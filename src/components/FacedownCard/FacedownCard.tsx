@@ -1,4 +1,4 @@
-// import logo from '../../assets/ethnos_logo_alt.png';
+// import logo from '../../assets/logos/ethnos_logo_2.png';
 
 import { IFacedownCardProps } from './FacedownCard.types';
 
@@ -10,11 +10,11 @@ export function FacedownCard(props: IFacedownCardProps): JSX.Element {
             className="card facedown-card"
             style={props.customStyles || {}}
         >
-            {/* <div className="card-logo-wrapper">
-                {props.showLogo &&
+            <div className="card-logo-wrapper">
+                {/* {props.showLogo &&
                     <img className="card-logo" src={logo} />
-                }
-            </div> */}
+                } */}
+            </div>
         </div>
     );
 }

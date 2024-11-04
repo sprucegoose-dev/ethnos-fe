@@ -72,8 +72,6 @@ export function Game(): JSX.Element {
         });
 
         setTimeout(() => {
-            console.log('slide-out');
-
             setTurnNotificationState({
                 show: true,
                 slideIn: false,
@@ -82,7 +80,6 @@ export function Game(): JSX.Element {
         }, 2000);
 
         setTimeout(() => {
-            console.log('hide');
             setTurnNotificationState({
                 show: false,
                 slideIn: false,

@@ -40,6 +40,7 @@ export function TokenIcon(props: ITokenIconProps): JSX.Element {
                 src={tokenIcons[color]}
                 alt={`${color} token`}
                 onClick={() => onSelect ? onSelect(color) : null}
+                draggable={false}
             />
             {selected ?
                 <FontAwesomeIcon className="selected-icon" icon={faCheckCircle} /> :

@@ -9,6 +9,7 @@
     .region-img-outlined {
         height: auto;
         max-width: 100%;
+        user-select: none;
     }
 
     &:hover {
@@ -176,14 +177,14 @@
     @for $i from 2 through 100 {
         .player-token:nth-child(#{$i}) {
             position: absolute;
-            transform: translateX(calc($i - 1) * 5%)  translateY(calc($i - 1) * -10%);;
+            transform: translateX(calc($i - 1) * 4%)  translateY(calc($i - 1) * -10%);;
             transform-origin: center;
             z-index: $i;
         }
     }
 
     .player-token {
-        border: .5px solid white;
+        border: 1px solid white;
         border-radius: 50%;
         width: 100%;
         height: auto;

@@ -17,7 +17,6 @@ import wingfolkImg from '../../assets/tribes/wingfolk.png';
 import wizardImg from '../../assets/tribes/wizards.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCrown } from '@fortawesome/free-solid-svg-icons';
-import { MouseEventHandler } from 'react';
 
 const tribeImgs = {
     [TribeName.CENTAURS]: centaurImg,
@@ -91,7 +90,6 @@ export function Card(props: ICardProps): JSX.Element {
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'center',
                 }}
-
             >
             <div className="tribe-name">
                 {convertToSingularName(tribe.name)}

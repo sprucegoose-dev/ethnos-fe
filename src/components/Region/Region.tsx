@@ -48,8 +48,18 @@ export function Region(props: IRegionProps): JSX.Element {
     }, {});
     return (
         <div className={`region ${region.color}`} onClick={() => onSelect(region)}>
-            <img className="region-img" src={regionImages[region.color]} alt={`${region.color} region`}/>
-            <img className="region-img-outlined" src={regionImages[`${region.color}_outlined`]} alt={`${region.color} region - outlined`}/>
+            <img
+                className="region-img"
+                src={regionImages[region.color]}
+                alt={`${region.color} region`}
+                draggable={false}
+            />
+            <img
+                className="region-img-outlined"
+                src={regionImages[`${region.color}_outlined`]}
+                alt={`${region.color} region - outlined`}
+                draggable={false}
+            />
             <div className="region-values">
                 {region.values.map((value, index) =>
                     <span className="region-value" key={`region-${region.color}-${index}-${value}`}>
