@@ -48,12 +48,9 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
     const sensors = useSensors(
         useSensor(PointerSensor),
     );
-    const {isOver, setNodeRef} = useDroppable({
+    const {setNodeRef} = useDroppable({
         id: 'droppable',
     });
-    const droppableStyle = {
-        color: isOver ? 'green' : undefined,
-    };
 
     const handleMouseEnter = throttle((index: number) => {
         setHoveredCardIndex(index);
@@ -167,7 +164,7 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
                 strategy={horizontalListSortingStrategy}
                 disabled={!className.includes('bottom')}
             >
-            <div className={`player-hand ${className || ''}`} ref={setNodeRef} style={droppableStyle}>
+            <div className={`player-hand ${className || ''}`} ref={setNodeRef}>
                     {sortedCardsInHand.map((card, index) =>
                         <DraggableCard
                             id={`${card.id}`}

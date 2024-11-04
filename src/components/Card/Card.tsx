@@ -1,7 +1,10 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCrown } from '@fortawesome/free-solid-svg-icons';
+
+import { useRef } from 'react';
+
 import { TribeName } from '../Game/Game.types';
 import { ICardProps } from './Card.types';
-
-import './Card.scss';
 
 import centaurImg from '../../assets/tribes/centaurs.png';
 import dwarfImg from '../../assets/tribes/dwarves.png';
@@ -15,8 +18,8 @@ import skeletonImg from '../../assets/tribes/skeletons.png';
 import trollImg from '../../assets/tribes/trolls.png';
 import wingfolkImg from '../../assets/tribes/wingfolk.png';
 import wizardImg from '../../assets/tribes/wizards.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCrown } from '@fortawesome/free-solid-svg-icons';
+
+import './Card.scss';
 
 const tribeImgs = {
     [TribeName.CENTAURS]: centaurImg,
@@ -59,6 +62,8 @@ export function Card(props: ICardProps): JSX.Element {
         selected,
     } = props;
 
+    const makeLeaderBtnRef = useRef(null);
+
     const classNames = [
         'card',
         className || '',
@@ -71,7 +76,17 @@ export function Card(props: ICardProps): JSX.Element {
 
     const handleSetLeader = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
-        props.onSetLeader(id)
+        props.onSetLeader(id);
+    };
+
+    const handleCardSelect = (event: React.MouseEvent<HTMLDivElement>) => {
+        if (event.target === makeLeaderBtnRef?.current) {
+            return
+        }
+
+        if (props.onSelect) {
+            props.onSelect(id);
+        }
     }
 
     return (
@@ -80,7 +95,7 @@ export function Card(props: ICardProps): JSX.Element {
             style={(props.customStyles || {})}
             onMouseEnter={(event) => props.onMouseEnter ? props.onMouseEnter(event) : null}
             onMouseLeave={(event) => props.onMouseLeave ? props.onMouseLeave(event) : null}
-            onMouseUp={() => props.onSelect ? props.onSelect(id) : null}
+            onMouseUp={handleCardSelect}
         >
             <div className="card-content"
                 style={{
@@ -100,8 +115,9 @@ export function Card(props: ICardProps): JSX.Element {
             {!isLeader && selected ?
                 <div className="set-leader-btn-wrapper">
                     <button
+                        ref={makeLeaderBtnRef}
                         className="btn btn-action btn-3d btn-block btn-medium"
-                        onClick={handleSetLeader}
+                        onMouseUp={handleSetLeader}
                     >
                         Make Leader <FontAwesomeIcon
                             icon={faCrown}
