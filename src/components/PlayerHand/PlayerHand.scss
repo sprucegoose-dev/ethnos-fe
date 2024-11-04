@@ -8,6 +8,7 @@
     transform: translateX(-50%);
     flex-wrap: nowrap;
     pointer-events: none;
+    z-index: 11;
 
     .card-wrapper {
         width: calc(10%);

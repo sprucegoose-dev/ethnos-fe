@@ -12,6 +12,7 @@
     left: 50%;
     transform: translateX(-50%);
     perspective: 1000px;
+    z-index: 10;
 
     .card-wrapper {
         aspect-ratio: 180 / 265;
