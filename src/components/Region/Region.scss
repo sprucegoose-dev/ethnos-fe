@@ -185,6 +185,10 @@
 
     .player-token {
         border: 1px solid white;
+        border-left-width: 1px;
+        border-bottom-width: 1px;
+        border-top-width: .5px;
+        border-right-width: .5px;
         border-radius: 50%;
         width: 100%;
         height: auto;

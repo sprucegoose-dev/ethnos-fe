@@ -1,4 +1,4 @@
-// import logo from '../../assets/logos/ethnos_logo_2.png';
+// import logo from '../../assets/logos/ethnos_logo.png';
 
 import { IFacedownCardProps } from './FacedownCard.types';
 

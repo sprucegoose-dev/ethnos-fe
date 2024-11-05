@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import throttle from 'lodash.throttle';
 import {
@@ -148,7 +148,11 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
             action.cardIds.includes(cardId) &&
             selectedCardIds.every(id => action.cardIds.includes(id))
         );
-    }
+    };
+
+    useEffect(() => {
+        setCardsOrder(cardsInHand.map(card => `${card.id}`));
+    }, cardsInHand);
 
     const sortedCardsInHand = cardsInHand.sort(sortCards);
 
