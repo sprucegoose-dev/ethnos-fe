@@ -36,7 +36,11 @@ export function Market({activePlayer, gameState}: IDeckProps): JSX.Element {
         return hoveredCardIndex === index ? 'hover' :  '';
     };
 
-    const calculateCardStyle = { width: `${(100 / cardsInMarket.length)}%`, minWidth: `${(100 / cardsInMarket.length)}%` };
+    const calculateCardStyle = () => {
+        let resolvedCardCount = cardsInMarket.length < 10 ? 10 : cardsInMarket.length;
+
+        return { width: `${(100 / resolvedCardCount)}%`, minWidth: `${(100 / resolvedCardCount)}%` }
+    };
 
     const handleMouseEnter = throttle((index: number) => {
         setHoveredCardIndex(index);
@@ -52,7 +56,7 @@ export function Market({activePlayer, gameState}: IDeckProps): JSX.Element {
                 cardsInMarket.map((card, index) =>
                     <div
                         className={`card-wrapper ${calculateClass(index)}`}
-                        style={calculateCardStyle}
+                        style={calculateCardStyle()}
                         key={`card-${index}`}
                     >
                         <Card
