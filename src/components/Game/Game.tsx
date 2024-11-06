@@ -59,6 +59,7 @@ export function Game(): JSX.Element {
             slideIn: false,
             slideOut: false,
     });
+    const [socketRefreshInterval, setSocketRefreshInterval] = useState(null);
     const navigate = useNavigate();
     let  currentPlayer: IPlayer;
     let playerPosition: {[userId: number]: string};
@@ -131,10 +132,24 @@ export function Game(): JSX.Element {
             handleTurnNotification();
         }
 
+        if (!socketRefreshInterval) {
+            setSocketRefreshInterval(setInterval(async () => {
+                if (!socket.connected) {
+                    await socket.connect();
+                    await socket.emit('joinRoomChannel', gameId);
+                    getGameState();
+                    getPlayerHands();
+                    getActions();
+                    handleTurnNotification();
+                }
+            }, 3000));
+        }
+
         socket.emit('onJoinGame', gameId);
         socket.on('onUpdateGameState', updateGameState);
 
         return () => {
+            clearInterval(socketRefreshInterval);
             socket.emit('onLeaveGame', gameId);
             socket.off('onUpdateGameState', updateGameState);
         }

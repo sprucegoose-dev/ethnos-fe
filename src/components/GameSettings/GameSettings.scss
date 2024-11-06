@@ -69,6 +69,10 @@
                 margin-right: 5px;
                 width: 25px;
             }
+
+            a {
+                color: $dark-gray;
+            }
         }
     }
 
@@ -189,6 +193,16 @@
         .btn-leave {
             padding: 8px 12px;
         }
+    }
+
+    .bot-icon {
+        margin-right: 5px;
+        color: $medium-gray-2;
+    }
+
+    .remove-bot-icon {
+        cursor: pointer;
+        margin-left: 5px;
     }
 }
 

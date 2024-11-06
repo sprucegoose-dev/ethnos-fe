@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faInfo, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faInfo, faRemove, faRobot } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import shuffle from 'lodash.shuffle';
 
@@ -109,6 +109,14 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
         }
     }
 
+    const submitAddBotPlayer = async () => {
+        await GameApi.addBotPlayer(gameState.id);
+    }
+
+    const submitRemoveBotPlayer = async (botPlayerId: number) => {
+        await GameApi.removeBotPlayer(gameState.id, botPlayerId);
+    }
+
     const submitLeaveGame = async() => {
         await GameApi.leave(gameState.id);
         navigate('/rooms');
@@ -116,6 +124,11 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
 
     const onPasswordSuccess = () => {
         setShowPasswordModal(false);
+    }
+
+    const botCanBeAdded = () => {
+        return auth.userId === gameState.creatorId &&
+            gameState.players.length < gameState.maxPlayers;
     }
 
     const playerCanJoin = () => {
@@ -167,19 +180,44 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                         Players
                     </div>
                     {/* TODO: move into 'PlayerLabel' component */}
-                    {gameState.players.map(({ color, user }, index) =>
-                        <Link
-                            to={`/matches/${decodeURIComponent(user.username)}`}
-                            key={`player-${index}`}
-                            className="player-label"
-                        >
-                         {color ?
-                            <TokenIcon
-                                color={color}
-                            /> : null
-                        } {user.username}
-                        </Link>
+                    {gameState.players.map(({ id: playerId, color, user }, index) =>
+                        <span className="player-label">
+                            {color ?
+                                <TokenIcon
+                                    color={color}
+                                /> : null
+                            }
+                            {
+                                user.isBot ?
+                                <FontAwesomeIcon
+                                    className="bot-icon"
+                                    icon={faRobot}
+                                /> : null
+                            }
+                            <Link
+                                to={`/matches/${decodeURIComponent(user.username)}`}
+                                key={`player-${index}`}
+                            >
+                            {user.username}
+                            </Link>
+                            {
+                                user.isBot && auth.userId === gameState.creatorId ?
+                                <FontAwesomeIcon
+                                    onClick={() => submitRemoveBotPlayer(playerId)}
+                                    className="remove-bot-icon"
+                                    icon={faRemove}
+                                /> : null
+                            }
+                        </span>
                     )}
+                    {botCanBeAdded() &&
+                        <button
+                            className="btn btn-action btn-3d btn-mini"
+                            onClick={submitAddBotPlayer}
+                        >
+                            Add bot
+                        </button>
+                    }
                     {playerCanJoin() &&
                         <button
                             className="btn btn-action btn-3d btn-mini"

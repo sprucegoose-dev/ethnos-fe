@@ -69,6 +69,7 @@ export interface ITribe {
 export interface IUser {
     id: number;
     username: string;
+    isBot: boolean;
 }
 
 export interface IPlayer {

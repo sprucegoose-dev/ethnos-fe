@@ -6,6 +6,15 @@ import { ICreateGamePayload } from '../components/RoomForm/RoomForm.types';
 
 export default class GameApi {
 
+    static async addBotPlayer(gameId: number) {
+        const options = {
+            ...requestOptions,
+            authorize: true,
+        };
+
+        return await api.request(Method.POST, `/game/${gameId}/addBot`, options);
+    }
+
     static async assignPlayerColor(gameId: number, color: PlayerColor) {
         const options = {
             ...requestOptions,
@@ -124,6 +133,15 @@ export default class GameApi {
         };
 
         return await api.request(Method.POST, `/game/${gameId}/orderCards`, options);
+    }
+
+    static async removeBotPlayer(gameId: number, botPlayerId: number) {
+        const options = {
+            ...requestOptions,
+            authorize: true,
+        };
+
+        return await api.request(Method.DELETE, `/game/${gameId}/removeBot/${botPlayerId}`, options);
     }
 
     static async sendAction(gameId: number, payload: IActionPayload) {
