@@ -53,59 +53,45 @@
     &.blue {
         background: $card-blue;
         padding: 5px;;
-        // background-image: url('../../assets/cards/card_blue_bkg.png');
-        // background-position-x: center;
-        // background-repeat: no-repeat;
-        // background-size: cover;
     }
 
     &.gray {
         background: $card-gray;
         padding: 5px;;
-        // background-image: url('../../assets/cards/card_gray_bkg.png');
-        // background-position-x: center;
-        // background-repeat: no-repeat;
-        // background-size: cover;
     }
 
     &.green {
         background: $card-green;
         padding: 5px;;
-        // background-image: url('../../assets/cards/card_green_bkg.png');
-        // background-position-x: center;
-        // background-repeat: no-repeat;
-        // background-size: cover;
     }
 
     &.orange {
         background: $card-orange;
         padding: 5px;
-        // background-image: url('../../assets/cards/card_orange_bkg.png');
-        // background-position-x: center;
-        // background-repeat: no-repeat;
-        // background-size: cover;
     }
 
     &.purple {
         background: $card-purple;
         padding: 5px;;
-        // background-image: url('../../assets/cards/card_purple_bkg.png');
-        // background-position-x: center;
-        // background-repeat: no-repeat;
-        // background-size: cover;
     }
 
     &.red {
         background: $card-red;
         padding: 5px;;
-        // background-image: url('../../assets/cards/card_red_bkg.png');
-        // background-position-x: center;
-        // background-repeat: no-repeat;
-        // background-size: cover;
     }
 
     &.skeletons {
         background: $card-brown;
+    }
+
+    .card-content {
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 10px;
+        flex-grow: 1;
+        height: 100%;
     }
 
     .tribe-name {
@@ -127,13 +113,7 @@
     }
 
     .set-leader-btn-wrapper {
-        margin-top: 5px;
-        z-index: 100;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        width: 85%;
+        margin-bottom: 10px;
     }
 
     .leader-icon {
@@ -150,14 +130,5 @@
             transform: translateX(-55%);
             font-size: 1.5rem;
         }
-    }
-
-    .card-content {
-        border-radius: 4px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: 10px;
-        flex-grow: 1;
     }
 }

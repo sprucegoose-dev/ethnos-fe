@@ -136,7 +136,7 @@ export function Game(): JSX.Element {
             setSocketRefreshInterval(setInterval(async () => {
                 if (!socket.connected) {
                     await socket.connect();
-                    await socket.emit('joinRoomChannel', gameId);
+                    await socket.emit('onJoinGame', gameId);
                     getGameState();
                     getPlayerHands();
                     getActions();

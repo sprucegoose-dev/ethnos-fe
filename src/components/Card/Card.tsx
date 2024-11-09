@@ -51,6 +51,7 @@ const convertToSingularName = (tribeName: TribeName) => {
 export function Card(props: ICardProps): JSX.Element {
     const {
         card: {
+            state,
             color,
             tribe,
             id
@@ -68,6 +69,7 @@ export function Card(props: ICardProps): JSX.Element {
         'card',
         className || '',
         color || '',
+        state || '',
         tribe.name.toLowerCase(),
         selectable ? 'selectable' : '',
         pauseAnimation ? 'paused' : '',
@@ -109,23 +111,26 @@ export function Card(props: ICardProps): JSX.Element {
             <div className="tribe-name">
                 {convertToSingularName(tribe.name)}
             </div>
-            <div className="tribe-description">
-                {tribe.description}
-            </div>
-            {!isLeader && selected ?
-                <div className="set-leader-btn-wrapper">
-                    <button
-                        ref={makeLeaderBtnRef}
-                        className="btn btn-action btn-3d btn-block btn-medium"
-                        onMouseUp={handleSetLeader}
-                    >
-                        Make Leader <FontAwesomeIcon
-                            icon={faCrown}
-                        />
-                    </button>
+            <div className="bottom-section">
+                {!isLeader && selected ?
+                    <div className="set-leader-btn-wrapper">
+                        <button
+                            ref={makeLeaderBtnRef}
+                            className="btn btn-action btn-3d btn-block btn-medium"
+                            onMouseUp={handleSetLeader}
+                        >
+                            Make Leader <FontAwesomeIcon
+                                icon={faCrown}
+                            />
+                        </button>
+                    </div>
+                    : null
+                }
+                <div className="tribe-description">
+                    {tribe.description}
                 </div>
-                : null
-            }
+            </div>
+
             {isLeader ?
                 <>
                     <FontAwesomeIcon

@@ -80,7 +80,9 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
         }
     };
 
-    const sortCards = (cardA: ICard, cardB: ICard) => cardsOrder.indexOf(`${cardA.id}`) - cardsOrder.indexOf(`${cardB.id}`);
+    const sortCards = (cardA: ICard, cardB: ICard) =>
+        cardsOrder.indexOf(`${cardA.id}`) -
+        cardsOrder.indexOf(`${cardB.id}`);
 
     const handleDragEnd = async (event: DragEndEvent) => {
         if (!className.includes('bottom')) {
@@ -100,7 +102,6 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
                 await GameApi.orderCards(player.gameId, orderedCardIds.map(cardId => parseInt(cardId as string)));
             }
         }
-
 
         setTimeout(() => {
             setDragging(false);
@@ -163,7 +164,7 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
         setCardsOrder(cardsInHand.map(card => `${card.id}`));
     }, cardsInHand);
 
-    const sortedCardsInHand = cardsInHand.sort(sortCards);
+    const sortedCardsInHand = [...cardsInHand].sort(sortCards);
 
     return (
         <DndContext
