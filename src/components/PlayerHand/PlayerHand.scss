@@ -14,7 +14,7 @@
         width: calc(10%);
         aspect-ratio: 180 / 265;
         position: relative;
-        margin-right: -#{calc(((12% * 1.5) / 2))};
+        margin-right: -#{calc(((10%) / 2))};
         pointer-events: all;
 
         &.hover {

@@ -37,7 +37,7 @@ export const calculateCardStyle = ({
     }
 
     return {
-      transform: `translateX(${translateX}%) translateY(${translateY}%) rotate(${rotate}deg)`,
+      transform: `translateY(${translateY}%) rotate(${rotate}deg)`,
       transformOrigin: 'center'
     };
 };
