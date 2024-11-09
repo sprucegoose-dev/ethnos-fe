@@ -6,6 +6,7 @@
     width: 9vw;
     aspect-ratio: 180 / 265;
     display: inline-block;
+    z-index: 101;
 
     .facedown-card {
         position: absolute;

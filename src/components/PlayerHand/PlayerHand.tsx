@@ -89,8 +89,6 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
 
         const {active, over} = event;
 
-        setDragging(false);
-
         if (active.id !== over.id) {
             const oldIndex = cardsOrder.indexOf(active.id);
             const newIndex = cardsOrder.indexOf(over.id);
@@ -102,6 +100,11 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
                 await GameApi.orderCards(player.gameId, orderedCardIds.map(cardId => parseInt(cardId as string)));
             }
         }
+
+
+        setTimeout(() => {
+            setDragging(false);
+        }, 200);
     };
 
     const handleDragStart = (_event: DragEndEvent) => {
@@ -109,10 +112,16 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
             return;
         }
 
-        setDragging(true);
+        setTimeout(() => {
+            setDragging(true);
+        }, 200);
     };
 
     const selectCard = (selectedCardId: number) => {
+        if (dragging) {
+            return;
+        }
+
         if (selectedCardIds.includes(selectedCardId)) {
             setPauseAnimation(true);
 
