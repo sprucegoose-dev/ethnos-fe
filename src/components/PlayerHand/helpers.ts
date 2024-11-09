@@ -2,6 +2,7 @@ interface ICalculateCardStyleParams {
     dragging?: boolean;
     hoveredCardIndex?: number;
     index: number;
+    playerPosition?: string;
     totalCards: number,
 }
 
@@ -9,11 +10,12 @@ export const calculateCardStyle = ({
     hoveredCardIndex,
     index,
     totalCards,
+    playerPosition
 }: ICalculateCardStyleParams) => {
     let middle = (totalCards / 2);
     middle = middle % 2 ? middle - .5 : middle;
     const offset = 2;
-    const translateOffsetX = 15;
+    const translateOffsetX = playerPosition === 'bottom' ? 20 : 15;
     const translateOffsetY = 3;
     let rotate = 0;
     let translateX = 0;

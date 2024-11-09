@@ -211,6 +211,8 @@ export function Game(): JSX.Element {
         await GameApi.sendAction(gameState.id, payload);
     }
 
+    const canAddFreeToken = actions.find(action => action.type === ActionType.ADD_FREE_TOKEN);
+
     const getTurnNotificationText = (player: IPlayer) => {
         const username = player.user.username;
 
@@ -265,10 +267,15 @@ export function Game(): JSX.Element {
                                 className={playerPosition[player.userId]}
                                 player={{...player, cardsInHand: playerHands[player.id] || []}}
                                 playerCount={gameState.players.length}
-                                isActivePlayer={player.id === currentPlayer.id}
+                                isActivePlayer={player.id === gameState.activePlayerId}
                                 highestGiantToken={highestGiantToken}
                                 tribes={gameState.settings.tribes}
                             />
+                            {canAddFreeToken ?
+                                <div className="free-token-notifaction">
+                                    Add a free token to any region
+                                </div> : null
+                            }
                         </div>
                     )}
                     {turnNotificationState.show ?

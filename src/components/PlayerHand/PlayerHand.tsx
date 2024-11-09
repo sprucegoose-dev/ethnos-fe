@@ -185,6 +185,7 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
                                         totalCards: cardsInHand.length,
                                         hoveredCardIndex,
                                         dragging,
+                                        playerPosition: 'bottom'
                                     })}
                                     isLeader={selectedLeaderId && selectedLeaderId === card.id}
                                     pauseAnimation={pauseAnimation}

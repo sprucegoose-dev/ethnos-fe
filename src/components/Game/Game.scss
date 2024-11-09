@@ -83,6 +83,21 @@
         right: 2%;
         bottom: 5%;
     }
+
+    .free-token-notifaction {
+        background: rgba(0, 0, 0, 0.03);
+        border-radius: 4px;
+        bottom: 15%;
+        box-shadow: 0 0 15px 15px rgba(0, 0, 0, 0.03);
+        box-sizing: border-box;
+        color: $off-white-2;
+        font-family: QuadratDemibold;
+        font-size: 1.1rem;
+        left: 50%;
+        padding: 10px 20px;
+        position: absolute;
+        transform: translateX(-50%);
+    }
 }
 
 @media screen and (orientation: portrait) {
