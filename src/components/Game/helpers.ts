@@ -1,15 +1,13 @@
 import { IPlayer } from './Game.types';
 
 export function sortPlayersByTurnOrder(currentPlayer: IPlayer, players: IPlayer[], turnOrder: number[]): IPlayer[] {
-    const otherPlayers = players.filter(player => player.id !== currentPlayer.id)
-        .sort((playerA, playerB) =>
-            turnOrder.indexOf(playerA.id) - turnOrder.indexOf(playerB.id)
-    );
+  const targetIndex = turnOrder.indexOf(currentPlayer.id);
+  const seatingOrder = turnOrder.slice(targetIndex).concat(turnOrder.slice(0, targetIndex));
 
-    return [currentPlayer, ...otherPlayers];
+  return players.sort((playerA, playerB) => seatingOrder.indexOf(playerA.id) - seatingOrder.indexOf(playerB.id));
 }
 
-export function getPlayerPositions(currentPlayer: IPlayer, players: IPlayer[], turnOrder:number[]): {[userId: number]: string} {
+export function getPlayerPositions(currentPlayer: IPlayer, players: IPlayer[], turnOrder: number[]): {[userId: number]: string} {
     const sortedPlayers = sortPlayersByTurnOrder(currentPlayer, players, turnOrder);
 
     const positionsByPlayerCount: {[key: number]: string[]} = {
