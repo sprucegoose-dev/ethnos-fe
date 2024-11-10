@@ -87,7 +87,7 @@
     .free-token-notifaction {
         background: rgba(0, 0, 0, 0.03);
         border-radius: 4px;
-        bottom: 15%;
+        bottom: 8%;
         box-shadow: 0 0 15px 15px rgba(0, 0, 0, 0.03);
         box-sizing: border-box;
         color: $off-white-2;
@@ -97,6 +97,7 @@
         padding: 10px 20px;
         position: absolute;
         transform: translateX(-50%);
+        z-index: 150;
     }
 
     .dragon-overlay {

@@ -148,13 +148,13 @@ export function Game(): JSX.Element {
             const nextActivePlayer = payload.players.find(player => player.id === payload.activePlayerId);
 
             setActivePlayer(nextActivePlayer);
-            getActions();
             getPlayerHands();
+            getActions();
             handleTurnNotification(nextActivePlayer);
 
             const newRevealedDragonsCount = getRevealedDragonsCount(payload);
 
-            if (newRevealedDragonsCount > revealedDragonsCount) {
+            if (newRevealedDragonsCount !== revealedDragonsCount) {
                 setRevealedDragonsCount(newRevealedDragonsCount);
             }
         }
@@ -182,7 +182,6 @@ export function Game(): JSX.Element {
     }, [auth, gameId, navigate]);
 
     useEffect(() => {
-
         if (prevRevealedDragonsCount.current === null && revealedDragonsCount !== null) {
             prevRevealedDragonsCount.current = revealedDragonsCount;
 

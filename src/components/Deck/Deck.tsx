@@ -29,8 +29,17 @@ export function Deck(props: IDeckProps): JSX.Element {
     const selectable = actions.find(action => action.type === ActionType.DRAW_CARD);
 
     const handleDrawCard = async () => {
+        if (!actions.find(action => action.type === ActionType.DRAW_CARD)) {
+            return;
+        }
+
         if (activePlayer?.userId === auth.userId) {
-            await GameApi.sendAction(gameState.id, { type: ActionType.DRAW_CARD });
+            const response = await GameApi.sendAction(gameState.id, { type: ActionType.DRAW_CARD });
+
+            if (!response.ok) {
+                const error = await response.json();
+                toast.error(error.message);
+            }
         } else {
             toast.info('Please wait for your turn');
         }
