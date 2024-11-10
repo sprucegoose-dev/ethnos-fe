@@ -58,7 +58,6 @@ export function Card(props: ICardProps): JSX.Element {
         },
         className,
         isLeader,
-        pauseAnimation,
         selectable,
         selected,
     } = props;
@@ -72,7 +71,6 @@ export function Card(props: ICardProps): JSX.Element {
         state.replace('_', '-') || '',
         tribe.name.toLowerCase(),
         selectable ? 'selectable' : '',
-        pauseAnimation ? 'paused' : '',
         selected ? 'selected' : '',
     ].filter(Boolean).join(' ');
 

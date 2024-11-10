@@ -11,6 +11,12 @@ import {
     useSensors
 } from '@dnd-kit/core';
 import {useDroppable} from '@dnd-kit/core';
+import { toast } from 'react-toastify';
+import {
+    arrayMove,
+    horizontalListSortingStrategy,
+    SortableContext,
+} from '@dnd-kit/sortable';
 
 import { IPlayerHandProps } from './PlayerHand.types';
 
@@ -25,7 +31,6 @@ import { setSelectedCardIds, setSelectedLeaderId } from '../Game/Game.reducer';
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IGameReducer } from '../Game/Game.reducer.types';
 import { DraggableCard } from '../DraggableCard/DraggableCard';
-import { arrayMove, horizontalListSortingStrategy, SortableContext } from '@dnd-kit/sortable';
 import GameApi from '../../api/Game.api';
 
 export function PlayerHand(props: IPlayerHandProps): JSX.Element {
@@ -40,7 +45,6 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
         actions = [],
     } = props;
     const [hoveredCardIndex, setHoveredCardIndex] = useState<number>(null);
-    const [pauseAnimation, setPauseAnimation] = useState<boolean>(false);
     const playBandActions = actions.filter(action => action.type === ActionType.PLAY_BAND) as IPlayBandPayload[];
     const cardsInHand = (player.cardsInHand || []).sort((cardA, cardB) => cardA.index - cardB.index);
     const [cardsOrder, setCardsOrder] = useState<UniqueIdentifier[]>(cardsInHand.map(card => `${card.id}`));
@@ -68,7 +72,7 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
         dispatch(setSelectedCardIds({ cardIds }));
     };
 
-    const assignFallbackLeader = (removedCardId: number) => {
+    const assignFallbackLeader = (removedCardId: number): number => {
         const fallbackCard = cardsInHand
             .find(card => selectedCardIds.includes(card.id) &&
                 card.id !== removedCardId &&
@@ -77,6 +81,7 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
 
         if (fallbackCard) {
             dispatchSetSelectedLeaderId(fallbackCard.id);
+            return fallbackCard.id;
         }
     };
 
@@ -119,22 +124,35 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
     };
 
     const selectCard = (selectedCard: ICard) => {
-        if (dragging) {
+        if (dragging || !actions.length) {
             return;
         }
 
         const selectedCardId = selectedCard.id;
+        let fallbackLeaderId = null;
 
         if (selectedCardIds.includes(selectedCardId)) {
-            setPauseAnimation(true);
-
             if (selectedLeaderId === selectedCardId) {
                 dispatchSetSelectedLeaderId(null);
-                assignFallbackLeader(selectedCardId);
+                fallbackLeaderId = assignFallbackLeader(selectedCardId);
             }
 
-            dispatchSetSelectedCardIds(selectedCardIds.filter((cardId) => cardId !== selectedCardId));
+            if (fallbackLeaderId) {
+                dispatchSetSelectedCardIds(selectedCardIds.filter((cardId) => cardId !== selectedCardId));
+            } else {
+                dispatchSetSelectedCardIds([]);
+            }
         } else {
+            if (!isSelectable(selectedCard.id)) {
+
+                if (selectedCardIds.length) {
+                    toast.info("This card can't be added to the band");
+                } else {
+                    toast.info("This card can't be the leader of a band");
+                }
+                return;
+            }
+
             const onlySkeletonsSelected = selectedCardIds.every(cardId =>
                 cardsInHand.find(card => card.id === cardId)?.tribe.name === TribeName.SKELETONS
             );
@@ -147,10 +165,6 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
 
             dispatchSetSelectedCardIds([...selectedCardIds, selectedCardId]);
         }
-
-        setTimeout(() => {
-            setPauseAnimation(false);
-        }, 0);
     };
 
     const isSelectable = (cardId: number): boolean => {
@@ -206,7 +220,6 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
                                         playerPosition: 'bottom'
                                     })}
                                     isLeader={selectedLeaderId && selectedLeaderId === card.id}
-                                    pauseAnimation={pauseAnimation}
                                     selectable={selectedCardIds.length && isSelectable(card.id)}
                                     selected={selectedCardIds.includes(card.id)}
                                     onSelect={selectCard}

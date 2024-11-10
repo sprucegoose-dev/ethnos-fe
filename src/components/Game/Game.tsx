@@ -133,11 +133,10 @@ export function Game(): JSX.Element {
                 toast.info('The game has been cancelled');
                 navigate('/rooms');
             }
+
             setActivePlayer(payload.players.find(player => player.id === payload.activePlayerId));
             getActions();
             getPlayerHands();
-            dispatch(setSelectedCardIds({ cardIds: [] }));
-            dispatch(setSelectedLeaderId({ leaderId: null }));
             handleTurnNotification();
 
             const newRevealedDragonsCount = getRevealedDragonsCount(payload);
@@ -242,7 +241,12 @@ export function Game(): JSX.Element {
             };
         }
 
-        await GameApi.sendAction(gameState.id, payload);
+        const response = await GameApi.sendAction(gameState.id, payload);
+
+        if (response.ok) {
+            dispatch(setSelectedCardIds({ cardIds: [] }));
+            dispatch(setSelectedLeaderId({ leaderId: null }));
+        }
     }
 
     const canAddFreeToken = actions.find(action => action.type === ActionType.ADD_FREE_TOKEN);

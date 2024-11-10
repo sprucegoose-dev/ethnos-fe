@@ -14,10 +14,10 @@ export const gameReducer = createSlice({
   },
   reducers: {
     setSelectedCardIds: (state: IGameReducer, {payload}:  PayloadAction<ISetCardIdsAction>) => {
-        state.selectedCardIds = payload.cardIds
+        state.selectedCardIds = payload.cardIds;
     },
     setSelectedLeaderId: (state: IGameReducer, {payload}:  PayloadAction<ISetLeaderIdAction>) => {
-        state.selectedLeaderId = payload.leaderId
+        state.selectedLeaderId = payload.leaderId;
     },
   },
 })
