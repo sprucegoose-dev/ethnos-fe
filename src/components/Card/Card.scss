@@ -22,6 +22,10 @@
         padding: 6px;
     }
 
+    &.selectable {
+        cursor: pointer;
+    }
+
     &.selectable:not(.paused) {
         &:after {
             content: '';

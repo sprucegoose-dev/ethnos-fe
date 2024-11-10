@@ -145,7 +145,6 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
                 dispatchSetSelectedLeaderId(selectedCardId);
             }
 
-
             dispatchSetSelectedCardIds([...selectedCardIds, selectedCardId]);
         }
 
@@ -171,7 +170,7 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
 
     useEffect(() => {
         setCardsOrder(cardsInHand.map(card => `${card.id}`));
-    }, cardsInHand);
+    }, [cardsInHand.length, cardsInHand.map(card => card.id).join(',')]);
 
     const sortedCardsInHand = [...cardsInHand].sort(sortCards);
 

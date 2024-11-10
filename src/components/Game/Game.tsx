@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
@@ -52,7 +52,7 @@ export function Game(): JSX.Element {
     } = useSelector<IRootReducer>((state) => state.game) as IGameReducer;
     const dispatch = useDispatch();
     const { id: gameId } = useParams();
-    const [gameState, setGameState] = useState<IGameState>(null);
+    const [ gameState, setGameState ] = useState<IGameState>(null);
     const [ actions, setActions ] = useState<IActionPayload[]>([]);
     const [ activePlayer, setActivePlayer ] = useState<IPlayer>(null);
     const [ playerHands, setPlayerHands ] = useState<{[playerId: number]: ICard[]}>({});
@@ -62,7 +62,10 @@ export function Game(): JSX.Element {
             slideOut: false,
     });
     const [socketRefreshInterval, setSocketRefreshInterval] = useState(null);
-    const [showDragonOverlay, setShowDragonOverlay] = useState(false);
+    const [showDragonOverlay, setShowDragonOverlay] = useState<boolean>(false);
+    const [revealedDragonsCount, setRevealedDragonsCount] = useState<number>(null);
+    const prevRevealedDragonsCount = useRef(null);
+    const [ initialized, setInitialized ] = useState(false);
     const navigate = useNavigate();
     let  currentPlayer: IPlayer;
     let playerPosition: {[userId: number]: string};
@@ -92,21 +95,8 @@ export function Game(): JSX.Element {
         }, 2500);
     }
 
-    const getRevealedDragons = (state: IGameState) =>
-        state?.cards.filter(card => card.tribe.name === TribeName.DRAGON && card.state === CardState.REVEALED) ?? [];
-
-    const handleShowDragonOverlay = (prevState: IGameState, nextState: IGameState) => {
-        const prevRevealedDragons = getRevealedDragons(prevState);
-        const nextRevealedDraogns = getRevealedDragons(nextState);
-
-        if (nextRevealedDraogns.length > prevRevealedDragons.length) {
-            setShowDragonOverlay(true);
-
-            setTimeout(() => {
-                setShowDragonOverlay(false);
-            }, 1000);
-        }
-    }
+    const getRevealedDragonsCount = (state: IGameState) =>
+        state?.cards.filter(card => card.tribe.name === TribeName.DRAGON && card.state === CardState.REVEALED)?.length ?? 0;
 
     useEffect(() => {
         if (!auth.userId) {
@@ -116,7 +106,7 @@ export function Game(): JSX.Element {
         const getGameState = async () => {
             const response = await GameApi.getState(Number(gameId))
             const payload: IGameState = await response.json();
-            handleShowDragonOverlay(gameState, payload);
+            setRevealedDragonsCount(getRevealedDragonsCount(payload));
             setGameState(payload);
             setActivePlayer(payload.players.find(player => player.id === payload.activePlayerId));
         };
@@ -143,13 +133,18 @@ export function Game(): JSX.Element {
                 toast.info('The game has been cancelled');
                 navigate('/rooms');
             }
-
             setActivePlayer(payload.players.find(player => player.id === payload.activePlayerId));
             getActions();
             getPlayerHands();
             dispatch(setSelectedCardIds({ cardIds: [] }));
             dispatch(setSelectedLeaderId({ leaderId: null }));
             handleTurnNotification();
+
+            const newRevealedDragonsCount = getRevealedDragonsCount(payload);
+
+            if (newRevealedDragonsCount > revealedDragonsCount) {
+                setRevealedDragonsCount(newRevealedDragonsCount);
+            }
         }
 
         if (!socketRefreshInterval) {
@@ -174,6 +169,25 @@ export function Game(): JSX.Element {
             socket.off('onUpdateGameState', updateGameState);
         }
     }, [auth, gameId, navigate]);
+
+    useEffect(() => {
+
+        if (prevRevealedDragonsCount.current === null && revealedDragonsCount !== null) {
+            prevRevealedDragonsCount.current = revealedDragonsCount;
+
+            setInitialized(true);
+        }
+
+        if (initialized && revealedDragonsCount > prevRevealedDragonsCount.current) {
+            setShowDragonOverlay(true);
+
+            setTimeout(() => {
+                setShowDragonOverlay(false);
+            }, 1500);
+
+            prevRevealedDragonsCount.current = revealedDragonsCount;
+        }
+    }, [initialized, revealedDragonsCount]);
 
     if (!gameState) {
         return;

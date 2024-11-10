@@ -110,9 +110,8 @@
         background-repeat: no-repeat;
         background-size: cover;
         z-index: 150;
-        animation: fadeInOut 2s ease-in-out forwards; /* Total duration: 2s */
-        animation-delay: 0.5s; /* Optional delay before starting */
-        animation-iteration-count: 1; /* Run only once */
+        animation: fadeInOut 1.5s ease-in forwards;
+        animation-iteration-count: 1;
     }
 }
 
