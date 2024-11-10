@@ -71,7 +71,11 @@ export function Game(): JSX.Element {
     let playerPosition: {[userId: number]: string};
     let highestGiantToken: number;
 
-    const handleTurnNotification = () => {
+    const handleTurnNotification = (activePlayer: IPlayer) => {
+        if (activePlayer.user.isBot) {
+            return;
+        }
+
         setTurnNotificationState({
             show: true,
             slideIn: true,
@@ -106,9 +110,17 @@ export function Game(): JSX.Element {
         const getGameState = async () => {
             const response = await GameApi.getState(Number(gameId))
             const payload: IGameState = await response.json();
+
+            if (payload.state === GameState.CANCELLED) {
+                toast.info('The game has been cancelled');
+                navigate('/rooms');
+            }
+
             setRevealedDragonsCount(getRevealedDragonsCount(payload));
             setGameState(payload);
-            setActivePlayer(payload.players.find(player => player.id === payload.activePlayerId));
+            const nextActivePlayer = payload.players.find(player => player.id === payload.activePlayerId);
+            setActivePlayer(nextActivePlayer);
+            handleTurnNotification(nextActivePlayer);
         };
 
         const getActions = async () => {
@@ -124,7 +136,6 @@ export function Game(): JSX.Element {
         getGameState();
         getPlayerHands();
         getActions();
-        handleTurnNotification();
 
         const updateGameState = (payload: IGameState) => {
             setGameState(payload);
@@ -134,10 +145,12 @@ export function Game(): JSX.Element {
                 navigate('/rooms');
             }
 
-            setActivePlayer(payload.players.find(player => player.id === payload.activePlayerId));
+            const nextActivePlayer = payload.players.find(player => player.id === payload.activePlayerId);
+
+            setActivePlayer(nextActivePlayer);
             getActions();
             getPlayerHands();
-            handleTurnNotification();
+            handleTurnNotification(nextActivePlayer);
 
             const newRevealedDragonsCount = getRevealedDragonsCount(payload);
 
@@ -154,7 +167,6 @@ export function Game(): JSX.Element {
                     getGameState();
                     getPlayerHands();
                     getActions();
-                    handleTurnNotification();
                 }
             }, 3000));
         }
@@ -182,7 +194,7 @@ export function Game(): JSX.Element {
 
             setTimeout(() => {
                 setShowDragonOverlay(false);
-            }, 1500);
+            }, 2000);
 
             prevRevealedDragonsCount.current = revealedDragonsCount;
         }
@@ -225,6 +237,13 @@ export function Game(): JSX.Element {
 
             if (!selectedLeaderId) {
                 toast.info('Please first select a leader for your band');
+                return;
+            }
+
+            const leader = playerHands[activePlayer.id].find(card => card.id === selectedLeaderId);
+
+            if (leader.tribe.name !== TribeName.WINGFOLK && leader.color !== region.color) {
+                toast.info('Leader color must match the region color');
                 return;
             }
 
