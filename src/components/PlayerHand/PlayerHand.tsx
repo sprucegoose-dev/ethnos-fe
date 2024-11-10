@@ -94,6 +94,8 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
             return;
         }
 
+        setHoveredCardIndex(null);
+
         const {active, over} = event;
 
         if (active.id !== over.id) {
