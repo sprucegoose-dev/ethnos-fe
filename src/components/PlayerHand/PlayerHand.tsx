@@ -118,10 +118,12 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
         }, 200);
     };
 
-    const selectCard = (selectedCardId: number) => {
+    const selectCard = (selectedCard: ICard) => {
         if (dragging) {
             return;
         }
+
+        const selectedCardId = selectedCard.id;
 
         if (selectedCardIds.includes(selectedCardId)) {
             setPauseAnimation(true);
@@ -133,9 +135,16 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
 
             dispatchSetSelectedCardIds(selectedCardIds.filter((cardId) => cardId !== selectedCardId));
         } else {
-            if (!selectedCardIds.length) {
+            const onlySkeletonsSelected = selectedCardIds.every(cardId =>
+                cardsInHand.find(card => card.id === cardId)?.tribe.name === TribeName.SKELETONS
+            );
+            const shouldSetAsLeader = (onlySkeletonsSelected || !selectedCardIds.length) &&
+                selectedCard.tribe.name !== TribeName.SKELETONS;
+
+            if (shouldSetAsLeader) {
                 dispatchSetSelectedLeaderId(selectedCardId);
             }
+
 
             dispatchSetSelectedCardIds([...selectedCardIds, selectedCardId]);
         }

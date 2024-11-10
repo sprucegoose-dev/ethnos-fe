@@ -69,7 +69,7 @@ export function Card(props: ICardProps): JSX.Element {
         'card',
         className || '',
         color || '',
-        state || '',
+        state.replace('_', '-') || '',
         tribe.name.toLowerCase(),
         selectable ? 'selectable' : '',
         pauseAnimation ? 'paused' : '',
@@ -87,7 +87,7 @@ export function Card(props: ICardProps): JSX.Element {
         }
 
         if (props.onSelect) {
-            props.onSelect(id);
+            props.onSelect(props.card);
         }
     }
 

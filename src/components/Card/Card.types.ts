@@ -7,7 +7,7 @@ export interface ICardProps {
     isLeader?: boolean;
     onMouseEnter?: React.MouseEventHandler<HTMLDivElement>;
     onMouseLeave?: React.MouseEventHandler<HTMLDivElement>;
-    onSelect?: (cardId: number) => void;
+    onSelect?: (card: ICard) => void;
     onSetLeader?: (cardId: number) => void;
     pauseAnimation?: boolean;
     selectable?: boolean;

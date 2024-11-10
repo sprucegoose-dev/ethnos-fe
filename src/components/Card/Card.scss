@@ -18,6 +18,10 @@
     flex-direction: column;
     padding: 5px;
 
+    &.in-hand {
+        padding: 6px;
+    }
+
     &.selectable:not(.paused) {
         &:after {
             content: '';
@@ -52,32 +56,26 @@
 
     &.blue {
         background: $card-blue;
-        padding: 5px;;
     }
 
     &.gray {
         background: $card-gray;
-        padding: 5px;;
     }
 
     &.green {
         background: $card-green;
-        padding: 5px;;
     }
 
     &.orange {
         background: $card-orange;
-        padding: 5px;
     }
 
     &.purple {
         background: $card-purple;
-        padding: 5px;;
     }
 
     &.red {
         background: $card-red;
-        padding: 5px;;
     }
 
     &.skeletons {

@@ -1,4 +1,5 @@
 @import '../../styles/variables.scss';
+@import '../../styles/animations.scss';
 
 .game-container {
     background-image: url('../../assets/backgrounds/ocean_bkg.png');
@@ -96,6 +97,22 @@
         padding: 10px 20px;
         position: absolute;
         transform: translateX(-50%);
+    }
+
+    .dragon-overlay {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        background-image: url('../../assets/backgrounds/dragon_overlay.png');
+        background-position-x: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        z-index: 150;
+        animation: fadeInOut 2s ease-in-out forwards; /* Total duration: 2s */
+        animation-delay: 0.5s; /* Optional delay before starting */
+        animation-iteration-count: 1; /* Run only once */
     }
 }
 

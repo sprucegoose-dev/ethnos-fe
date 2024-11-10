@@ -9,10 +9,12 @@ import { socket } from '../../socket';
 import { setSelectedCardIds, setSelectedLeaderId } from './Game.reducer';
 
 import {
+    CardState,
     GameState,
     ICard,
     IGameState,
     IPlayer,
+    TribeName,
 } from './Game.types';
 import {
     ActionType,
@@ -60,6 +62,7 @@ export function Game(): JSX.Element {
             slideOut: false,
     });
     const [socketRefreshInterval, setSocketRefreshInterval] = useState(null);
+    const [showDragonOverlay, setShowDragonOverlay] = useState(false);
     const navigate = useNavigate();
     let  currentPlayer: IPlayer;
     let playerPosition: {[userId: number]: string};
@@ -89,6 +92,22 @@ export function Game(): JSX.Element {
         }, 2500);
     }
 
+    const getRevealedDragons = (state: IGameState) =>
+        state?.cards.filter(card => card.tribe.name === TribeName.DRAGON && card.state === CardState.REVEALED) ?? [];
+
+    const handleShowDragonOverlay = (prevState: IGameState, nextState: IGameState) => {
+        const prevRevealedDragons = getRevealedDragons(prevState);
+        const nextRevealedDraogns = getRevealedDragons(nextState);
+
+        if (nextRevealedDraogns.length > prevRevealedDragons.length) {
+            setShowDragonOverlay(true);
+
+            setTimeout(() => {
+                setShowDragonOverlay(false);
+            }, 1000);
+        }
+    }
+
     useEffect(() => {
         if (!auth.userId) {
             navigate('/rooms');
@@ -97,6 +116,7 @@ export function Game(): JSX.Element {
         const getGameState = async () => {
             const response = await GameApi.getState(Number(gameId))
             const payload: IGameState = await response.json();
+            handleShowDragonOverlay(gameState, payload);
             setGameState(payload);
             setActivePlayer(payload.players.find(player => player.id === payload.activePlayerId));
         };
@@ -288,6 +308,9 @@ export function Game(): JSX.Element {
                             text={getTurnNotificationText(activePlayer)}
                         />
                     : null}
+                    {showDragonOverlay ?
+                        <div className="dragon-overlay"></div> : null
+                    }
                 </div> : null
             }
         </div>

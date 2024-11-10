@@ -8,7 +8,7 @@ import { IAuthReducer } from '../Auth/Auth.types';
 
 import GameApi from '../../api/Game.api';
 
-import { CardState } from '../Game/Game.types';
+import { CardState, ICard } from '../Game/Game.types';
 import { ActionType } from '../Game/Action.types';
 import { IDeckProps } from './Market.types';
 
@@ -24,9 +24,9 @@ export function Market({activePlayer, gameState}: IDeckProps): JSX.Element {
         .filter(card => card.state === CardState.IN_MARKET)
         .sort((cardA, cardB) => cardA.index - cardB.index);
 
-    const handlePickUpCard = async (cardId: number) => {
+    const handlePickUpCard = async (card: ICard) => {
         if (activePlayer?.userId === auth.userId) {
-            await GameApi.sendAction(gameState.id, { type: ActionType.PICK_UP_CARD, cardId });
+            await GameApi.sendAction(gameState.id, { type: ActionType.PICK_UP_CARD, cardId: card.id });
         } else {
             toast.info('Please wait for your turn');
         }

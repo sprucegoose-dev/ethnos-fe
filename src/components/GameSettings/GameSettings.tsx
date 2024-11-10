@@ -181,7 +181,7 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                     </div>
                     {/* TODO: move into 'PlayerLabel' component */}
                     {gameState.players.map(({ id: playerId, color, user }, index) =>
-                        <span className="player-label">
+                        <span className="player-label" key={`player-id-${playerId}`}>
                             {color ?
                                 <TokenIcon
                                     color={color}
