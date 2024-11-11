@@ -34,6 +34,7 @@
         margin: 5% auto;
         display: flex;
         flex-direction: column;
+        position: relative;
 
         .regions-row {
             display: flex;
@@ -84,6 +85,7 @@
         bottom: 5%;
     }
 
+    .play-band-notification,
     .free-token-notifaction {
         background: rgba(0, 0, 0, 0.03);
         border-radius: 4px;
@@ -98,6 +100,22 @@
         position: absolute;
         transform: translateX(-50%);
         z-index: 150;
+    }
+
+    .play-band-notification {
+        background: rgba(0, 0, 0, 0.75);
+        box-shadow: 0 0 20px 20px rgba(0, 0, 0, 0.75);
+        top: 50%;
+        transform: translate(-50%, -50%);
+        bottom: auto;
+        cursor: pointer;
+
+        &:hover {
+            text-shadow: 0 0 5px rgba(25, 49, 52, 0.8),
+                0 0 10px rgba(36, 76, 82, 0.6),
+                0 0 15px rgba(104, 170, 177, 0.4),
+                0 0 20px rgba(150, 210, 220, 0.3);
+        }
     }
 
     .dragon-overlay {

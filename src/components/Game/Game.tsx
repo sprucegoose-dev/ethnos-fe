@@ -222,9 +222,8 @@ export function Game(): JSX.Element {
         highestGiantToken = getHighestGiantTokenValue(gameState.players);
     }
 
-    const onSelectRegion = async (region: IRegion) => {
+    const onSelectRegion = async (region?: IRegion) => {
         let payload: IActionPayload;
-
 
         if (gameState.activePlayerId !== currentPlayer.id) {
             toast.info('Please wait for your turn');
@@ -239,7 +238,7 @@ export function Game(): JSX.Element {
             payload = {
                 type: ActionType.ADD_FREE_TOKEN,
                 nextActionId: addFreeTokenAction.nextActionId,
-                regionColor: region.color
+                regionColor: region?.color
             };
         } else {
 
@@ -255,7 +254,7 @@ export function Game(): JSX.Element {
 
             const leader = cardsInHand.find(card => card.id === selectedLeaderId);
 
-            if (leader.tribe.name !== TribeName.WINGFOLK && leader.color !== region.color) {
+            if (region && leader.tribe.name !== TribeName.WINGFOLK && leader.color !== region.color) {
                 toast.info('Leader color must match the region color');
                 return;
             }
@@ -267,7 +266,7 @@ export function Game(): JSX.Element {
                     action.nextActionId
                 // @ts-ignore
                 )?.nextActionId,
-                regionColor: region.color,
+                regionColor: region?.color,
                 leaderId: selectedLeaderId,
                 cardIds: selectedCardIds,
             };
@@ -292,6 +291,11 @@ export function Game(): JSX.Element {
     const sortedRegions = gameState.regions.sort((regionA, regionB) =>
         regionOrder[regionA.color] - regionOrder[regionB.color]
     );
+
+    const selectedLeaderIsHalfling = selectedLeaderId &&
+        cardsInHand.find(card =>
+            card.id === selectedLeaderId
+        )?.tribe.name === TribeName.HALFLINGS;
 
     return (
         <div className={`game-container ${gameState.state.toLowerCase()}`}>
@@ -321,6 +325,12 @@ export function Game(): JSX.Element {
                                 />
                             )}
                         </div>
+                        {
+                            selectedLeaderIsHalfling ?
+                            <div className="play-band-notification" onClick={() => onSelectRegion()}>
+                                Play Band
+                            </div> : null
+                        }
                     </div>
                     <Market gameState={gameState} activePlayer={activePlayer} />
                     <Deck gameState={gameState} activePlayer={activePlayer} actions={actions}/>
