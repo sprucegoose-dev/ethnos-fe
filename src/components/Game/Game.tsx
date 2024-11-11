@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
+import pako, { Data } from 'pako';
 
 import { getHighestGiantTokenValue, getPlayerPositions } from './helpers';
 import GameApi from '../../api/Game.api';
@@ -118,9 +119,14 @@ export function Game(): JSX.Element {
 
             setRevealedDragonsCount(getRevealedDragonsCount(payload));
             setGameState(payload);
-            const nextActivePlayer = payload.players.find(player => player.id === payload.activePlayerId);
-            setActivePlayer(nextActivePlayer);
-            handleTurnNotification(nextActivePlayer);
+
+            if (payload.state !== GameState.CREATED) {
+                const nextActivePlayer = payload.players.find(player => player.id === payload.activePlayerId);
+                getPlayerHands();
+                getActions();
+                setActivePlayer(nextActivePlayer);
+                handleTurnNotification(nextActivePlayer);
+            }
         };
 
         const getActions = async () => {
@@ -134,10 +140,9 @@ export function Game(): JSX.Element {
         };
 
         getGameState();
-        getPlayerHands();
-        getActions();
 
-        const updateGameState = (payload: IGameState) => {
+        const updateGameState = (compressedPayload: Data) => {
+            const payload: IGameState = JSON.parse(pako.inflate(compressedPayload, { to: 'string' }));
             setGameState(payload);
 
             if (payload.state === GameState.CANCELLED) {
@@ -145,17 +150,19 @@ export function Game(): JSX.Element {
                 navigate('/rooms');
             }
 
-            const nextActivePlayer = payload.players.find(player => player.id === payload.activePlayerId);
+            if (payload.state !== GameState.CREATED) {
+                const nextActivePlayer = payload.players.find(player => player.id === payload.activePlayerId);
 
-            setActivePlayer(nextActivePlayer);
-            getPlayerHands();
-            getActions();
-            handleTurnNotification(nextActivePlayer);
+                setActivePlayer(nextActivePlayer);
+                getPlayerHands();
+                getActions();
+                handleTurnNotification(nextActivePlayer);
 
-            const newRevealedDragonsCount = getRevealedDragonsCount(payload);
+                const newRevealedDragonsCount = getRevealedDragonsCount(payload);
 
-            if (newRevealedDragonsCount !== revealedDragonsCount) {
-                setRevealedDragonsCount(newRevealedDragonsCount);
+                if (newRevealedDragonsCount !== revealedDragonsCount) {
+                    setRevealedDragonsCount(newRevealedDragonsCount);
+                }
             }
         }
 
@@ -165,8 +172,6 @@ export function Game(): JSX.Element {
                     await socket.connect();
                     await socket.emit('onJoinGame', gameId);
                     getGameState();
-                    getPlayerHands();
-                    getActions();
                 }
             }, 3000));
         }
