@@ -45,7 +45,7 @@ function App() {
             validateLoginState();
         }
 
-    }, [auth, dispatch]);
+    }, [auth, dispatch, socketRefreshInterval]);
 
     const inGame = location.pathname.startsWith('/game');
 

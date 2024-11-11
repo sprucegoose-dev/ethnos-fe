@@ -57,6 +57,7 @@ export function Game(): JSX.Element {
     const [ actions, setActions ] = useState<IActionPayload[]>([]);
     const [ activePlayer, setActivePlayer ] = useState<IPlayer>(null);
     const [ playerHands, setPlayerHands ] = useState<{[playerId: number]: ICard[]}>({});
+    const [ cardsInHand, setCardsInHand ] = useState<ICard[]>([]);
     const [ turnNotificationState, setTurnNotificationState ] = useState<ITurnNotificationState>({
             show: true,
             slideIn: false,
@@ -122,6 +123,7 @@ export function Game(): JSX.Element {
 
             if (payload.state !== GameState.CREATED) {
                 const nextActivePlayer = payload.players.find(player => player.id === payload.activePlayerId);
+                getCardsInHand();
                 getPlayerHands();
                 getActions();
                 setActivePlayer(nextActivePlayer);
@@ -132,6 +134,11 @@ export function Game(): JSX.Element {
         const getActions = async () => {
             const response = await GameApi.getActions(parseInt(gameId, 10));
             setActions(await response.json());
+        };
+
+        const getCardsInHand = async () => {
+            const response = await GameApi.getCardsInHand(parseInt(gameId, 10));
+            setCardsInHand(await response.json());
         };
 
         const getPlayerHands = async () => {
@@ -154,6 +161,7 @@ export function Game(): JSX.Element {
                 const nextActivePlayer = payload.players.find(player => player.id === payload.activePlayerId);
 
                 setActivePlayer(nextActivePlayer);
+                getCardsInHand();
                 getPlayerHands();
                 getActions();
                 handleTurnNotification(nextActivePlayer);
@@ -184,7 +192,7 @@ export function Game(): JSX.Element {
             socket.emit('onLeaveGame', gameId);
             socket.off('onUpdateGameState', updateGameState);
         }
-    }, [auth, gameId, navigate]);
+    }, [auth, gameId, navigate, revealedDragonsCount, socketRefreshInterval]);
 
     useEffect(() => {
         if (prevRevealedDragonsCount.current === null && revealedDragonsCount !== null) {
@@ -217,6 +225,7 @@ export function Game(): JSX.Element {
     const onSelectRegion = async (region: IRegion) => {
         let payload: IActionPayload;
 
+
         if (gameState.activePlayerId !== currentPlayer.id) {
             toast.info('Please wait for your turn');
             return;
@@ -244,7 +253,7 @@ export function Game(): JSX.Element {
                 return;
             }
 
-            const leader = playerHands[activePlayer.id].find(card => card.id === selectedLeaderId);
+            const leader = cardsInHand.find(card => card.id === selectedLeaderId);
 
             if (leader.tribe.name !== TribeName.WINGFOLK && leader.color !== region.color) {
                 toast.info('Leader color must match the region color');
@@ -321,12 +330,12 @@ export function Game(): JSX.Element {
                                 key={`player-hand-${player.id}`}
                                 actions={actions}
                                 className={playerPosition[player.userId]}
-                                player={{...player, cardsInHand: playerHands[player.id] || []}}
+                                player={{...player, cardsInHand: player.id === currentPlayer.id ? cardsInHand : (playerHands[player.id] || [])}}
                             />
                             <PlayerWidget
                                 key={`player-widget-${player.id}`}
                                 className={playerPosition[player.userId]}
-                                player={{...player, cardsInHand: playerHands[player.id] || []}}
+                                player={{...player, cardsInHand: player.id === currentPlayer.id ? cardsInHand : (playerHands[player.id] || [])}}
                                 playerCount={gameState.players.length}
                                 isActivePlayer={player.id === gameState.activePlayerId}
                                 highestGiantToken={highestGiantToken}

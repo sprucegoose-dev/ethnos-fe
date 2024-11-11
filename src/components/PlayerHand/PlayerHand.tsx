@@ -184,9 +184,12 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
         );
     };
 
+    const setCardsOrderDependency = cardsInHand.length;
+    const cardsInHandString = cardsInHand.map(card => card.id).join(',');
+
     useEffect(() => {
         setCardsOrder(cardsInHand.map(card => `${card.id}`));
-    }, [cardsInHand.length, cardsInHand.map(card => card.id).join(',')]);
+    }, [setCardsOrderDependency, cardsInHandString, cardsInHand]);
 
     const sortedCardsInHand = [...cardsInHand].sort(sortCards);
 
