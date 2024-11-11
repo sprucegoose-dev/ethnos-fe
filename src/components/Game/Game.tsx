@@ -67,7 +67,6 @@ export function Game(): JSX.Element {
     const [showDragonOverlay, setShowDragonOverlay] = useState<boolean>(false);
     const [revealedDragonsCount, setRevealedDragonsCount] = useState<number>(null);
     const prevRevealedDragonsCount = useRef(null);
-    const [ initialized, setInitialized ] = useState(false);
     const navigate = useNavigate();
     let  currentPlayer: IPlayer;
     let playerPosition: {[userId: number]: string};
@@ -75,6 +74,11 @@ export function Game(): JSX.Element {
 
     const handleTurnNotification = (activePlayer: IPlayer) => {
         if (activePlayer.user.isBot) {
+            setTurnNotificationState({
+                show: false,
+                slideIn: false,
+                slideOut: false
+            });
             return;
         }
 
@@ -197,11 +201,10 @@ export function Game(): JSX.Element {
     useEffect(() => {
         if (prevRevealedDragonsCount.current === null && revealedDragonsCount !== null) {
             prevRevealedDragonsCount.current = revealedDragonsCount;
-
-            setInitialized(true);
+            return;
         }
 
-        if (initialized && revealedDragonsCount > prevRevealedDragonsCount.current) {
+        if (revealedDragonsCount > prevRevealedDragonsCount.current) {
             setShowDragonOverlay(true);
 
             setTimeout(() => {
@@ -210,7 +213,7 @@ export function Game(): JSX.Element {
 
             prevRevealedDragonsCount.current = revealedDragonsCount;
         }
-    }, [initialized, revealedDragonsCount]);
+    }, [revealedDragonsCount]);
 
     if (!gameState) {
         return;

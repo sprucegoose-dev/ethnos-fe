@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import throttle from 'lodash.throttle';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
@@ -18,18 +18,27 @@ import './Market.scss';
 
 export function Market({activePlayer, gameState}: IDeckProps): JSX.Element {
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
-    const [hoveredCardIndex, setHoveredCardIndex] = useState(null);
+    const [hoveredCardIndex, setHoveredCardIndex] = useState<number>(null);
+    const [submitting, setSubmitting] = useState<boolean>(null);
 
     const cardsInMarket = gameState.cards
         .filter(card => card.state === CardState.IN_MARKET)
         .sort((cardA, cardB) => cardA.index - cardB.index);
 
     const handlePickUpCard = async (card: ICard) => {
+        if (submitting) {
+            return;
+        }
+
+        setSubmitting(true);
+
         if (activePlayer?.userId === auth.userId) {
             await GameApi.sendAction(gameState.id, { type: ActionType.PICK_UP_CARD, cardId: card.id });
         } else {
             toast.info('Please wait for your turn');
         }
+
+        setSubmitting(false);
     };
 
     const calculateClass = (index: number) => {
@@ -49,6 +58,10 @@ export function Market({activePlayer, gameState}: IDeckProps): JSX.Element {
     const handleMouseLeave = throttle(() => {
         setHoveredCardIndex(null);
     }, 1000);
+
+    useEffect(() => {
+        setHoveredCardIndex(null);
+    }, [cardsInMarket.length]);
 
     return (
         <div className="market">
