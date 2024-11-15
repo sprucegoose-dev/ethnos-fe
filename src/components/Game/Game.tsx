@@ -26,7 +26,6 @@ import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
 import { IGameReducer } from './Game.reducer.types';
 import { IRegion, regionOrder } from '../Region/Region.types';
-import { ITurnNotificationState } from '../TurnNotification/TurnNotification.types';
 
 import { GameSettings } from '../GameSettings/GameSettings';
 import { Deck } from '../Deck/Deck';
@@ -35,6 +34,7 @@ import { Region } from '../Region/Region';
 import { PlayerWidget } from '../PlayerWidget/PlayerWidget';
 import { PlayerHand } from '../PlayerHand/PlayerHand';
 import { TurnNotification } from '../TurnNotification/TurnNotification';
+import { useTurnNotification } from '../../hooks/useTurnNotification';
 
 import './Game.scss';
 
@@ -58,11 +58,7 @@ export function Game(): JSX.Element {
     const [ activePlayer, setActivePlayer ] = useState<IPlayer>(null);
     const [ playerHands, setPlayerHands ] = useState<{[playerId: number]: ICard[]}>({});
     const [ cardsInHand, setCardsInHand ] = useState<ICard[]>([]);
-    const [ turnNotificationState, setTurnNotificationState ] = useState<ITurnNotificationState>({
-            show: true,
-            slideIn: false,
-            slideOut: false,
-    });
+    const { getTurnNotificationText, handleTurnNotification, turnNotificationState } = useTurnNotification();
     const [socketRefreshInterval, setSocketRefreshInterval] = useState(null);
     const [showDragonOverlay, setShowDragonOverlay] = useState<boolean>(false);
     const [revealedDragonsCount, setRevealedDragonsCount] = useState<number>(null);
@@ -71,39 +67,6 @@ export function Game(): JSX.Element {
     let  currentPlayer: IPlayer;
     let playerPosition: {[userId: number]: string};
     let highestGiantToken: number;
-
-    const handleTurnNotification = (activePlayer: IPlayer) => {
-        if (activePlayer.user.isBot) {
-            setTurnNotificationState({
-                show: false,
-                slideIn: false,
-                slideOut: false
-            });
-            return;
-        }
-
-        setTurnNotificationState({
-            show: true,
-            slideIn: true,
-            slideOut: false
-        });
-
-        setTimeout(() => {
-            setTurnNotificationState({
-                show: true,
-                slideIn: false,
-                slideOut: true
-            });
-        }, 2000);
-
-        setTimeout(() => {
-            setTurnNotificationState({
-                show: false,
-                slideIn: false,
-                slideOut: false
-            });
-        }, 2500);
-    }
 
     const getRevealedDragonsCount = (state: IGameState) =>
         state?.cards.filter(card => card.tribe.name === TribeName.DRAGON && card.state === CardState.REVEALED)?.length ?? 0;
@@ -284,12 +247,6 @@ export function Game(): JSX.Element {
     }
 
     const canAddFreeToken = actions.find(action => action.type === ActionType.ADD_FREE_TOKEN);
-
-    const getTurnNotificationText = (player: IPlayer) => {
-        const username = player.user.username;
-
-        return `${username}'${username.charAt(username.length - 1) === 's' ? '' : 's'} turn`;
-    }
 
     const sortedRegions = gameState.regions.sort((regionA, regionB) =>
         regionOrder[regionA.color] - regionOrder[regionB.color]
