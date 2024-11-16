@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import pako, { Data } from 'pako';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 import { getHighestGiantTokenValue, getPlayerPositions } from './helpers';
 import GameApi from '../../api/Game.api';
@@ -41,9 +43,9 @@ import { PlayerHand } from '../PlayerHand/PlayerHand';
 import { TurnNotification } from '../TurnNotification/TurnNotification';
 import { useTurnNotification } from '../../hooks/useTurnNotification';
 
-import './Game.scss';
 import { IActionLogPayload } from '../ActionsLog/ActionsLog.types';
 import { ActionsLog } from '../ActionsLog/ActionsLog';
+import './Game.scss';
 
 const {
     CREATED,
@@ -295,6 +297,14 @@ export function Game(): JSX.Element {
 
     return (
         <div className={`game-container ${gameState.state.toLowerCase()}`}>
+            <Link to="/rooms">
+                <button className="btn btn-outline btn-back">
+                    <FontAwesomeIcon
+                        className="back-icon"
+                        icon={faChevronLeft}
+                    /> Back
+                </button>
+            </Link>
             {gameState.state === CREATED ?
                 <GameSettings gameState={gameState} /> : null
             }

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faInfo, faRemove, faRobot } from '@fortawesome/free-solid-svg-icons';
+import { faInfo, faRemove, faRobot } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import shuffle from 'lodash.shuffle';
 
@@ -163,14 +163,6 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
 
     return (
         <div className="game-settings">
-            <Link to="/rooms">
-                <button className="btn btn-outline btn-back">
-                    <FontAwesomeIcon
-                        className="back-icon"
-                        icon={faChevronLeft}
-                    /> Back
-                </button>
-            </Link>
             <div className="room-title">
                 {renderRoomName()}
             </div>

@@ -21,6 +21,20 @@
         overflow: visible;
     }
 
+    .btn-back {
+        box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.3);
+        left: 0;
+        position: absolute;
+        top: -55px;
+        text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+        font-size: .9rem;
+
+        .back-icon {
+            margin-right: 5px;
+            font-size: .9rem;
+        }
+    }
+
     .game {
         display: flex;
         flex-direction: column;
@@ -146,13 +160,6 @@
         animation: fadeInOut 2s ease-in forwards;
         animation-iteration-count: 1;
     }
-
-    .debug {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-    }
 }
 
 @media screen and (orientation: portrait) {
@@ -164,3 +171,17 @@
         }
     }
 }
+
+
+@media only screen and (min-width: $screen-sm) {
+
+    .game-container {
+
+        .btn-back {
+            position: fixed;
+            left: 20px;
+            top: 15px;
+        }
+    }
+}
+

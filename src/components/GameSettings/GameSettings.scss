@@ -13,19 +13,6 @@
     text-align: center;
     width: 100%;
 
-    .btn-back {
-        box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.3);
-        left: 0;
-        position: absolute;
-        top: -55px;
-        text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
-
-        .back-icon {
-            margin-right: 5px;
-            font-size: .9rem;
-        }
-    }
-
     .section {
         border-top: 1px solid $light-gray-2;
         margin-bottom: 20px;
@@ -228,12 +215,6 @@
             .token-icon {
                 width: 13.5%;
             }
-        }
-
-        .btn-back {
-            position: fixed;
-            left: 20px;
-            top: 15px;
         }
     }
 }

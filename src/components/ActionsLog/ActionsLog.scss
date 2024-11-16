@@ -6,7 +6,7 @@
     box-sizing: border-box;
     position: absolute;
     top: 0;
-    left: 10%;
+    left: 14%;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     border-top: none;
@@ -75,29 +75,39 @@
                 background: rgba(255, 255, 255, .5);
                 border-radius: 2px;
                 padding: 2px 3px;
+                background-position-x: center;
+                background-repeat: no-repeat;
+                background-size: contain;
+                display: inline-block;
             }
 
             .region-green {
+                // background-image: url('../../assets/regions/green_region.png');
                 color: $card-green;
             }
 
             .region-red {
+                // background-image: url('../../assets/regions/red_region.png');
                 color: $card-red;
             }
 
             .region-gray {
+                // background-image: url('../../assets/regions/gray_region.png');
                 color: $card-gray;
             }
 
             .region-orange {
+                // background-image: url('../../assets/regions/orange_region.png');
                 color: $card-orange;
             }
 
             .region-blue {
+                // background-image: url('../../assets/regions/blue_region.png');
                 color: $card-blue;
             }
 
             .region-purple {
+                // background-image: url('../../assets/regions/purple_region.png');
                 color: $card-purple;
             }
         }
