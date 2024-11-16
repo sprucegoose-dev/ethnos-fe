@@ -43,6 +43,7 @@
         }
     }
 
+    &.keep,
     &.selected {
         &:after {
             content: '';
@@ -55,6 +56,12 @@
             transform: translate(-50%, -50%);
             border: 3.5px solid $selected;
             box-sizing: border-box;
+        }
+    }
+
+    &.keep {
+        &:after {
+            border-color: white;
         }
     }
 

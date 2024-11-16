@@ -60,6 +60,7 @@ export function Card(props: ICardProps): JSX.Element {
         isLeader,
         selectable,
         selected,
+        keep,
     } = props;
 
     const makeLeaderBtnRef = useRef(null);
@@ -72,6 +73,7 @@ export function Card(props: ICardProps): JSX.Element {
         tribe.name.toLowerCase(),
         selectable ? 'selectable' : '',
         selected ? 'selected' : '',
+        keep ? 'keep' : '',
     ].filter(Boolean).join(' ');
 
     const handleSetLeader = (event: React.MouseEvent<HTMLButtonElement>) => {

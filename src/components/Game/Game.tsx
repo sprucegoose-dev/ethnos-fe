@@ -25,6 +25,7 @@ import {
     ActionType,
     IActionPayload,
     IAddFreeTokenPayload,
+    IKeepCardsPayload,
 } from './Action.types';
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
@@ -53,6 +54,7 @@ export function Game(): JSX.Element {
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
     const {
         selectedCardIds,
+        selectedCardIdsToKeep,
         selectedLeaderId,
     } = useSelector<IRootReducer>((state) => state.game) as IGameReducer;
     const dispatch = useDispatch();
@@ -68,6 +70,7 @@ export function Game(): JSX.Element {
     const [revealedDragonsCount, setRevealedDragonsCount] = useState<number>(null);
     const prevRevealedDragonsCount = useRef(null);
     const navigate = useNavigate();
+    const keepCardsAction = actions.find(action => action.type === ActionType.KEEP_CARDS) as IKeepCardsPayload;
     let  currentPlayer: IPlayer;
     let playerPosition: {[userId: number]: string};
     let highestGiantToken: number;
@@ -192,6 +195,12 @@ export function Game(): JSX.Element {
         highestGiantToken = getHighestGiantTokenValue(gameState.players);
     }
 
+    const clearSelections = () => {
+        dispatch(setSelectedCardIds({ cardIds: [] }));
+        dispatch(setSelectedLeaderId({ leaderId: null }));
+        dispatch(setSelectedCardIdsToKeep({ cardIds: [] }));
+    }
+
     const onSelectRegion = async (region?: IRegion) => {
         let payload: IActionPayload;
 
@@ -245,11 +254,23 @@ export function Game(): JSX.Element {
         const response = await GameApi.sendAction(gameState.id, payload);
 
         if (response.ok) {
-            dispatch(setSelectedCardIds({ cardIds: [] }));
-            dispatch(setSelectedLeaderId({ leaderId: null }));
-            dispatch(setSelectedCardIdsToKeep([]));
+            clearSelections();
         }
     }
+
+    const submitKeepCardsAction = async () => {
+        const payload: IKeepCardsPayload = {
+            type: ActionType.KEEP_CARDS,
+            nextActionId: keepCardsAction.nextActionId,
+            cardIds: selectedCardIdsToKeep,
+        };
+
+        const response = await GameApi.sendAction(gameState.id, payload);
+
+        if (response.ok) {
+            clearSelections();
+        }
+    };
 
     const canAddFreeToken = actions.find(action => action.type === ActionType.ADD_FREE_TOKEN);
 
@@ -296,6 +317,22 @@ export function Game(): JSX.Element {
                                 Play Band
                             </div> : null
                         }
+                        {
+                            keepCardsAction ?
+                            <div className="keep-cards-notification">
+                                {
+                                    selectedCardIdsToKeep.length === keepCardsAction.value ?
+                                    <button
+                                        className="btn btn-outline btn-3d"
+                                        onClick={() => submitKeepCardsAction()}
+                                    >
+                                            Keep Selected Cards
+                                    </button>
+                                    : `Choose ${keepCardsAction.value} cards to keep`
+                                }
+
+                            </div>  : null
+                        }
                     </div>
                     <Market gameState={gameState} activePlayer={activePlayer} />
                     <Deck gameState={gameState} activePlayer={activePlayer} actions={actions}/>
@@ -303,7 +340,7 @@ export function Game(): JSX.Element {
                         <div key={`player-area-${player.id}`}>
                             <PlayerHand
                                 key={`player-hand-${player.id}`}
-                                actions={actions}
+                                actions={player.id === currentPlayer.id ? actions : []}
                                 className={playerPosition[player.userId]}
                                 player={{...player, cardsInHand: player.id === currentPlayer.id ? cardsInHand : (playerHands[player.id] || [])}}
                             />

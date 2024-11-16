@@ -53,7 +53,7 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
     const playBandActions = actions.filter(action => action.type === ActionType.PLAY_BAND) as IPlayBandPayload[];
     const cardsInHand = (player.cardsInHand || []).sort((cardA, cardB) => cardA.index - cardB.index);
     const [cardsOrder, setCardsOrder] = useState<UniqueIdentifier[]>(cardsInHand.map(card => `${card.id}`));
-    const keepCardsAction: IKeepCardsPayload = actions.find(action => action.type === ActionType.KEEP_CARDS);
+    const keepCardsAction = actions.find(action => action.type === ActionType.KEEP_CARDS) as IKeepCardsPayload;
     const [dragging, setDragging] = useState<boolean>(false);
     const sensors = useSensors(
         useSensor(PointerSensor),
@@ -182,7 +182,7 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
         const selectedCardId = selectedCard.id;
 
         if (selectedCardIdsToKeep.includes(selectedCardId)) {
-            dispatch(setSelectedCardIdsToKeep(selectedCardIdsToKeep.filter((cardId) => cardId !== selectedCardId)))
+            dispatch(setSelectedCardIdsToKeep({ cardIds: selectedCardIdsToKeep.filter((cardId) => cardId !== selectedCardId) }))
         } else {
 
             if (selectedCardIdsToKeep.length === keepCardsAction.value) {
@@ -190,7 +190,7 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
                 return;
             }
 
-            dispatch(setSelectedCardIdsToKeep([...selectedCardIdsToKeep, selectedCardId]));
+            dispatch(setSelectedCardIdsToKeep({ cardIds: [...selectedCardIdsToKeep, selectedCardId] }));
         }
     };
 
@@ -219,18 +219,18 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
     const sortedCardsInHand = [...cardsInHand].sort(sortCards);
 
     return (
-        <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
-            onDragStart={handleDragStart}
-        >
-            <SortableContext
-                items={cardsOrder}
-                strategy={horizontalListSortingStrategy}
-                disabled={!className.includes('bottom')}
+        <div className={`player-hand ${className || ''}`} ref={setNodeRef}>
+            <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragEnd={handleDragEnd}
+                onDragStart={handleDragStart}
             >
-            <div className={`player-hand ${className || ''}`} ref={setNodeRef}>
+                <SortableContext
+                    items={cardsOrder}
+                    strategy={horizontalListSortingStrategy}
+                    disabled={!className.includes('bottom')}
+                >
                     {sortedCardsInHand.map((card, index) =>
                         <DraggableCard
                             id={`${card.id}`}
@@ -252,6 +252,7 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
                                     isLeader={selectedLeaderId && selectedLeaderId === card.id}
                                     selectable={selectedCardIds.length && isSelectable(card.id)}
                                     selected={selectedCardIds.includes(card.id)}
+                                    keep={selectedCardIdsToKeep.includes(card.id)}
                                     onSelect={keepCardsAction ? selectCardToKeep : selectCard}
                                     onSetLeader={dispatchSetSelectedLeaderId}
                                 /> :
@@ -266,8 +267,8 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
                             }
                         </DraggableCard>
                     )}
-            </div>
-            </SortableContext>
-        </DndContext>
+                </SortableContext>
+            </DndContext>
+        </div>
     );
 }

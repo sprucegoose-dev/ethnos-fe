@@ -11,6 +11,7 @@ export const gameReducer = createSlice({
   initialState: {
     selectedCardIds: [],
     selectedLeaderId: null,
+    selectedCardIdsToKeep: [],
   },
   reducers: {
     setSelectedCardIds: (state: IGameReducer, {payload}:  PayloadAction<ISetCardIdsAction>) => {

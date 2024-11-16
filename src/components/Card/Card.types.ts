@@ -11,4 +11,5 @@ export interface ICardProps {
     onSetLeader?: (cardId: number) => void;
     selectable?: boolean;
     selected?: boolean;
+    keep?: boolean;
 }

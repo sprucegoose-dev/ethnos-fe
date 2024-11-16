@@ -86,7 +86,8 @@
     }
 
     .play-band-notification,
-    .free-token-notifaction {
+    .free-token-notifaction,
+    .keep-cards-notification {
         background: rgba(0, 0, 0, 0.03);
         border-radius: 4px;
         bottom: 8%;
@@ -115,6 +116,19 @@
                 0 0 10px rgba(36, 76, 82, 0.6),
                 0 0 15px rgba(104, 170, 177, 0.4),
                 0 0 20px rgba(150, 210, 220, 0.3);
+        }
+    }
+
+    .keep-cards-notification  {
+        background: rgba(0, 0, 0, 0.75);
+        box-shadow: 0 0 20px 20px rgba(0, 0, 0, 0.75);
+        top: 50%;
+        transform: translate(-50%, -50%);
+        bottom: auto;
+
+        .btn {
+            font-size: 1rem;
+            font-family: QuadratDemibold;
         }
     }
 
