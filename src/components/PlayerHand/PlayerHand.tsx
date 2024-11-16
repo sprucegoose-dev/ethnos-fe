@@ -26,8 +26,12 @@ import { calculateCardStyle } from './helpers';
 
 import './PlayerHand.scss';
 import { ICard, TribeName } from '../Game/Game.types';
-import { ActionType, IPlayBandPayload,  } from '../Game/Action.types';
-import { setSelectedCardIds, setSelectedLeaderId } from '../Game/Game.reducer';
+import { ActionType, IKeepCardsPayload, IPlayBandPayload,  } from '../Game/Action.types';
+import {
+    setSelectedCardIds,
+    setSelectedCardIdsToKeep,
+    setSelectedLeaderId
+} from '../Game/Game.reducer';
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IGameReducer } from '../Game/Game.reducer.types';
 import { DraggableCard } from '../DraggableCard/DraggableCard';
@@ -37,6 +41,7 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
     const dispatch = useDispatch();
     const {
         selectedCardIds,
+        selectedCardIdsToKeep,
         selectedLeaderId,
     } = useSelector<IRootReducer>((state) => state.game) as IGameReducer;
     const {
@@ -48,6 +53,7 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
     const playBandActions = actions.filter(action => action.type === ActionType.PLAY_BAND) as IPlayBandPayload[];
     const cardsInHand = (player.cardsInHand || []).sort((cardA, cardB) => cardA.index - cardB.index);
     const [cardsOrder, setCardsOrder] = useState<UniqueIdentifier[]>(cardsInHand.map(card => `${card.id}`));
+    const keepCardsAction: IKeepCardsPayload = actions.find(action => action.type === ActionType.KEEP_CARDS);
     const [dragging, setDragging] = useState<boolean>(false);
     const sensors = useSensors(
         useSensor(PointerSensor),
@@ -146,7 +152,6 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
             }
         } else {
             if (!isSelectable(selectedCard.id)) {
-
                 if (selectedCardIds.length) {
                     toast.info("This card can't be added to the band");
                 } else {
@@ -166,6 +171,26 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
             }
 
             dispatchSetSelectedCardIds([...selectedCardIds, selectedCardId]);
+        }
+    };
+
+    const selectCardToKeep = (selectedCard: ICard) => {
+        if (!keepCardsAction) {
+            return;
+        }
+
+        const selectedCardId = selectedCard.id;
+
+        if (selectedCardIdsToKeep.includes(selectedCardId)) {
+            dispatch(setSelectedCardIdsToKeep(selectedCardIdsToKeep.filter((cardId) => cardId !== selectedCardId)))
+        } else {
+
+            if (selectedCardIdsToKeep.length === keepCardsAction.value) {
+                toast.info(`You cannot select more than ${keepCardsAction.value} cards`);
+                return;
+            }
+
+            dispatch(setSelectedCardIdsToKeep([...selectedCardIdsToKeep, selectedCardId]));
         }
     };
 
@@ -227,7 +252,7 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
                                     isLeader={selectedLeaderId && selectedLeaderId === card.id}
                                     selectable={selectedCardIds.length && isSelectable(card.id)}
                                     selected={selectedCardIds.includes(card.id)}
-                                    onSelect={selectCard}
+                                    onSelect={keepCardsAction ? selectCardToKeep : selectCard}
                                     onSetLeader={dispatchSetSelectedLeaderId}
                                 /> :
                                 <FacedownCard

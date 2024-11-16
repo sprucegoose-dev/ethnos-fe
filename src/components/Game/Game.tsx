@@ -7,7 +7,11 @@ import pako, { Data } from 'pako';
 import { getHighestGiantTokenValue, getPlayerPositions } from './helpers';
 import GameApi from '../../api/Game.api';
 import { socket } from '../../socket';
-import { setSelectedCardIds, setSelectedLeaderId } from './Game.reducer';
+import {
+    setSelectedCardIds,
+    setSelectedCardIdsToKeep,
+    setSelectedLeaderId
+} from './Game.reducer';
 
 import {
     CardState,
@@ -243,6 +247,7 @@ export function Game(): JSX.Element {
         if (response.ok) {
             dispatch(setSelectedCardIds({ cardIds: [] }));
             dispatch(setSelectedLeaderId({ leaderId: null }));
+            dispatch(setSelectedCardIdsToKeep([]));
         }
     }
 

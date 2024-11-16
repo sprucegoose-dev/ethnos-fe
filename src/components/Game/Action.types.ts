@@ -8,9 +8,9 @@ export enum ActionType {
     PLAY_BAND = 'play_band',
 }
 
-export interface IActionPayloadBase {
-    cardIds?: number[];
-    type: ActionType.DRAW_CARD | ActionType.KEEP_CARDS;
+
+export interface IDrawCardPayload {
+    type: ActionType.DRAW_CARD;
 }
 
 export interface IPickUpCardPayload {
@@ -24,6 +24,13 @@ export interface IAddFreeTokenPayload {
     type: ActionType.ADD_FREE_TOKEN;
 }
 
+export interface IKeepCardsPayload {
+    nextActionId: number;
+    cardIds: number[];
+    type: ActionType.KEEP_CARDS;
+    value?: number;
+}
+
 export interface IPlayBandPayload {
     cardIds?: number[];
     cardIdsToKeep?: number[];
@@ -34,15 +41,16 @@ export interface IPlayBandPayload {
 }
 
 export type IActionPayload =
-    IActionPayloadBase |
+    IDrawCardPayload |
     IPlayBandPayload |
     IPickUpCardPayload |
-    IAddFreeTokenPayload;
+    IAddFreeTokenPayload |
+    IKeepCardsPayload;
 
 export interface INextActionPayload {
     type: ActionType;
 }
 
 export interface IActionRequest {
-    body: IActionPayloadBase;
+    body: IActionPayload;
 }
