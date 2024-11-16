@@ -8,7 +8,6 @@ export enum ActionType {
     PLAY_BAND = 'play_band',
 }
 
-
 export interface IDrawCardPayload {
     type: ActionType.DRAW_CARD;
 }

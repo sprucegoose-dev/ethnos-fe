@@ -42,6 +42,8 @@ import { TurnNotification } from '../TurnNotification/TurnNotification';
 import { useTurnNotification } from '../../hooks/useTurnNotification';
 
 import './Game.scss';
+import { IActionLogPayload } from '../ActionsLog/ActionsLog.types';
+import { ActionsLog } from '../ActionsLog/ActionsLog';
 
 const {
     CREATED,
@@ -61,6 +63,7 @@ export function Game(): JSX.Element {
     const { id: gameId } = useParams();
     const [ gameState, setGameState ] = useState<IGameState>(null);
     const [ actions, setActions ] = useState<IActionPayload[]>([]);
+    const [ actionsLog, setActionsLog ] = useState<IActionLogPayload[]>([]);
     const [ activePlayer, setActivePlayer ] = useState<IPlayer>(null);
     const [ playerHands, setPlayerHands ] = useState<{[playerId: number]: ICard[]}>({});
     const [ cardsInHand, setCardsInHand ] = useState<ICard[]>([]);
@@ -83,6 +86,26 @@ export function Game(): JSX.Element {
             navigate('/rooms');
         }
 
+        const getActionsLog = async () => {
+            const response = await GameApi.getActionsLog(parseInt(gameId, 10));
+            setActionsLog(await response.json());
+        };
+
+        const getActions = async () => {
+            const response = await GameApi.getActions(parseInt(gameId, 10));
+            setActions(await response.json());
+        };
+
+        const getCardsInHand = async () => {
+            const response = await GameApi.getCardsInHand(parseInt(gameId, 10));
+            setCardsInHand(await response.json());
+        };
+
+        const getPlayerHands = async () => {
+            const response = await GameApi.getPlayerHands(parseInt(gameId, 10));
+            setPlayerHands(await response.json());
+        };
+
         const getGameState = async () => {
             const response = await GameApi.getState(Number(gameId))
             const payload: IGameState = await response.json();
@@ -101,23 +124,9 @@ export function Game(): JSX.Element {
                 getPlayerHands();
                 getActions();
                 setActivePlayer(nextActivePlayer);
+                getActionsLog();
                 handleTurnNotification(nextActivePlayer);
             }
-        };
-
-        const getActions = async () => {
-            const response = await GameApi.getActions(parseInt(gameId, 10));
-            setActions(await response.json());
-        };
-
-        const getCardsInHand = async () => {
-            const response = await GameApi.getCardsInHand(parseInt(gameId, 10));
-            setCardsInHand(await response.json());
-        };
-
-        const getPlayerHands = async () => {
-            const response = await GameApi.getPlayerHands(parseInt(gameId, 10));
-            setPlayerHands(await response.json());
         };
 
         getGameState();
@@ -138,6 +147,7 @@ export function Game(): JSX.Element {
                 getCardsInHand();
                 getPlayerHands();
                 getActions();
+                getActionsLog();
                 handleTurnNotification(nextActivePlayer);
 
                 const newRevealedDragonsCount = getRevealedDragonsCount(payload);
@@ -373,6 +383,10 @@ export function Game(): JSX.Element {
                     {showDragonOverlay ?
                         <div className="dragon-overlay"></div> : null
                     }
+                    <ActionsLog
+                        actionsLog={actionsLog}
+                        cards={gameState.players.reduce((acc, player) => acc.concat([...player.cards]), [])}
+                    />
                 </div> : null
             }
         </div>
