@@ -84,7 +84,8 @@ export function Game(): JSX.Element {
     const [openWidgetModal, setOpenWidgetModal] = useState<IActiveWidgetModal>({ type: null, player: null });
     const [ageResults, setAgeResults] = useState<IGameState>(null);
     const [showAgeResults, setShowAgeResults] = useState<boolean>(false);
-    const prevAge = useRef(null);
+    const prevAge = useRef<number>(0);
+    const prevState = useRef<GameState>(null);
     const prevRevealedDragonsCount = useRef(null);
     const navigate = useNavigate();
     const keepCardsAction = actions.find(action => action.type === ActionType.KEEP_CARDS) as IKeepCardsPayload;
@@ -214,21 +215,36 @@ export function Game(): JSX.Element {
             return;
         }
 
-        const getAgeResults = async () => {
-            const results = await GameApi.getAgeResults(parseInt(gameId, 10), gameState.age);
-            setAgeResults(results);
-            setShowAgeResults(true);
+        const getAgeResults = async (age: number) => {
+            const response = await GameApi.getAgeResults(parseInt(gameId, 10), age);
+
+            if (response.ok) {
+                setAgeResults(await response.json());
+                setShowAgeResults(true);
+            }
         }
 
-        if (prevAge.current === null) {
+        if (gameState.state === ENDED) {
+            getAgeResults(gameState.age);
+        }
+
+        if (prevAge.current === 0) {
             prevAge.current = gameState.age;
+            prevState.current = gameState.state;
+
+            if (gameState.state === ENDED) {
+                getAgeResults(gameState.age);
+            }
             return;
         }
 
-        if (gameState.age > prevAge.current) {
-            getAgeResults();
+        if (gameState.age > prevAge.current || (prevState.current === CREATED && gameState.state === ENDED)) {
+            getAgeResults(prevAge.current);
+            prevAge.current = gameState.age;
+            prevState.current = gameState.state;
+            return;
         }
-    }, [gameState?.age, gameId]);
+    }, [gameState?.age, gameState?.state, gameId]);
 
     if (!gameState) {
         return;

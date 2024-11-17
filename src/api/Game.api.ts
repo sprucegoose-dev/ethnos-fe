@@ -93,7 +93,7 @@ export default class GameApi {
         return await api.request(Method.GET, `/game/${gameId}/actionsLog`, options);
     }
 
-    static async getAgeResults(gameId: number, age: number): Promise<IGameState> {
+    static async getAgeResults(gameId: number, age: number) {
         const options = {
             ...requestOptions,
             authorize: true,

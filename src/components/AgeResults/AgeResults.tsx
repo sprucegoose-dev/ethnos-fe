@@ -25,7 +25,7 @@ export function AgeResults(props: IAgeResultsProps): JSX.Element {
                             <div className="points"> {player.points}</div>
                             <Icon className="victory-points-icon" icon="wreath" />
                         </div>
-                        {player.id === gameState.winnerId ?
+                        {player.user.id === gameState.winnerId ?
                             <FontAwesomeIcon className="winner-icon" icon={faCrown} /> : null
                         }
                     </div>
