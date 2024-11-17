@@ -37,7 +37,7 @@ const tribeIcons = {
 
 export function TribeIcon(props: ITribeIconProps): JSX.Element {
     const {
-        onSelectTribe,
+        onSelect,
         selected,
         tribe,
         showTribeName = true,
@@ -45,11 +45,11 @@ export function TribeIcon(props: ITribeIconProps): JSX.Element {
     return (
         <div className="tribe-icon">
             <img
-                className={`tribe-img ${onSelectTribe ? 'selectable' : ''}`}
+                className={`tribe-img ${onSelect ? 'selectable' : ''}`}
                 // @ts-ignore
                 src={tribeIcons[tribe.name]}
                 alt={tribe.name}
-                onClick={() => onSelectTribe ? onSelectTribe(tribe.name) : null}
+                onClick={() => onSelect ? onSelect(tribe.name) : null}
             />
             {showTribeName ?
                 <div className="tribe-name">

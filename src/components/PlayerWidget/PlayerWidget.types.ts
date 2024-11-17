@@ -7,4 +7,14 @@ export interface IPlayerWidgetProps {
     player: IPlayer;
     playerCount: number;
     tribes: TribeName[];
+    onSelectWidgetIcon: (modal: WidgetModal) => void;
+}
+
+export enum WidgetModal {
+    MERFOLK = 'MERFOLK',
+    GIANTS = 'GIANTS',
+    TROLLS = 'TROLLS',
+    ORCS = 'ORCS',
+    BANDS = 'BANDS',
+    VICTORY_POINTS = 'VICTORY_POINTS',
 }

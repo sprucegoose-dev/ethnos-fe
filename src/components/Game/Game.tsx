@@ -46,6 +46,9 @@ import { useTurnNotification } from '../../hooks/useTurnNotification';
 import { IActionLogPayload } from '../ActionsLog/ActionsLog.types';
 import { ActionsLog } from '../ActionsLog/ActionsLog';
 import './Game.scss';
+import { Modal } from '../Modal/Modal';
+import { WidgetModal } from '../PlayerWidget/PlayerWidget.types';
+import { MerfolkTrack } from '../MerfolkTrack/MerfolkTrack';
 
 const {
     CREATED,
@@ -73,6 +76,7 @@ export function Game(): JSX.Element {
     const [socketRefreshInterval, setSocketRefreshInterval] = useState(null);
     const [showDragonOverlay, setShowDragonOverlay] = useState<boolean>(false);
     const [revealedDragonsCount, setRevealedDragonsCount] = useState<number>(null);
+    const [openWidgetModal, setOpenWidgetModal] = useState<string>(null);
     const prevRevealedDragonsCount = useRef(null);
     const navigate = useNavigate();
     const keepCardsAction = actions.find(action => action.type === ActionType.KEEP_CARDS) as IKeepCardsPayload;
@@ -372,6 +376,7 @@ export function Game(): JSX.Element {
                                 isActivePlayer={player.id === gameState.activePlayerId}
                                 highestGiantToken={highestGiantToken}
                                 tribes={gameState.settings.tribes}
+                                onSelectWidgetIcon={(modal) => setOpenWidgetModal(modal)}
                             />
                             {canAddFreeToken ?
                                 <div className="free-token-notifaction">
@@ -397,6 +402,13 @@ export function Game(): JSX.Element {
                         actionsLog={actionsLog}
                         cards={gameState.players.reduce((acc, player) => acc.concat([...player.cards]), [])}
                     />
+                    {openWidgetModal ?
+                        <Modal onClose={() => setOpenWidgetModal(null)} modalClass={`widget-modal ${openWidgetModal?.toLowerCase()}`}>
+                            {openWidgetModal === WidgetModal.MERFOLK ?
+                                <MerfolkTrack players={gameState.players} /> : null
+                            }
+                        </Modal> : null
+                    }
                 </div> : null
             }
         </div>

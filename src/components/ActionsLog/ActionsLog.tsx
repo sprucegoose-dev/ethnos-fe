@@ -34,7 +34,7 @@ export function ActionsLog(props: IActionsLogProps): JSX.Element {
             <div className="logs">
                 {
                     logs.map((log, index) =>
-                        <div className={`log ${index === logs.length - 1 ? 'is-last': ''}`}>
+                        <div className={`log ${index === logs.length - 1 ? 'is-last': ''}`} key={`log-${log.id}`}>
 
                             <div className="player-color">
                                 <TokenIcon color={log.playerColor} />

@@ -1,4 +1,4 @@
-import { IPlayerWidgetProps } from './PlayerWidget.types';
+import { IPlayerWidgetProps, WidgetModal } from './PlayerWidget.types';
 import Icon from '../Icon/Icon';
 
 import './PlayerWidget.scss';
@@ -12,6 +12,7 @@ import orcTokenPurple from '../../assets/orc_tokens/orc_token_purple.png';
 import orcTokenOrange from '../../assets/orc_tokens/orc_token_orange.png';
 import orcTokenRed from '../../assets/orc_tokens/orc_token_red.png';
 import orcTokenBlue from '../../assets/orc_tokens/orc_token_blue.png';
+import { useState } from 'react';
 
 const orcTokens = {
     [Color.GREEN]: orcTokenGreen,
@@ -29,11 +30,13 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
         isActivePlayer,
         player,
         playerCount,
-        tribes
+        tribes,
+        onSelectWidgetIcon,
     } = props;
 
-    const cardsInBands = player.cards.filter(card => card.state === CardState.IN_BAND);
+    const [showMerfolkModal, setShowMerfolkModal] = useState<boolean>(false);
 
+    const cardsInBands = player.cards.filter(card => card.state === CardState.IN_BAND);
 
     const visibleTokens: {[key: string]: boolean} = {
         [TribeName.GIANTS]: highestGiantToken && highestGiantToken === player.giantTokenValue,
@@ -63,7 +66,13 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
         return tokenPositions;
     };
 
+    const closeAllModals = () => {
+        setShowMerfolkModal(false);
+    };
+
     const tokenPositions = getTokenPositions();
+
+    const showModal = showMerfolkModal;
 
     return (
         <div className={`player-widget ${className || ''} player-count-${playerCount} ${isActivePlayer ? 'active-player' : ''}`}>
@@ -126,6 +135,7 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
                         <TribeIcon
                             showTribeName={false}
                             tribe={{ name: TribeName.MERFOLK, id: null, description: ''}}
+                            onSelect={() => onSelectWidgetIcon(WidgetModal.MERFOLK)}
                         />
                         <span className="tribe-token-value">
                             {player.merfolkTrackScore || ''}

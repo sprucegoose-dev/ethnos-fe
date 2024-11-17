@@ -261,7 +261,7 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                             {tribes.map((tribe, index) =>
                                 <TribeIcon
                                     key={`tribe-icon-${index}`}
-                                    onSelectTribe={handleSelectTribe}
+                                    onSelect={handleSelectTribe}
                                     selected={selectedTribes.includes(tribe.name)}
                                     tribe={tribe}
                                 />

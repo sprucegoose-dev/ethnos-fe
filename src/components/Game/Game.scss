@@ -160,6 +160,14 @@
         animation: fadeInOut 2s ease-in forwards;
         animation-iteration-count: 1;
     }
+
+    .widget-modal {
+        max-width: 90%;
+
+        &.merfolk {
+            width: 90vw;
+        }
+    }
 }
 
 @media screen and (orientation: portrait) {
@@ -181,6 +189,14 @@
             position: fixed;
             left: 20px;
             top: 15px;
+        }
+
+        .widget-modal {
+            max-width: 425px;
+
+            &.merfolk {
+                width: 40vw;
+            }
         }
     }
 }
