@@ -1,0 +1,74 @@
+@import '../../styles/variables.scss';
+
+.troll-tokens-container {
+    background: rgba(255, 255, 255, .9);
+    padding: 25px;
+    font-family: QuadratDemibold;
+
+    .title {
+        margin-bottom: 25px;
+        text-align: center;
+
+        &.claimed-tokens-title {
+            margin-top: 25px;
+            margin-bottom: 20px;
+        }
+    }
+
+    .tribe-icon {
+
+        .tribe-img {
+            width: 60px;
+            height: 60px;
+        }
+    }
+
+    .available-troll-tokens {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        justify-items: center;
+        gap: 10px;
+        align-content: space-around;
+        max-width: 225px;
+        margin: 0 auto;
+    }
+
+    .claimed-troll-tokens {
+        display: flex;
+        flex-wrap: wrap;
+
+        .player-container {
+
+            &:not(:first-of-type) {
+                margin-left: 15px;
+            }
+
+            .username {
+                margin-bottom: 10px;
+                text-align: center;
+            }
+
+            .token-container {
+                display: flex;
+                justify-content: center;
+            }
+
+            .token-container:not(:last-of-type) {
+                margin-bottom: 10px;
+            }
+        }
+    }
+
+    .token-container {
+        position: relative;
+
+        .token-value {
+            color: $off-white;
+            font-size: 1.3rem;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+}

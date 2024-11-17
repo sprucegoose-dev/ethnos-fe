@@ -143,12 +143,14 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
             if (selectedLeaderId === selectedCardId) {
                 dispatchSetSelectedLeaderId(null);
                 fallbackLeaderId = assignFallbackLeader(selectedCardId);
-            }
 
-            if (fallbackLeaderId) {
-                dispatchSetSelectedCardIds(selectedCardIds.filter((cardId) => cardId !== selectedCardId));
+                if (fallbackLeaderId) {
+                    dispatchSetSelectedCardIds(selectedCardIds.filter((cardId) => cardId !== selectedCardId));
+                } else {
+                    dispatchSetSelectedCardIds([]);
+                }
             } else {
-                dispatchSetSelectedCardIds([]);
+                dispatchSetSelectedCardIds(selectedCardIds.filter((cardId) => cardId !== selectedCardId));
             }
         } else {
             if (!isSelectable(selectedCard.id)) {

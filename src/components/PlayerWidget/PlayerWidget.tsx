@@ -118,6 +118,7 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
                         <TribeIcon
                             showTribeName={false}
                             tribe={{ name: TribeName.TROLLS, id: null, description: ''}}
+                            onSelect={() => onSelectWidgetIcon(WidgetModal.TROLLS)}
                         />
                         <div className="token-elements">
                             {

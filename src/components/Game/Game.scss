@@ -167,6 +167,17 @@
         &.merfolk {
             width: 90vw;
         }
+
+        &.trolls {
+            width: 90vw;
+
+            .btn-close {
+
+                .btn-close-icon {
+                    color: black;
+                }
+            }
+        }
     }
 }
 
@@ -195,6 +206,10 @@
             max-width: 425px;
 
             &.merfolk {
+                width: 40vw;
+            }
+
+            &.trolls {
                 width: 40vw;
             }
         }

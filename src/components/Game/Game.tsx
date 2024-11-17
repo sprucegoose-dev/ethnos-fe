@@ -33,6 +33,8 @@ import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
 import { IGameReducer } from './Game.reducer.types';
 import { IRegion, regionOrder } from '../Region/Region.types';
+import { IActionLogPayload } from '../ActionsLog/ActionsLog.types';
+import { WidgetModal } from '../PlayerWidget/PlayerWidget.types';
 
 import { GameSettings } from '../GameSettings/GameSettings';
 import { Deck } from '../Deck/Deck';
@@ -43,12 +45,13 @@ import { PlayerHand } from '../PlayerHand/PlayerHand';
 import { TurnNotification } from '../TurnNotification/TurnNotification';
 import { useTurnNotification } from '../../hooks/useTurnNotification';
 
-import { IActionLogPayload } from '../ActionsLog/ActionsLog.types';
 import { ActionsLog } from '../ActionsLog/ActionsLog';
-import './Game.scss';
 import { Modal } from '../Modal/Modal';
-import { WidgetModal } from '../PlayerWidget/PlayerWidget.types';
 import { MerfolkTrack } from '../MerfolkTrack/MerfolkTrack';
+import { TrollTokens } from '../TrollTokens/TrollTokens';
+
+import './Game.scss';
+
 
 const {
     CREATED,
@@ -406,6 +409,9 @@ export function Game(): JSX.Element {
                         <Modal onClose={() => setOpenWidgetModal(null)} modalClass={`widget-modal ${openWidgetModal?.toLowerCase()}`}>
                             {openWidgetModal === WidgetModal.MERFOLK ?
                                 <MerfolkTrack players={gameState.players} /> : null
+                            }
+                            {openWidgetModal === WidgetModal.TROLLS ?
+                                <TrollTokens players={gameState.players} /> : null
                             }
                         </Modal> : null
                     }

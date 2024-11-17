@@ -23,6 +23,7 @@ export function MerfolkTrack(props: IMerfolkTrackProps): JSX.Element {
         },
         {}
     );
+
     return (
         <div className="merfolk-track-container">
             <div className="merfolk-track">
