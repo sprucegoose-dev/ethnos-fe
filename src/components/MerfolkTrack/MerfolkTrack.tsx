@@ -39,7 +39,7 @@ export function MerfolkTrack(props: IMerfolkTrackProps): JSX.Element {
                             <div className="player-tokens">
                                 {playersByPoints[index] ?
                                     playersByPoints[index].map(playerColor =>
-                                        <TokenIcon color={playerColor} key={`token-icon${playerColor}`}/>
+                                        <TokenIcon color={playerColor} key={`token-icon-${playerColor}`}/>
                                     )
                                     : null
                                 }

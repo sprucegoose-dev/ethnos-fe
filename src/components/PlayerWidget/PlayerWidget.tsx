@@ -1,27 +1,12 @@
 import { IPlayerWidgetProps, WidgetModal } from './PlayerWidget.types';
-import Icon from '../Icon/Icon';
-
-import './PlayerWidget.scss';
 import { CardState, TribeName } from '../Game/Game.types';
-import { Color } from '../Game/Shared.types';
+
+import Icon from '../Icon/Icon';
 import { TribeIcon } from '../TribeIcon/TribeIcon';
 import { TokenIcon } from '../TokenIcon/TokenIcon';
-import orcTokenGreen from '../../assets/orc_tokens/orc_token_green.png';
-import orcTokenGray from '../../assets/orc_tokens/orc_token_gray.png';
-import orcTokenPurple from '../../assets/orc_tokens/orc_token_purple.png';
-import orcTokenOrange from '../../assets/orc_tokens/orc_token_orange.png';
-import orcTokenRed from '../../assets/orc_tokens/orc_token_red.png';
-import orcTokenBlue from '../../assets/orc_tokens/orc_token_blue.png';
-import { useState } from 'react';
 
-const orcTokens = {
-    [Color.GREEN]: orcTokenGreen,
-    [Color.GRAY]: orcTokenGray,
-    [Color.BLUE]: orcTokenBlue,
-    [Color.ORANGE]: orcTokenOrange,
-    [Color.RED]: orcTokenRed,
-    [Color.PURPLE]: orcTokenPurple,
-};
+import './PlayerWidget.scss';
+import { OrcToken } from '../OrcToken/OrcToken';
 
 export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
     const {
@@ -33,8 +18,6 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
         tribes,
         onSelectWidgetIcon,
     } = props;
-
-    const [showMerfolkModal, setShowMerfolkModal] = useState<boolean>(false);
 
     const cardsInBands = player.cards.filter(card => card.state === CardState.IN_BAND);
 
@@ -66,13 +49,7 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
         return tokenPositions;
     };
 
-    const closeAllModals = () => {
-        setShowMerfolkModal(false);
-    };
-
     const tokenPositions = getTokenPositions();
-
-    const showModal = showMerfolkModal;
 
     return (
         <div className={`player-widget ${className || ''} player-count-${playerCount} ${isActivePlayer ? 'active-player' : ''}`}>
@@ -118,7 +95,7 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
                         <TribeIcon
                             showTribeName={false}
                             tribe={{ name: TribeName.TROLLS, id: null, description: ''}}
-                            onSelect={() => onSelectWidgetIcon(WidgetModal.TROLLS)}
+                            onSelect={() => onSelectWidgetIcon({ type: WidgetModal.TROLLS, player })}
                         />
                         <div className="token-elements">
                             {
@@ -136,7 +113,7 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
                         <TribeIcon
                             showTribeName={false}
                             tribe={{ name: TribeName.MERFOLK, id: null, description: ''}}
-                            onSelect={() => onSelectWidgetIcon(WidgetModal.MERFOLK)}
+                            onSelect={() => onSelectWidgetIcon({ type: WidgetModal.MERFOLK, player })}
                         />
                         <span className="tribe-token-value">
                             {player.merfolkTrackScore || ''}
@@ -148,17 +125,12 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
                         <TribeIcon
                             showTribeName={false}
                             tribe={{ name: TribeName.ORCS, id: null, description: ''}}
+                            onSelect={() => onSelectWidgetIcon({ type: WidgetModal.ORCS, player })}
                         />
                         <div className="token-elements">
                             {
                                 player.orcTokens.map(color =>
-                                    <span className={`token-element orc-token ${color}`} key={`orc-token-${color}`}>
-                                        <img
-                                            className={`orc-token-img ${color}`}
-                                            src={orcTokens[color]}
-                                            alt={`orc token ${color}`}
-                                        />
-                                    </span>
+                                    <OrcToken color={color} key={`orc-token-${color}`} />
                                 )
                             }
                         </div>

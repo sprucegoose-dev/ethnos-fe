@@ -164,12 +164,13 @@
     .widget-modal {
         max-width: 90%;
 
-        &.merfolk {
+        &.orcs,
+        &.merfolk,
+        &.trolls {
             width: 90vw;
         }
 
         &.trolls {
-            width: 90vw;
 
             .btn-close {
 
@@ -205,10 +206,8 @@
         .widget-modal {
             max-width: 425px;
 
-            &.merfolk {
-                width: 40vw;
-            }
-
+            &.orcs,
+            &.merfolk,
             &.trolls {
                 width: 40vw;
             }

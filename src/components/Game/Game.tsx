@@ -34,7 +34,7 @@ import { IAuthReducer } from '../Auth/Auth.types';
 import { IGameReducer } from './Game.reducer.types';
 import { IRegion, regionOrder } from '../Region/Region.types';
 import { IActionLogPayload } from '../ActionsLog/ActionsLog.types';
-import { WidgetModal } from '../PlayerWidget/PlayerWidget.types';
+import { IActiveWidgetModal, WidgetModal } from '../PlayerWidget/PlayerWidget.types';
 
 import { GameSettings } from '../GameSettings/GameSettings';
 import { Deck } from '../Deck/Deck';
@@ -51,6 +51,7 @@ import { MerfolkTrack } from '../MerfolkTrack/MerfolkTrack';
 import { TrollTokens } from '../TrollTokens/TrollTokens';
 
 import './Game.scss';
+import { OrcBoard } from '../OrcBoard/OrcBoard';
 
 
 const {
@@ -79,7 +80,7 @@ export function Game(): JSX.Element {
     const [socketRefreshInterval, setSocketRefreshInterval] = useState(null);
     const [showDragonOverlay, setShowDragonOverlay] = useState<boolean>(false);
     const [revealedDragonsCount, setRevealedDragonsCount] = useState<number>(null);
-    const [openWidgetModal, setOpenWidgetModal] = useState<string>(null);
+    const [openWidgetModal, setOpenWidgetModal] = useState<IActiveWidgetModal>({ type: null, player: null });
     const prevRevealedDragonsCount = useRef(null);
     const navigate = useNavigate();
     const keepCardsAction = actions.find(action => action.type === ActionType.KEEP_CARDS) as IKeepCardsPayload;
@@ -405,13 +406,16 @@ export function Game(): JSX.Element {
                         actionsLog={actionsLog}
                         cards={gameState.players.reduce((acc, player) => acc.concat([...player.cards]), [])}
                     />
-                    {openWidgetModal ?
-                        <Modal onClose={() => setOpenWidgetModal(null)} modalClass={`widget-modal ${openWidgetModal?.toLowerCase()}`}>
-                            {openWidgetModal === WidgetModal.MERFOLK ?
+                    {openWidgetModal.type ?
+                        <Modal onClose={() => setOpenWidgetModal({ type: null, player: null })} modalClass={`widget-modal ${openWidgetModal.type.toLowerCase()}`}>
+                            {openWidgetModal.type === WidgetModal.MERFOLK ?
                                 <MerfolkTrack players={gameState.players} /> : null
                             }
-                            {openWidgetModal === WidgetModal.TROLLS ?
+                            {openWidgetModal.type === WidgetModal.TROLLS ?
                                 <TrollTokens players={gameState.players} /> : null
+                            }
+                            {openWidgetModal.type === WidgetModal.ORCS ?
+                                <OrcBoard player={openWidgetModal.player} /> : null
                             }
                         </Modal> : null
                     }
