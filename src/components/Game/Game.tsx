@@ -52,6 +52,7 @@ import { TrollTokens } from '../TrollTokens/TrollTokens';
 
 import './Game.scss';
 import { OrcBoard } from '../OrcBoard/OrcBoard';
+import { AgeResults } from '../AgeResults/AgeResults';
 
 
 const {
@@ -81,6 +82,9 @@ export function Game(): JSX.Element {
     const [showDragonOverlay, setShowDragonOverlay] = useState<boolean>(false);
     const [revealedDragonsCount, setRevealedDragonsCount] = useState<number>(null);
     const [openWidgetModal, setOpenWidgetModal] = useState<IActiveWidgetModal>({ type: null, player: null });
+    const [ageResults, setAgeResults] = useState<IGameState>(null);
+    const [showAgeResults, setShowAgeResults] = useState<boolean>(false);
+    const prevAge = useRef(null);
     const prevRevealedDragonsCount = useRef(null);
     const navigate = useNavigate();
     const keepCardsAction = actions.find(action => action.type === ActionType.KEEP_CARDS) as IKeepCardsPayload;
@@ -204,6 +208,27 @@ export function Game(): JSX.Element {
             prevRevealedDragonsCount.current = revealedDragonsCount;
         }
     }, [revealedDragonsCount]);
+
+    useEffect(() => {
+        if (!gameState) {
+            return;
+        }
+
+        const getAgeResults = async () => {
+            const results = await GameApi.getAgeResults(parseInt(gameId, 10), gameState.age);
+            setAgeResults(results);
+            setShowAgeResults(true);
+        }
+
+        if (prevAge.current === null) {
+            prevAge.current = gameState.age;
+            return;
+        }
+
+        if (gameState.age > prevAge.current) {
+            getAgeResults();
+        }
+    }, [gameState?.age, gameId]);
 
     if (!gameState) {
         return;
@@ -417,6 +442,11 @@ export function Game(): JSX.Element {
                             {openWidgetModal.type === WidgetModal.ORCS ?
                                 <OrcBoard player={openWidgetModal.player} /> : null
                             }
+                        </Modal> : null
+                    }
+                    {showAgeResults && ageResults ?
+                        <Modal onClose={() => setShowAgeResults(false)} modalClass="age-results-modal age-results">
+                            <AgeResults gameState={ageResults} />
                         </Modal> : null
                     }
                 </div> : null

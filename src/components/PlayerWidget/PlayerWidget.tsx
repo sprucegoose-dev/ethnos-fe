@@ -3,10 +3,10 @@ import { CardState, TribeName } from '../Game/Game.types';
 
 import Icon from '../Icon/Icon';
 import { TribeIcon } from '../TribeIcon/TribeIcon';
-import { TokenIcon } from '../TokenIcon/TokenIcon';
 
 import './PlayerWidget.scss';
 import { OrcToken } from '../OrcToken/OrcToken';
+import { PlayerIcon } from '../PlayerIcon/PlayerIcon';
 
 export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
     const {
@@ -53,13 +53,7 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
 
     return (
         <div className={`player-widget ${className || ''} player-count-${playerCount} ${isActivePlayer ? 'active-player' : ''}`}>
-            <span className={`username ${player.color} username-backdrop`}>
-                {player.user.username}
-            </span>
-            <TokenIcon color={player.color} />
-            <span className={`username ${player.color}`}>
-                {player.user.username}
-            </span>
+            <PlayerIcon player={player} />
             <div className="badges">
                 <span className="badge total-cards-in-hand">
                     <span className="badge-content">

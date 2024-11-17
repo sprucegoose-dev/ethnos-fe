@@ -1,0 +1,105 @@
+@import '../../styles/variables.scss';
+
+.player-icon {
+    font-family: QuadratDemibold;
+    position: relative;
+
+    .token-icon {
+        border-radius: 50%;
+        box-shadow: -1px 2px 4px rgba(0, 0, 0, 0.3);
+
+        .token-img {
+            height: 60px;
+            width: 60px;
+        }
+
+        &:before {
+            content: '';
+            border: 4px solid $light-gold;
+            border-radius: 50%;
+            height: 85%;
+            left: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 85%;
+        }
+
+        &.black:before {
+            border-color: $token-black;
+        }
+
+        &.blue:before {
+            border-color: $token-blue;
+        }
+
+        &.green:before {
+            border-color: $token-green;
+        }
+
+        &.pink:before {
+            border-color: $token-pink;
+        }
+
+        &.white:before {
+            border-color: $token-white;
+        }
+
+        &.yellow:before {
+            border-color: $token-yellow;
+        }
+    }
+
+    &:before {
+        border-radius: 50%;
+        content: '';
+        height: 100%;
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+    }
+
+    .username {
+        align-items: center;
+        background: rgba(0, 0, 0, 0.6);
+        border-radius: 4px;
+        color: white;
+        display: flex;
+        font-size: .8rem;
+        justify-content: center;
+        left: 50%;
+        min-width: 45px;
+        padding: 3px 4px;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+
+        &.black {
+            background: $token-black;
+        }
+
+        &.blue {
+            background: $token-blue;
+        }
+
+        &.green {
+            background: $token-green;
+        }
+
+        &.pink {
+            background: $token-pink;
+        }
+
+        &.white {
+            background: $token-white;
+            color: $dark-gray;
+        }
+
+        &.yellow {
+            background: $token-yellow;
+            color: $dark-gray;
+        }
+    }
+}

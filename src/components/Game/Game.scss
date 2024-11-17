@@ -161,6 +161,7 @@
         animation-iteration-count: 1;
     }
 
+    .age-results-modal,
     .widget-modal {
         max-width: 90%;
 
@@ -170,6 +171,11 @@
             width: 90vw;
         }
 
+        &.trolls {
+            width: 75%;
+        }
+
+        &.age-results,
         &.trolls {
 
             .btn-close {

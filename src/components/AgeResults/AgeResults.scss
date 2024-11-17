@@ -1,0 +1,56 @@
+@import '../../styles/variables.scss';
+
+.age-results-container {
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.9),
+        white);
+    padding: 30px;
+    box-sizing: border-box;
+    font-family: QuadratDemibold;
+
+    .title {
+        text-align: center;
+        font-size: 1.2rem;
+        margin-bottom: 25px;
+    }
+
+    .player-scores {
+        display: flex;
+        gap: 30px;
+        margin-bottom: 10px;
+
+        .player {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .score {
+            margin-top: 30px;
+            position: relative;
+
+            .points {
+                text-align: center;
+                font-size: 1rem;
+            }
+
+            .victory-points-icon {
+                fill: $gold;
+                position: absolute;
+                top: 60%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 105%;
+                height: auto;
+            }
+        }
+
+        .winner-icon {
+            position: absolute;
+            top: -22%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+            color: $gold-alt;
+        }
+    }
+}

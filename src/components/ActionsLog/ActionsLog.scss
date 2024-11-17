@@ -9,12 +9,11 @@
     left: 14%;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    border-top: none;
     background: rgba(255, 255, 255, .2);
     min-width: 200px;
     box-shadow:  -1px 1px 3px 2px rgba(0, 0, 0, .2);
-    color: $dark-gray;
     font-weight: 600;
+    color: $dark-gray;
 
     &.expanded {
         background: rgba(255, 255, 255, .7);

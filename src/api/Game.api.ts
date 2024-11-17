@@ -1,5 +1,5 @@
 import { Method, requestOptions } from './Api.types';
-import { IGameSettings, PlayerColor } from '../components/Game/Game.types';
+import { IGameSettings, IGameState, PlayerColor } from '../components/Game/Game.types';
 import { IActionPayload } from '../components/Game/Action.types';
 import api from './Api';
 import { ICreateGamePayload } from '../components/RoomForm/RoomForm.types';
@@ -91,6 +91,15 @@ export default class GameApi {
         };
 
         return await api.request(Method.GET, `/game/${gameId}/actionsLog`, options);
+    }
+
+    static async getAgeResults(gameId: number, age: number): Promise<IGameState> {
+        const options = {
+            ...requestOptions,
+            authorize: true,
+        };
+
+        return await api.request(Method.GET, `/game/${gameId}/age/${age}`, options);
     }
 
     static async getActions(gameId: number) {
