@@ -1,4 +1,5 @@
 import { IPlayer } from './Game.types';
+import alertSound  from '../../assets/sounds/sound_alert.mp3';
 
 export function sortPlayersByTurnOrder(currentPlayer: IPlayer, players: IPlayer[], turnOrder: number[]): IPlayer[] {
   const targetIndex = turnOrder.indexOf(currentPlayer.id);
@@ -43,4 +44,11 @@ export function getHighestGiantTokenValue(players: IPlayer[]): number {
         .sort((playerA, playerB) =>
             playerB.giantTokenValue - playerA.giantTokenValue
         )[0].giantTokenValue;
+}
+
+export async function initAudio() {
+    const audio = new Audio(alertSound);
+    await audio.play();
+    audio.pause();
+    return audio;
 }

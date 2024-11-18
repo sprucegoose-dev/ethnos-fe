@@ -10,7 +10,7 @@ export function useTurnNotification() {
         slideOut: false,
     });
 
-    const handleTurnNotification = (activePlayer: IPlayer) => {
+    const handleTurnNotification = (activePlayer: IPlayer, audio: HTMLAudioElement) => {
         if (activePlayer.user.isBot) {
             setTurnNotificationState({
                 show: false,
@@ -18,6 +18,11 @@ export function useTurnNotification() {
                 slideOut: false
             });
             return;
+        }
+
+        if (audio) {
+            audio.volume = .5;
+            audio.play();
         }
 
         setTurnNotificationState({

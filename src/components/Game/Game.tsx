@@ -6,7 +6,11 @@ import pako, { Data } from 'pako';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
-import { getHighestGiantTokenValue, getPlayerPositions } from './helpers';
+import {
+    getHighestGiantTokenValue,
+    getPlayerPositions,
+    initAudio
+} from './helpers';
 import GameApi from '../../api/Game.api';
 import { socket } from '../../socket';
 
@@ -61,7 +65,12 @@ export function Game(): JSX.Element {
     const [ activePlayer, setActivePlayer ] = useState<IPlayer>(null);
     const [ playerHands, setPlayerHands ] = useState<{[playerId: number]: ICard[]}>({});
     const [ cardsInHand, setCardsInHand ] = useState<ICard[]>([]);
-    const { getTurnNotificationText, handleTurnNotification, turnNotificationState } = useTurnNotification();
+    const [ audioEnabled, setAudioEnabled] = useState<boolean>(false);
+    const {
+        getTurnNotificationText,
+        handleTurnNotification,
+        turnNotificationState
+    } = useTurnNotification();
     const [socketRefreshInterval, setSocketRefreshInterval] = useState(null);
     const [showDragonOverlay, setShowDragonOverlay] = useState<boolean>(false);
     const [revealedDragonsCount, setRevealedDragonsCount] = useState<number>(null);
@@ -71,6 +80,7 @@ export function Game(): JSX.Element {
     const prevAge = useRef<number>(0);
     const prevState = useRef<GameState>(null);
     const prevRevealedDragonsCount = useRef(null);
+    const audioRef = useRef<HTMLAudioElement>(null);
     const navigate = useNavigate();
     let  currentPlayer: IPlayer;
     let playerPosition: {[userId: number]: string};
@@ -78,6 +88,15 @@ export function Game(): JSX.Element {
 
     const getRevealedDragonsCount = (state: IGameState) =>
         state?.cards.filter(card => card.tribe.name === TribeName.DRAGON && card.state === CardState.REVEALED)?.length ?? 0;
+
+    const enableAudio = async () => {
+        if (audioEnabled) {
+            return;
+        }
+
+        setAudioEnabled(true);
+        audioRef.current = await initAudio();
+    }
 
     useEffect(() => {
         if (!auth.userId) {
@@ -123,7 +142,7 @@ export function Game(): JSX.Element {
                 getActions();
                 setActivePlayer(nextActivePlayer);
                 getActionsLog();
-                handleTurnNotification(nextActivePlayer);
+                handleTurnNotification(nextActivePlayer, audioRef.current);
             }
         };
 
@@ -146,7 +165,7 @@ export function Game(): JSX.Element {
                 getPlayerHands();
                 getActions();
                 getActionsLog();
-                handleTurnNotification(nextActivePlayer);
+                handleTurnNotification(nextActivePlayer, audioRef.current);
 
                 const newRevealedDragonsCount = getRevealedDragonsCount(payload);
 
@@ -242,7 +261,7 @@ export function Game(): JSX.Element {
     const canAddFreeToken = actions.find(action => action.type === ActionType.ADD_FREE_TOKEN);
 
     return (
-        <div className={`game-container ${gameState.state.toLowerCase()}`}>
+        <div className={`game-container ${gameState.state.toLowerCase()}`} onClick={() => enableAudio()}>
             <Link to="/rooms">
                 <button className="btn btn-outline btn-back">
                     <FontAwesomeIcon
