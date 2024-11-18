@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import pako, { Data } from 'pako';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
@@ -9,11 +9,6 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { getHighestGiantTokenValue, getPlayerPositions } from './helpers';
 import GameApi from '../../api/Game.api';
 import { socket } from '../../socket';
-import {
-    setSelectedCardIds,
-    setSelectedCardIdsToKeep,
-    setSelectedLeaderId
-} from './Game.reducer';
 
 import {
     CardState,
@@ -26,20 +21,15 @@ import {
 import {
     ActionType,
     IActionPayload,
-    IAddFreeTokenPayload,
-    IKeepCardsPayload,
 } from './Action.types';
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
-import { IGameReducer } from './Game.reducer.types';
-import { IRegion, regionOrder } from '../Region/Region.types';
 import { IActionLogPayload } from '../ActionsLog/ActionsLog.types';
 import { IActiveWidgetModal, WidgetModal } from '../PlayerWidget/PlayerWidget.types';
 
 import { GameSettings } from '../GameSettings/GameSettings';
 import { Deck } from '../Deck/Deck';
 import { Market } from '../Market/Market';
-import { Region } from '../Region/Region';
 import { PlayerWidget } from '../PlayerWidget/PlayerWidget';
 import { PlayerHand } from '../PlayerHand/PlayerHand';
 import { TurnNotification } from '../TurnNotification/TurnNotification';
@@ -50,10 +40,10 @@ import { Modal } from '../Modal/Modal';
 import { MerfolkTrack } from '../MerfolkTrack/MerfolkTrack';
 import { TrollTokens } from '../TrollTokens/TrollTokens';
 
-import './Game.scss';
 import { OrcBoard } from '../OrcBoard/OrcBoard';
 import { AgeResults } from '../AgeResults/AgeResults';
-
+import { Regions } from '../Regions/Regions';
+import './Game.scss';
 
 const {
     CREATED,
@@ -64,12 +54,6 @@ const {
 
 export function Game(): JSX.Element {
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
-    const {
-        selectedCardIds,
-        selectedCardIdsToKeep,
-        selectedLeaderId,
-    } = useSelector<IRootReducer>((state) => state.game) as IGameReducer;
-    const dispatch = useDispatch();
     const { id: gameId } = useParams();
     const [ gameState, setGameState ] = useState<IGameState>(null);
     const [ actions, setActions ] = useState<IActionPayload[]>([]);
@@ -88,7 +72,6 @@ export function Game(): JSX.Element {
     const prevState = useRef<GameState>(null);
     const prevRevealedDragonsCount = useRef(null);
     const navigate = useNavigate();
-    const keepCardsAction = actions.find(action => action.type === ActionType.KEEP_CARDS) as IKeepCardsPayload;
     let  currentPlayer: IPlayer;
     let playerPosition: {[userId: number]: string};
     let highestGiantToken: number;
@@ -256,93 +239,7 @@ export function Game(): JSX.Element {
         highestGiantToken = getHighestGiantTokenValue(gameState.players);
     }
 
-    const clearSelections = () => {
-        dispatch(setSelectedCardIds({ cardIds: [] }));
-        dispatch(setSelectedLeaderId({ leaderId: null }));
-        dispatch(setSelectedCardIdsToKeep({ cardIds: [] }));
-    }
-
-    const onSelectRegion = async (region?: IRegion) => {
-        let payload: IActionPayload;
-
-        if (gameState.activePlayerId !== currentPlayer.id) {
-            toast.info('Please wait for your turn');
-            return;
-        }
-
-        const addFreeTokenAction = actions.find(action =>
-            action.type === ActionType.ADD_FREE_TOKEN
-        ) as IAddFreeTokenPayload;
-
-        if (addFreeTokenAction) {
-            payload = {
-                type: ActionType.ADD_FREE_TOKEN,
-                nextActionId: addFreeTokenAction.nextActionId,
-                regionColor: region?.color
-            };
-        } else {
-
-            if (!selectedCardIds.length) {
-                toast.info('Please first select cards in your hand');
-                return;
-            }
-
-            if (!selectedLeaderId) {
-                toast.info('Please first select a leader for your band');
-                return;
-            }
-
-            const leader = cardsInHand.find(card => card.id === selectedLeaderId);
-
-            if (region && leader.tribe.name !== TribeName.WINGFOLK && leader.color !== region.color) {
-                toast.info('Leader color must match the region color');
-                return;
-            }
-
-            payload = {
-                type: ActionType.PLAY_BAND,
-                nextActionId: actions.find(action =>
-                    action.type === ActionType.PLAY_BAND &&
-                    action.nextActionId
-                // @ts-ignore
-                )?.nextActionId,
-                regionColor: region?.color,
-                leaderId: selectedLeaderId,
-                cardIds: selectedCardIds,
-            };
-        }
-
-        const response = await GameApi.sendAction(gameState.id, payload);
-
-        if (response.ok) {
-            clearSelections();
-        }
-    }
-
-    const submitKeepCardsAction = async () => {
-        const payload: IKeepCardsPayload = {
-            type: ActionType.KEEP_CARDS,
-            nextActionId: keepCardsAction.nextActionId,
-            cardIds: selectedCardIdsToKeep,
-        };
-
-        const response = await GameApi.sendAction(gameState.id, payload);
-
-        if (response.ok) {
-            clearSelections();
-        }
-    };
-
     const canAddFreeToken = actions.find(action => action.type === ActionType.ADD_FREE_TOKEN);
-
-    const sortedRegions = gameState.regions.sort((regionA, regionB) =>
-        regionOrder[regionA.color] - regionOrder[regionB.color]
-    );
-
-    const selectedLeaderIsHalfling = selectedLeaderId &&
-        cardsInHand.find(card =>
-            card.id === selectedLeaderId
-        )?.tribe.name === TribeName.HALFLINGS;
 
     return (
         <div className={`game-container ${gameState.state.toLowerCase()}`}>
@@ -359,52 +256,14 @@ export function Game(): JSX.Element {
             }
             {[STARTED, ENDED, CANCELLED].includes(gameState.state) ?
                 <div className="game">
-                    <div className="regions-container">
-                        <div className="regions-row">
-                            {sortedRegions.slice(0, 3).map(region =>
-                                <Region
-                                    key={`region-${region.color}`}
-                                    region={region}
-                                    onSelect={onSelectRegion}
-                                    players={gameState.players}
-                                />
-                            )}
-                        </div>
-                        <div className="regions-row">
-                            {sortedRegions.slice(3).map(region =>
-                                <Region
-                                    key={`region-${region.color}`}
-                                    region={region}
-                                    onSelect={onSelectRegion}
-                                    players={gameState.players}
-                                />
-                            )}
-                        </div>
-                        {
-                            selectedLeaderIsHalfling ?
-                            <div className="play-band-notification" onClick={() => onSelectRegion()}>
-                                Play Band
-                            </div> : null
-                        }
-                        {
-                            keepCardsAction ?
-                            <div className="keep-cards-notification">
-                                {
-                                    selectedCardIdsToKeep.length === keepCardsAction.value ?
-                                    <button
-                                        className="btn btn-outline btn-3d"
-                                        onClick={() => submitKeepCardsAction()}
-                                    >
-                                            Keep Selected Cards
-                                    </button>
-                                    : `Choose ${keepCardsAction.value} cards to keep`
-                                }
-
-                            </div>  : null
-                        }
-                    </div>
+                    <Regions
+                        actions={actions}
+                        cardsInHand={cardsInHand}
+                        currentPlayer={currentPlayer}
+                        gameState={gameState}
+                    />
                     <Market gameState={gameState} activePlayer={activePlayer} />
-                    <Deck gameState={gameState} activePlayer={activePlayer} actions={actions}/>
+                    <Deck gameState={gameState} activePlayer={activePlayer} actions={actions} />
                     {gameState.players.map((player) =>
                         <div key={`player-area-${player.id}`}>
                             <PlayerHand

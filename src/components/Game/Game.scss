@@ -43,56 +43,6 @@
         overflow: hidden;
     }
 
-    .regions-container {
-        width: 60vw;
-        margin: 5% auto;
-        display: flex;
-        flex-direction: column;
-        position: relative;
-
-        .regions-row {
-            display: flex;
-            align-content: flex-start;
-            justify-content: center;
-
-            .region {
-                flex-basis: 33.33%;
-                box-sizing: border-box;
-                position: relative;
-
-                &.red {
-                    top: 4%;
-                }
-
-                &.blue {
-                    right: -3%;
-                    top: 2.5%;
-                }
-
-                &.gray {
-                    top: 3.5%;
-                    left: -7%;
-                }
-
-                &.orange {
-                    top: -22.5%;
-                    right: -.5%;
-                }
-
-                &.green {
-                    bottom: 16%;
-                    left: -2.8%;
-                }
-
-                &.purple {
-                    left: -5.7%;
-                    top: -31%;
-                }
-            }
-        }
-
-    }
-
     .deck {
         position: fixed;
         right: 2%;
@@ -187,17 +137,6 @@
         }
     }
 }
-
-@media screen and (orientation: portrait) {
-
-    .game-container {
-
-        .regions-container {
-            width: 75vh;
-        }
-    }
-}
-
 
 @media only screen and (min-width: $screen-sm) {
 
