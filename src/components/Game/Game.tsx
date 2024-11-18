@@ -45,6 +45,7 @@ import { MerfolkTrack } from '../MerfolkTrack/MerfolkTrack';
 import { TrollTokens } from '../TrollTokens/TrollTokens';
 
 import { OrcBoard } from '../OrcBoard/OrcBoard';
+import { Bands } from '../Bands/Bands';
 import { AgeResults } from '../AgeResults/AgeResults';
 import { Regions } from '../Regions/Regions';
 import './Game.scss';
@@ -335,6 +336,9 @@ export function Game(): JSX.Element {
                             }
                             {openWidgetModal.type === WidgetModal.ORCS ?
                                 <OrcBoard player={openWidgetModal.player} /> : null
+                            }
+                            {openWidgetModal.type === WidgetModal.BANDS ?
+                                <Bands player={openWidgetModal.player} /> : null
                             }
                         </Modal> : null
                     }

@@ -1,0 +1,18 @@
+
+.band {
+    flex: 1 1 calc(25% - 20px);
+    max-width: calc(25% - 20px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+    position: relative;
+
+    @for $i from 2 through 100 {
+        .card:nth-child(#{$i}) {
+            position: absolute;
+            transform: translateY(calc((#{$i} - 1) * 25%));
+            z-index: $i + 10;
+        }
+    }
+}

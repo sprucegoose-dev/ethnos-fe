@@ -66,7 +66,7 @@ export function PlayerWidget(props: IPlayerWidgetProps): JSX.Element {
                     </span>
                     <Icon icon="wreath" />
                 </span>
-                <span className="badge total-bands">
+                <span className="badge total-bands" onClick={() => onSelectWidgetIcon({ type: WidgetModal.BANDS, player })}>
                     <span className="badge-content">
                         <Icon icon="helmet" /> {cardsInBands.length}
                     </span>

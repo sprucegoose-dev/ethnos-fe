@@ -125,6 +125,16 @@
             width: 75%;
         }
 
+        &.bands {
+
+            .btn-close {
+
+                .btn-close-icon {
+                    color: $dark-gray;
+                }
+            }
+        }
+
         &.age-results,
         &.trolls {
 
@@ -150,6 +160,11 @@
 
         .widget-modal {
             max-width: 425px;
+
+            &.bands {
+                max-width: none;
+                width: 80vw;
+            }
 
             &.orcs,
             &.merfolk,
