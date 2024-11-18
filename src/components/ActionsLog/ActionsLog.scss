@@ -9,11 +9,11 @@
     left: 14%;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    background: rgba(255, 255, 255, .2);
+    background: rgba(0, 0, 0, .3);
     min-width: 200px;
     box-shadow:  -1px 1px 3px 2px rgba(0, 0, 0, .2);
     font-weight: 600;
-    color: $dark-gray;
+    color: rgba(255, 255, 255, .8);
 
     &.expanded {
         background: rgba(255, 255, 255, .7);
@@ -71,7 +71,7 @@
             }
 
             [class^="region-"] {
-                background: rgba(255, 255, 255, .5);
+                // background: rgba(0, 0, 0, .2);
                 border-radius: 2px;
                 padding: 2px 3px;
                 background-position-x: center;
