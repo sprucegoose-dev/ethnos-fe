@@ -3,10 +3,16 @@
 .troll-tokens-container {
     background: linear-gradient(45deg, rgba(255, 255, 255, 0.8),
         rgba(255, 255, 255, .9));
+    background-image: url('../../assets/backgrounds/troll_tokens_bkg.png');
+    background-position-x: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     padding: 25px;
     font-family: QuadratDemibold;
+    color: $off-white-2;
 
     .title {
+        text-shadow: .5px .5px 3px black;
         margin-bottom: 25px;
         text-align: center;
 
@@ -17,6 +23,8 @@
     }
 
     .tribe-icon {
+        border-radius: 50%;
+        box-shadow: -1px 1px 3px rgba(0, 0, 0, .4);
 
         .tribe-img {
             width: 60px;
