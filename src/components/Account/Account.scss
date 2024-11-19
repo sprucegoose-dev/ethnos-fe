@@ -1,0 +1,70 @@
+@import '../../styles/variables.scss';
+
+.account {
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: #e5e2e6;
+    width: 375px;
+    padding: 25px;
+    position: relative;
+    margin: 25px auto 0;
+
+    .title {
+        font-family: QuadratDemibold;
+        text-align: center;
+        text-transform: uppercase;
+        margin-bottom: 25px;
+    }
+
+    .content {
+        font-size: 1.1em;
+
+        .control-label {
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+    }
+
+    .delete-account {
+        text-align: center;
+
+        .btn {
+            font-size: .9em;
+        }
+    }
+
+    .delete-account-modal {
+        background: white;
+        color: black;
+        padding: 30px;
+
+        .title {
+            font-size: 1.5rem;
+        }
+
+        .footer {
+            background: none;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+
+        .btn-close {
+
+            .btn-close-icon {
+                color: black;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: $screen-sm) {
+
+    .account {
+
+        .content {
+            max-width: 350px;
+        }
+    }
+}

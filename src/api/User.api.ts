@@ -23,6 +23,15 @@ export default class UserApi {
         return await api.request(Method.POST, '/user/login', options);
     }
 
+    static async delete() {
+        const options = {
+            ...requestOptions,
+            authorize: true,
+        }
+
+        return await api.request(Method.DELETE, '/user', options);
+    }
+
     static async getDetails() {
         const options = {
             ...requestOptions,

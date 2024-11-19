@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -62,6 +62,7 @@ export const filterMenuItem = (visibility: MenuItemVisibility[], isLoggedIn: boo
 
 export function DesktopMenu(): JSX.Element {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [userMenuAnchor, setUserMenuAnchor] = useState<null | HTMLElement>(null);
 
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
@@ -81,6 +82,7 @@ export function DesktopMenu(): JSX.Element {
     const logout = () => {
         dispatch(resetAuthDetails());
         toast.success('You have logged out successfully');
+        navigate('/rooms');
     };
 
     const handleCallback = (callbackName: string) => {

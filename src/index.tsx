@@ -4,15 +4,17 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import App from './components/App/App';
-import reportWebVitals from './reportWebVitals';
 import { store, persistor } from './reducers/store';
+import reportWebVitals from './reportWebVitals';
 
-import './index.css';
+import App from './components/App/App';
 import { LoginForm } from './components/LoginForm/LoginForm';
 import { Home } from './components/Home/Home';
 import { RoomList } from './components/RoomList/RoomList';
 import { Game } from './components/Game/Game';
+import { Account } from './components/Account/Account';
+
+import './index.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -27,9 +29,9 @@ root.render(
                             <Route path="login/:signUp" element={<LoginForm />} />
                             <Route path="login" element={<LoginForm />} />
                             <Route path="rooms" element={<RoomList />} />
+                            <Route path="account" element={<Account />} />
                             <Route path="/" element={<Home />} />
-                        <Route path="game/:id" element={<Game />} />
-
+                            <Route path="game/:id" element={<Game />} />
                         </Route>
                     </Routes>
                 </BrowserRouter>
