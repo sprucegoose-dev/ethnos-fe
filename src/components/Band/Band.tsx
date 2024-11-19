@@ -12,23 +12,23 @@ export function Band(props: IBandProps): JSX.Element {
         leaderId,
     } = props;
 
-    const bandRef = useRef(null);
+    const bandRef = useRef<HTMLDivElement | null>(null);
     const [bandHeight, setBandHeight] = useState<number | null>(null);
 
-    useEffect(() => {
-        const calculateHeight = () => {
-            if (bandRef.current) {
-                const height = bandRef.current.offsetHeight;
-                const newHeight = height + (cards.length - 1) * (height * 0.2);
-                setBandHeight(newHeight);
-            }
-        };
+    const calculateHeight = () => {
+        if (bandRef.current && !bandHeight) {
+            const height = bandRef.current.offsetHeight;
+            const newHeight = height + (cards.length - 1) * (height * 0.2);
+            setBandHeight(newHeight);
+        }
+    };
 
+    useEffect(() => {
         calculateHeight();
     }, [cards]);
 
     return (
-        <div className="band" ref={bandRef} style={{ height: bandHeight ?? 'auto' }}>
+        <div className="band" ref={bandRef} style={{ minHeight: bandHeight !== null ? `${bandHeight}px` : 'none' }}>
             <Card card={cards.find(card => card.id === leaderId)} />
             {cards.map(card => (
                 card.id !== leaderId ?

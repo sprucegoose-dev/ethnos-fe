@@ -5,8 +5,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 25px;
+    margin-bottom: 35px;
     position: relative;
+
+    .card {
+
+        .tribe-description {
+            visibility: hidden;
+        }
+    }
 
     @for $i from 2 through 100 {
         .card:nth-child(#{$i}) {
