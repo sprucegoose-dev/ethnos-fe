@@ -48,6 +48,7 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
         className,
         player,
         actions = [],
+        showCards
     } = props;
     const [hoveredCardIndex, setHoveredCardIndex] = useState<number>(null);
     const playBandActions = actions.filter(action => action.type === ActionType.PLAY_BAND) as IPlayBandPayload[];
@@ -241,7 +242,7 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
                             onMouseEnter={() => handleMouseEnter(index)}
                             onMouseLeave={handleMouseLeave}
                         >
-                            {className.includes('bottom') ?
+                            {showCards ?
                                 <Card
                                     card={card}
                                     customStyles={calculateCardStyle({

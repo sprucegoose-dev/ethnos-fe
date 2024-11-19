@@ -83,6 +83,9 @@ export function Game(): JSX.Element {
     const prevRevealedDragonsCount = useRef(null);
     const audioRef = useRef<HTMLAudioElement>(null);
     const navigate = useNavigate();
+    const isSpectator = auth.userId &&
+        gameState?.state === STARTED &&
+        !gameState?.players.find(player => player.userId === auth.userId);
     let  currentPlayer: IPlayer;
     let playerPosition: {[userId: number]: string};
     let highestGiantToken: number;
@@ -138,9 +141,13 @@ export function Game(): JSX.Element {
 
             if (payload.state !== GameState.CREATED) {
                 const nextActivePlayer = payload.players.find(player => player.id === payload.activePlayerId);
-                getCardsInHand();
+
+                if (!isSpectator) {
+                    getCardsInHand();
+                    getActions();
+                }
+
                 getPlayerHands();
-                getActions();
                 setActivePlayer(nextActivePlayer);
                 getActionsLog();
                 handleTurnNotification(nextActivePlayer, audioRef.current);
@@ -162,9 +169,13 @@ export function Game(): JSX.Element {
                 const nextActivePlayer = payload.players.find(player => player.id === payload.activePlayerId);
 
                 setActivePlayer(nextActivePlayer);
-                getCardsInHand();
+
+                if (!isSpectator) {
+                    getCardsInHand();
+                    getActions();
+                }
+
                 getPlayerHands();
-                getActions();
                 getActionsLog();
                 handleTurnNotification(nextActivePlayer, audioRef.current);
 
@@ -254,7 +265,9 @@ export function Game(): JSX.Element {
     }
 
     if ([STARTED, ENDED, CANCELLED].includes(gameState.state)) {
-        currentPlayer =  gameState.players.find(player => player.userId === auth.userId);
+        currentPlayer =  isSpectator ?
+            gameState.players[0] :
+            gameState.players.find(player => player.userId === auth.userId);
         playerPosition = getPlayerPositions(currentPlayer, gameState.players, gameState.turnOrder);
         highestGiantToken = getHighestGiantTokenValue(gameState.players);
     }
@@ -290,12 +303,13 @@ export function Game(): JSX.Element {
                                 key={`player-hand-${player.id}`}
                                 actions={player.id === currentPlayer.id ? actions : []}
                                 className={playerPosition[player.userId]}
-                                player={{...player, cardsInHand: player.id === currentPlayer.id ? cardsInHand : (playerHands[player.id] || [])}}
+                                player={{...player, cardsInHand: player.id === currentPlayer.id && !isSpectator ? cardsInHand : (playerHands[player.id] || [])}}
+                                showCards={playerPosition[player.userId] === 'bottom' && !isSpectator}
                             />
                             <PlayerWidget
                                 key={`player-widget-${player.id}`}
                                 className={playerPosition[player.userId]}
-                                player={{...player, cardsInHand: player.id === currentPlayer.id ? cardsInHand : (playerHands[player.id] || [])}}
+                                player={{...player, cardsInHand: player.id === currentPlayer.id && !isSpectator ? cardsInHand : (playerHands[player.id] || [])}}
                                 playerCount={gameState.players.length}
                                 isActivePlayer={player.id === gameState.activePlayerId}
                                 highestGiantToken={highestGiantToken}

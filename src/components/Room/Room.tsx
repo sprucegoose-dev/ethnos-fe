@@ -217,7 +217,7 @@ export function Room({game}: IRoomProps): JSX.Element {
                 {
                     game.state !== GameState.CREATED &&
                     !userInGame() &&
-                    <Link to={`/game/${game.id}`}>
+                    <Link to={auth.userId ? `/game/${game.id}`: '/login'}>
                         <button
                             className="btn btn-primary btn-3d btn-block spectate-btn"
                             type="submit"

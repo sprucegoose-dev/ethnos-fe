@@ -5,4 +5,5 @@ export interface IPlayerHandProps {
     className: string;
     player: IPlayer & { cardsInHand: ICard[] };
     actions?: IActionPayload[];
+    showCards: boolean;
 }
