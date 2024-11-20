@@ -67,7 +67,7 @@ export function Region(props: IRegionProps): JSX.Element {
                     </span>
                 )}
             </div>
-            <div className="player-tokens-container">
+            <div className={`player-tokens-container ${Object.entries(playerTokens).length > 4 ? 'multi-row' : ''}`}>
                 {Object.entries(playerTokens).map(([color, tokens], _index) =>
                     <div className="player-tokens" key={`region-${region.id}-player-${color}`}>
                         {tokens.map((_token, index) =>

@@ -39,7 +39,7 @@
         background: rgba(0, 0, 0, .5);
         color: white;
         font-family: QuadratDemibold;
-        margin-right: 15px;
+        margin-right: 12.5px;
         font-size: .7rem;
         text-shadow: .5px .5px 3px black;
         border-radius: 50%;
@@ -54,18 +54,35 @@
         }
     }
 
-    &.red {
+    .player-tokens-container {
+        position: absolute;
+        z-index: 10;
+        transform: translateX(-50%);
+        display: flex;
+        justify-content: center;
+        gap: 0 5%;
+        width: 68%;
 
-        .player-tokens-container {
-            bottom: 30%;
-        }
+        &.multi-row {
+            gap: 0;
 
-        .region-values {
-            left: 46%;
-            top: 30%;
+            .player-tokens {
 
-            .region-value {
-                background: rgba(134, 11, 11, 0.4);
+                &:nth-child(even) {
+                    margin-top: 40px;
+                }
+
+                &:nth-child(odd) {
+                    margin-top: 0; /* Keep even elements in the main row */
+                }
+
+                @for $i from 2 through 100 {
+                    &:nth-child(#{$i}) {
+                        transform: translateX(calc(1 - $i) * 22%) ;
+                        transform-origin: center;
+                        z-index: 7 - $i;
+                    }
+                }
             }
         }
     }
@@ -73,13 +90,18 @@
     &.blue {
 
         .player-tokens-container {
-            bottom: 32%;
-            left: 57%;
+            top: 42%;
+            left: 52%;
+            transform: translateX(-50%);
+
+            &.multi-row {
+                left: 57%;
+            }
         }
 
         .region-values {
             left: 55%;
-            top: 30%;
+            top: 28%;
 
             .region-value {
                 background: rgba(14, 74, 130, 0.4);
@@ -90,13 +112,17 @@
     &.gray {
 
         .player-tokens-container {
-            bottom: 34%;
-            left: 58%;
+            top: 42%;
+            left: 50%;
+
+            &.multi-row {
+                top: 36%;
+                left: 57%;
+            }
         }
 
         .region-values {
-            left: 35%;
-            top: 30%;
+            top: 23%;
 
             .region-value {
                 background: rgba(62, 62, 62, 0.4);
@@ -104,11 +130,41 @@
         }
     }
 
+    &.green {
+
+        .player-tokens-container {
+            top: 20%;
+            left: 48%;
+            transform: translateX(-50%);
+
+            &.multi-row {
+                top: 10%;
+                left: 54%;
+            }
+        }
+
+        .region-values {
+            left: auto;
+            right: -5%;
+            top: 52%;
+
+            .region-value {
+                background: rgba(6, 85, 13, 0.3);
+            }
+        }
+    }
+
     &.orange {
 
         .player-tokens-container {
-            bottom: 30%;
-            left: 55%;
+            top: 46%;
+            left: 52%;
+            transform: translateX(-50%);
+
+            &.multi-row {
+                top: 43%;
+                left: 61%;
+            }
         }
 
         .region-values {
@@ -120,35 +176,23 @@
         }
     }
 
-    &.green {
-
-        .player-tokens-container {
-            bottom: 65%;
-            left: 48%;
-        }
-
-        .region-values {
-            left: 55%;
-            top: 42%;
-
-            .region-value {
-                background: rgba(6, 85, 13, 0.3);
-            }
-        }
-    }
-
     &.purple {
         left: -5.7%;
         top: -31%;
 
         .player-tokens-container {
-            bottom: 37%;
+            top: 41%;
             left: 48%;
-            width: 66%;
+            transform: translateX(-50%);
+
+            &.multi-row {
+                top: 36%;
+                left: 52%;
+            }
         }
 
         .region-values {
-            top: 30%;
+            top: 26%;
 
             .region-value {
                 background: rgba(67, 33, 80, 0.35);
@@ -156,15 +200,27 @@
         }
     }
 
-    .player-tokens-container {
-        position: absolute;
-        bottom: 25%;
-        left: 50%;
-        z-index: 10;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 0 5%;
-        width: 68%;
+    &.red {
+
+        .player-tokens-container {
+            top: 50%;
+            left: 48%;
+            transform: translateX(-50%);
+
+            &.multi-row {
+                left: 54%;
+                top: 43%;
+            }
+        }
+
+        .region-values {
+            left: 46%;
+            top: 29%;
+
+            .region-value {
+                background: rgba(134, 11, 11, 0.4);
+            }
+        }
     }
 
     .player-tokens {
@@ -172,12 +228,14 @@
         flex-direction: column;
         align-items: center;
         min-width: 0;
+        flex-shrink: 0;
+        position: relative;
     }
 
     @for $i from 2 through 100 {
         .player-token:nth-child(#{$i}) {
             position: absolute;
-            transform: translateX(calc($i - 1) * 4%)  translateY(calc($i - 1) * -10%);;
+            transform: translateX(calc($i - 1) * 4%) translateY(calc($i - 1) * -10%);
             transform-origin: center;
             z-index: $i;
         }
