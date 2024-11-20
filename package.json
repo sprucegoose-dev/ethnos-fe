@@ -1,7 +1,8 @@
 {
   "name": "ethnos-fe",
-  "version": "0.1.0",
-  "private": true,
+  "author": "Morgan Polak",
+  "license": "CC BY-NC-ND 4.0",
+  "version": "1.0.0",
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@dnd-kit/core": "^6.1.0",
