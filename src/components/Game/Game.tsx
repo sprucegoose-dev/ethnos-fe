@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import pako, { Data } from 'pako';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faVolumeHigh, faVolumeXmark } from '@fortawesome/free-solid-svg-icons';
 
 import {
     getHighestGiantTokenValue,
@@ -48,6 +48,8 @@ import { OrcBoard } from '../OrcBoard/OrcBoard';
 import { Bands } from '../Bands/Bands';
 import { AgeResults } from '../AgeResults/AgeResults';
 import { Regions } from '../Regions/Regions';
+import { setAudioEnabled, setAudioMuted } from '../App/App.reducer';
+import { IAppReducer } from '../App/App.reducer.types';
 import './Game.scss';
 
 const {
@@ -59,6 +61,7 @@ const {
 
 export function Game(): JSX.Element {
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
+    const { audioMuted } = useSelector<IRootReducer>((state) => state.app) as IAppReducer;
     const { id: gameId } = useParams();
     const [ gameState, setGameState ] = useState<IGameState>(null);
     const [ actions, setActions ] = useState<IActionPayload[]>([]);
@@ -66,7 +69,6 @@ export function Game(): JSX.Element {
     const [ activePlayer, setActivePlayer ] = useState<IPlayer>(null);
     const [ playerHands, setPlayerHands ] = useState<{[playerId: number]: ICard[]}>({});
     const [ cardsInHand, setCardsInHand ] = useState<ICard[]>([]);
-    const [ audioEnabled, setAudioEnabled] = useState<boolean>(false);
     const {
         getTurnNotificationText,
         handleTurnNotification,
@@ -78,6 +80,7 @@ export function Game(): JSX.Element {
     const [openWidgetModal, setOpenWidgetModal] = useState<IActiveWidgetModal>({ type: null, player: null });
     const [ageResults, setAgeResults] = useState<IGameState>(null);
     const [showAgeResults, setShowAgeResults] = useState<boolean>(false);
+    const [audioInitialised, setAudioInitialized] = useState<boolean>(false);
     const prevAge = useRef<number>(0);
     const prevState = useRef<GameState>(null);
     const prevRevealedDragonsCount = useRef(null);
@@ -89,16 +92,22 @@ export function Game(): JSX.Element {
     let  currentPlayer: IPlayer;
     let playerPosition: {[userId: number]: string};
     let highestGiantToken: number;
+    const dispatch = useDispatch();
 
     const getRevealedDragonsCount = (state: IGameState) =>
         state?.cards.filter(card => card.tribe.name === TribeName.DRAGON && card.state === CardState.REVEALED)?.length ?? 0;
 
+    const toggleAudio = () => {
+        dispatch(setAudioMuted({ audioMuted: !audioMuted }));
+    }
+
     const enableAudio = async () => {
-        if (audioEnabled) {
+        if (audioInitialised) {
             return;
         }
 
-        setAudioEnabled(true);
+        setAudioInitialized(true);
+        dispatch(setAudioEnabled({ audioEnabled: true }));
         audioRef.current = await initAudio();
     }
 
@@ -150,7 +159,7 @@ export function Game(): JSX.Element {
                 getPlayerHands();
                 setActivePlayer(nextActivePlayer);
                 getActionsLog();
-                handleTurnNotification(nextActivePlayer, audioRef.current);
+                handleTurnNotification(nextActivePlayer, audioRef.current, audioMuted);
             }
         };
 
@@ -177,7 +186,7 @@ export function Game(): JSX.Element {
 
                 getPlayerHands();
                 getActionsLog();
-                handleTurnNotification(nextActivePlayer, audioRef.current);
+                handleTurnNotification(nextActivePlayer, audioRef.current, audioMuted);
 
                 const newRevealedDragonsCount = getRevealedDragonsCount(payload);
 
@@ -205,7 +214,7 @@ export function Game(): JSX.Element {
             socket.emit('onLeaveGame', gameId);
             socket.off('onUpdateGameState', updateGameState);
         }
-    }, [auth, gameId, navigate, revealedDragonsCount, socketRefreshInterval]);
+    }, [audioMuted, auth, gameId, navigate, revealedDragonsCount, socketRefreshInterval]);
 
     useEffect(() => {
         if (prevRevealedDragonsCount.current === null && revealedDragonsCount !== null) {
@@ -265,7 +274,7 @@ export function Game(): JSX.Element {
     }
 
     if ([STARTED, ENDED, CANCELLED].includes(gameState.state)) {
-        currentPlayer =  isSpectator ?
+        currentPlayer = isSpectator ?
             gameState.players[0] :
             gameState.players.find(player => player.userId === auth.userId);
         playerPosition = getPlayerPositions(currentPlayer, gameState.players, gameState.turnOrder);
@@ -363,6 +372,9 @@ export function Game(): JSX.Element {
                             <AgeResults gameState={ageResults} />
                         </Modal> : null
                     }
+                    <button className="btn btn-outline btn-round toggle-sound-btn" onClick={toggleAudio}>
+                        <FontAwesomeIcon icon={audioMuted ? faVolumeXmark : faVolumeHigh} />
+                    </button>
                 </div> : null
             }
         </div>

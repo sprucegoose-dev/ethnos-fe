@@ -75,6 +75,7 @@
         position: absolute;
         top: 50%;
         transform: translate(-50%, -50%);
+        white-space: nowrap;
 
         &.black {
             background: $token-black;

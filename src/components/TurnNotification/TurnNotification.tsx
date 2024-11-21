@@ -15,6 +15,7 @@ export function TurnNotification(props: ITurnNotificationProps): JSX.Element {
         className,
         `${color}`,
     ].join(' ');
+
     return (
         <div className={classNames}>
             <span className="player-icon-wrapper">

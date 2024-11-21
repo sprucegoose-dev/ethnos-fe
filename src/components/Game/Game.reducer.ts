@@ -10,18 +10,18 @@ export const gameReducer = createSlice({
   name: 'game',
   initialState: {
     selectedCardIds: [],
-    selectedLeaderId: null,
     selectedCardIdsToKeep: [],
+    selectedLeaderId: null,
   },
   reducers: {
     setSelectedCardIds: (state: IGameReducer, {payload}:  PayloadAction<ISetCardIdsAction>) => {
         state.selectedCardIds = payload.cardIds;
     },
-    setSelectedLeaderId: (state: IGameReducer, {payload}:  PayloadAction<ISetLeaderIdAction>) => {
-        state.selectedLeaderId = payload.leaderId;
-    },
     setSelectedCardIdsToKeep: (state: IGameReducer, {payload}:  PayloadAction<ISetCardIdsAction>) => {
         state.selectedCardIdsToKeep = payload.cardIds;
+    },
+    setSelectedLeaderId: (state: IGameReducer, {payload}:  PayloadAction<ISetLeaderIdAction>) => {
+        state.selectedLeaderId = payload.leaderId;
     },
   },
 })

@@ -136,6 +136,13 @@
             }
         }
     }
+
+    .toggle-sound-btn {
+        position: absolute;
+        left: 1.5%;
+        bottom: 2%;
+        font-size: .9rem;
+    }
 }
 
 @media only screen and (min-width: $screen-sm) {

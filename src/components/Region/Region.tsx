@@ -36,6 +36,7 @@ const regionImages = {
 
 export function Region(props: IRegionProps): JSX.Element {
     const { onSelect, region, players } = props;
+
     const playerColors: { [playerId: number]: PlayerColor } = players.reduce<{ [playerId: number]: PlayerColor }>((acc, player) => {
         acc[player.id] = player.color;
         return acc;
@@ -46,6 +47,7 @@ export function Region(props: IRegionProps): JSX.Element {
         acc[color] = Array.from({ length: tokenData.tokens  }, (_, i) => i);
         return acc;
     }, {});
+
     return (
         <div className={`region ${region.color}`} onClick={() => onSelect(region)}>
             <img
