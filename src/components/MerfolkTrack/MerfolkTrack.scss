@@ -9,14 +9,21 @@
     box-sizing: border-box;
 
     .merfolk-track {
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        gap: 14px;
-        max-width: 95%;
-        margin: auto;
-        grid-auto-flow: dense;
         transform: rotate(180deg);
-        direction: rtl;
+
+        .row {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 14px;
+            max-width: 95%;
+            margin: auto;
+            grid-auto-flow: dense;
+            margin-bottom: 10px;
+
+            &:nth-child(odd){
+                direction: rtl;
+            }
+        }
 
         .square {
             display: flex;
@@ -29,8 +36,8 @@
             text-align: center;
             border-radius: 5px;
             box-sizing: border-box;
-            transform: rotate(180deg);
             color: $off-white;
+            transform: rotate(180deg);
 
             &.checkpoint {
                 scale: 1.1;

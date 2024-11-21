@@ -9,7 +9,7 @@ export function MerfolkTrack(props: IMerfolkTrackProps): JSX.Element {
 
     const { players } = props;
 
-    const squares = Array.from({ length: 18 }, (_, i) => i);
+    const squares = Array.from({ length: 19 }, (_, i) => i);
 
     const playersByPoints = players.reduce<{ [key: number]: PlayerColor[] }>(
         (acc, player) => {
@@ -24,26 +24,45 @@ export function MerfolkTrack(props: IMerfolkTrackProps): JSX.Element {
         {}
     );
 
+    const rows = [
+        squares.slice(0, 6),
+        squares.slice(6, 12),
+        squares.slice(12, 18),
+        squares.slice(18, 19),
+    ]
+
+    const renderSquare = (index: number) => {
+        return (
+            <div
+                key={`square-${index}`}
+                className={`square ${ checkpoints.includes(index) ? 'checkpoint': ''}`}
+            >
+                <span className="number">
+                    {index}
+                </span>
+                <div className="player-tokens">
+                    {playersByPoints[index] ?
+                        playersByPoints[index].map(playerColor =>
+                            <TokenIcon color={playerColor} key={`token-icon-${playerColor}`}/>
+                        )
+                        : null
+                    }
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div className="merfolk-track-container">
             <div className="merfolk-track">
                 {
-                    squares.map((_square, index) =>
-                        <div
-                            key={`square-${index}`}
-                            className={`square ${ checkpoints.includes(index + 1) ? 'checkpoint': ''}`}
-                        >
-                            <span className="number">
-                                {index + 1}
-                            </span>
-                            <div className="player-tokens">
-                                {playersByPoints[index] ?
-                                    playersByPoints[index].map(playerColor =>
-                                        <TokenIcon color={playerColor} key={`token-icon-${playerColor}`}/>
-                                    )
-                                    : null
-                                }
-                            </div>
+                    rows.map(row =>
+                        <div className="row">
+                            {
+                                row.map(squareIndex =>
+                                    renderSquare(squareIndex)
+                                )
+                            }
                         </div>
                     )
                 }
