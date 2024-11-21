@@ -120,6 +120,10 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
             return;
         }
 
+        if (submitting) {
+            return;
+        }
+
         setSubmitting(true);
 
         if (gameState.creatorId === auth.userId) {
