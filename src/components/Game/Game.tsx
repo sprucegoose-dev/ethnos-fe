@@ -336,10 +336,12 @@ export function Game(): JSX.Element {
                     {showDragonOverlay ?
                         <div className="dragon-overlay"></div> : null
                     }
-                    <ActionsLog
-                        actionsLog={actionsLog}
-                        cards={gameState.players.reduce((acc, player) => acc.concat([...player.cards]), [])}
-                    />
+                    {actionsLog.length ?
+                        <ActionsLog
+                            actionsLog={actionsLog}
+                            cards={gameState.players.reduce((acc, player) => acc.concat([...player.cards]), [])}
+                        /> : null
+                    }
                     {openWidgetModal.type ?
                         <Modal onClose={() => setOpenWidgetModal({ type: null, player: null })} modalClass={`widget-modal ${openWidgetModal.type.toLowerCase()}`}>
                             {openWidgetModal.type === WidgetModal.MERFOLK ?
