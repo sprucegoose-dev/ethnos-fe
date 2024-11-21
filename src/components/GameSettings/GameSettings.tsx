@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInfo, faRemove, faRobot } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faInfo, faRemove, faRobot } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import shuffle from 'lodash.shuffle';
 
@@ -29,6 +29,7 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
     const [selectedTribes, setSelectedTribes] = useState<TribeName[]>(gameState.settings.tribes || []);
     const [showTribsModal, setShowTribesModal] = useState<boolean>(false);
     const [showPasswordModal, setShowPasswordModal] = useState<boolean>(false);
+    const [submitting, setSubmitting] = useState<boolean>(false);
     const currentPlayer = gameState.players.find(player => player.userId === auth.userId);
 
     useEffect(() => {
@@ -47,27 +48,6 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
     const renderRoomName = () => {
         const username = gameState.creator.username;
         return `${username}${username.charAt(-1) === 's'? "'" : "'s"} Room`
-    };
-
-    const handleStartGame = async () => {
-        if (gameState.creatorId !== auth.userId) {
-            toast.info('Only the game creator can start the game');
-            return;
-        }
-
-        if (selectedTribes.length < 6) {
-            toast.info('Please select 6 tribes');
-            return;
-        }
-
-        if (gameState.creatorId === auth.userId) {
-            const response = await GameApi.start(gameState.id, { tribes: selectedTribes});
-
-            if (!response.ok) {
-                const error = await response.json();
-                toast.error(error.message);
-            }
-        }
     };
 
     const handleSelectTribe = async (tribeName: TribeName) => {
@@ -97,6 +77,15 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
         setShowTribesModal(value);
     };
 
+    const submitAddBotPlayer = async () => {
+        const response = await GameApi.addBotPlayer(gameState.id);
+
+        if (!response.ok) {
+            const error = await response.json();
+            toast.error(error.message);
+        }
+    }
+
     const submitJoinGame = async () => {
         const response = await GameApi.join(gameState.id);
 
@@ -109,19 +98,39 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
         }
     }
 
-    const submitAddBotPlayer = async () => {
-        await GameApi.addBotPlayer(gameState.id);
-    }
-
-    const submitRemoveBotPlayer = async (botPlayerId: number) => {
-        await GameApi.removeBotPlayer(gameState.id, botPlayerId);
-    }
-
     const submitLeaveGame = async() => {
         await GameApi.leave(gameState.id);
         navigate('/rooms');
     };
 
+    const submitRemoveBotPlayer = async (botPlayerId: number) => {
+        await GameApi.removeBotPlayer(gameState.id, botPlayerId);
+    }
+
+    const submitStartGame = async () => {
+        if (gameState.creatorId !== auth.userId) {
+            toast.info('Only the game creator can start the game');
+            return;
+        }
+
+        if (selectedTribes.length < 6) {
+            toast.info('Please select 6 tribes');
+            return;
+        }
+
+        setSubmitting(true);
+
+        if (gameState.creatorId === auth.userId) {
+            const response = await GameApi.start(gameState.id, { tribes: selectedTribes});
+
+            if (!response.ok) {
+                const error = await response.json();
+                toast.error(error.message);
+            }
+        }
+
+        setSubmitting(false);
+    };
     const onPasswordSuccess = () => {
         setShowPasswordModal(false);
     }
@@ -160,6 +169,10 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
             currentPlayer.color !== color &&
             gameState.players.find(player => player.color === color));
     }
+
+    const startBtnDisabled = auth.userId !== gameState.creatorId ||
+        selectedTribes.length < 6 ||
+        submitting;
 
     return (
         <div className="game-settings">
@@ -270,10 +283,15 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                     </div>}
                 <div>
                     <button
-                        className={`btn btn-action btn-3d ${auth.userId !== gameState.creatorId || selectedTribes.length < 6 ? 'btn-disabled' : ''}`}
-                        onClick={handleStartGame}
+                        className={`btn btn-action btn-3d ${startBtnDisabled ? 'btn-disabled' : ''}`}
+                        onClick={submitStartGame}
                     >
-                        Start game
+                        {submitting ?
+                            <FontAwesomeIcon
+                                className="loader-icon"
+                                icon={faCircleNotch}
+                            /> : null
+                        } Start game
                     </button>
                 </div>
             </div>
