@@ -52,3 +52,10 @@ export async function initAudio() {
     audio.pause();
     return audio;
 }
+
+export function sortPlayersByBotStatus(players: IPlayer[]) {
+    return [
+        ...players.filter(player => !player.user.isBot),
+        ...players.filter(player => player.user.isBot)
+    ];
+}

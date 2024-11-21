@@ -16,11 +16,13 @@ import GameApi from '../../api/Game.api';
 
 import { TribeIcon } from '../TribeIcon/TribeIcon';
 
-import './GameSettings.scss';
 import { Modal } from '../Modal/Modal';
 import { Card } from '../Card/Card';
 import { PasswordForm } from '../PasswordForm/PasswordForm';
 import { TokenIcon } from '../TokenIcon/TokenIcon';
+import { sortPlayersByBotStatus } from '../Game/helpers';
+
+import './GameSettings.scss';
 
 export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
@@ -174,6 +176,8 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
         selectedTribes.length < 6 ||
         submitting;
 
+    const sortedPlayers = sortPlayersByBotStatus(gameState.players);
+
     return (
         <div className="game-settings">
             <div className="room-title">
@@ -185,7 +189,7 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                         Players
                     </div>
                     {/* TODO: move into 'PlayerLabel' component */}
-                    {gameState.players.map(({ id: playerId, color, user }, index) =>
+                    {sortedPlayers.map(({ id: playerId, color, user }, index) =>
                         <span className="player-label" key={`player-id-${playerId}`}>
                             {color ?
                                 <TokenIcon

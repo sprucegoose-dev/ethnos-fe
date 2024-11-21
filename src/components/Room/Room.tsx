@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faLock, faRobot, faUser } from '@fortawesome/free-solid-svg-icons';
 
 import { IRoomProps } from './Room.types';
 import { GameState, TribeName } from '../Game/Game.types';
@@ -15,6 +15,7 @@ import { PasswordForm } from '../PasswordForm/PasswordForm';
 import { useSelector } from 'react-redux';
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
+import { sortPlayersByBotStatus } from '../Game/helpers';
 
 import centaurIcon from '../../assets/tribes/circle_icon_centaur.png';
 import dwarfIcon from '../../assets/tribes/circle_icon_dwarf.png';
@@ -111,6 +112,8 @@ export function Room({game}: IRoomProps): JSX.Element {
         return `${game.state.charAt(0).toUpperCase()}${game.state.slice(1)}`;
     }
 
+    const sortedPlayers = sortPlayersByBotStatus(game.players);
+
     const tribes: TribeName[] = Array.from({ length: 6 }, (_, i) => game.settings.tribes[i] || null);
 
     return (
@@ -134,7 +137,7 @@ export function Room({game}: IRoomProps): JSX.Element {
                 }
             </div>
             <div className="players">
-                {game.players.map(({ user }, index) =>
+                {sortedPlayers.map(({ user }, index) =>
                     <Link
                         to={`/matches/${decodeURIComponent(user.username)}`}
                         key={`player-${index}`}
@@ -142,7 +145,7 @@ export function Room({game}: IRoomProps): JSX.Element {
                     >
                         <FontAwesomeIcon
                         className="player-icon"
-                        icon={faUser}
+                        icon={user.isBot ? faRobot : faUser}
                     /> {user.username}
                     </Link>
                 )}
