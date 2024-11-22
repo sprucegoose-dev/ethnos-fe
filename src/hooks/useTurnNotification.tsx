@@ -2,6 +2,9 @@ import { useState } from 'react';
 
 import { IPlayer } from '../components/Game/Game.types';
 import { ITurnNotificationState } from '../components/TurnNotification/TurnNotification.types';
+import { IAuthReducer } from '../components/Auth/Auth.types';
+import { IRootReducer } from '../reducers/reducers.types';
+import { useSelector } from 'react-redux';
 
 export function useTurnNotification() {
     const [ turnNotificationState, setTurnNotificationState ] = useState<ITurnNotificationState>({
@@ -9,6 +12,7 @@ export function useTurnNotification() {
         slideIn: false,
         slideOut: false,
     });
+    const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
 
     const handleTurnNotification = (activePlayer: IPlayer, audio: HTMLAudioElement, audioMuted: boolean) => {
         if (activePlayer.user.isBot) {
@@ -20,7 +24,7 @@ export function useTurnNotification() {
             return;
         }
 
-        if (audio && !audioMuted) {
+        if (auth.userId === activePlayer.user.id && audio && !audioMuted) {
             audio.volume = .5;
             audio.play();
         }

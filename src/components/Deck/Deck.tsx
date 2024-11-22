@@ -20,6 +20,7 @@ export function Deck(props: IDeckProps): JSX.Element {
     const {
         actions = [],
         activePlayer,
+        currentPlayer,
         gameState
     } = props;
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
@@ -29,6 +30,10 @@ export function Deck(props: IDeckProps): JSX.Element {
     const selectable = actions.find(action => action.type === ActionType.DRAW_CARD);
 
     const handleDrawCard = async () => {
+        if (currentPlayer.cardsInHand.length === 10) {
+            toast.info('You cannot draw more than 10 cards');
+        }
+
         if (!actions.find(action => action.type === ActionType.DRAW_CARD)) {
             return;
         }

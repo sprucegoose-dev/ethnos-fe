@@ -15,12 +15,10 @@ import GameApi from '../../api/Game.api';
 import { socket } from '../../socket';
 
 import {
-    CardState,
     GameState,
     ICard,
     IGameState,
     IPlayer,
-    TribeName,
 } from './Game.types';
 import {
     ActionType,
@@ -51,6 +49,7 @@ import { Regions } from '../Regions/Regions';
 import { setAudioEnabled, setAudioMuted } from '../App/App.reducer';
 import { IAppReducer } from '../App/App.reducer.types';
 import './Game.scss';
+import { useDragonOverlay } from '../../hooks/useDragonOverlay';
 
 const {
     CREATED,
@@ -74,16 +73,16 @@ export function Game(): JSX.Element {
         handleTurnNotification,
         turnNotificationState
     } = useTurnNotification();
+    const {
+        showDragonOverlay,
+    } = useDragonOverlay(gameState);
     const [socketRefreshInterval, setSocketRefreshInterval] = useState(null);
-    const [showDragonOverlay, setShowDragonOverlay] = useState<boolean>(false);
-    const [revealedDragonsCount, setRevealedDragonsCount] = useState<number>(null);
     const [openWidgetModal, setOpenWidgetModal] = useState<IActiveWidgetModal>({ type: null, player: null });
     const [ageResults, setAgeResults] = useState<IGameState>(null);
     const [showAgeResults, setShowAgeResults] = useState<boolean>(false);
     const [audioInitialised, setAudioInitialized] = useState<boolean>(false);
     const prevAge = useRef<number>(0);
     const prevState = useRef<GameState>(null);
-    const prevRevealedDragonsCount = useRef(null);
     const audioRef = useRef<HTMLAudioElement>(null);
     const navigate = useNavigate();
     const isSpectator = auth.userId &&
@@ -93,9 +92,6 @@ export function Game(): JSX.Element {
     let playerPosition: {[userId: number]: string};
     let highestGiantToken: number;
     const dispatch = useDispatch();
-
-    const getRevealedDragonsCount = (state: IGameState) =>
-        state?.cards.filter(card => card.tribe.name === TribeName.DRAGON && card.state === CardState.REVEALED)?.length ?? 0;
 
     const toggleAudio = () => {
         dispatch(setAudioMuted({ audioMuted: !audioMuted }));
@@ -145,7 +141,6 @@ export function Game(): JSX.Element {
                 navigate('/rooms');
             }
 
-            setRevealedDragonsCount(getRevealedDragonsCount(payload));
             setGameState(payload);
 
             if (payload.state !== GameState.CREATED) {
@@ -187,12 +182,6 @@ export function Game(): JSX.Element {
                 getPlayerHands();
                 getActionsLog();
                 handleTurnNotification(nextActivePlayer, audioRef.current, audioMuted);
-
-                const newRevealedDragonsCount = getRevealedDragonsCount(payload);
-
-                if (newRevealedDragonsCount !== revealedDragonsCount) {
-                    setRevealedDragonsCount(newRevealedDragonsCount);
-                }
             }
         }
 
@@ -214,24 +203,7 @@ export function Game(): JSX.Element {
             socket.emit('onLeaveGame', gameId);
             socket.off('onUpdateGameState', updateGameState);
         }
-    }, [audioMuted, auth, gameId, navigate, revealedDragonsCount, socketRefreshInterval]);
-
-    useEffect(() => {
-        if (prevRevealedDragonsCount.current === null && revealedDragonsCount !== null) {
-            prevRevealedDragonsCount.current = revealedDragonsCount;
-            return;
-        }
-
-        if (revealedDragonsCount > prevRevealedDragonsCount.current) {
-            setShowDragonOverlay(true);
-
-            setTimeout(() => {
-                setShowDragonOverlay(false);
-            }, 2000);
-
-            prevRevealedDragonsCount.current = revealedDragonsCount;
-        }
-    }, [revealedDragonsCount]);
+    }, [audioMuted, auth, gameId, navigate, socketRefreshInterval]);
 
     useEffect(() => {
         if (!gameState) {
@@ -305,7 +277,12 @@ export function Game(): JSX.Element {
                         gameState={gameState}
                     />
                     <Market gameState={gameState} activePlayer={activePlayer} />
-                    <Deck gameState={gameState} activePlayer={activePlayer} actions={actions} />
+                    <Deck
+                        gameState={gameState}
+                        activePlayer={activePlayer}
+                        currentPlayer={{...currentPlayer, cardsInHand: playerHands[currentPlayer.id] || []}}
+                        actions={actions}
+                    />
                     {gameState.players.map((player) =>
                         <div key={`player-area-${player.id}`}>
                             <PlayerHand
