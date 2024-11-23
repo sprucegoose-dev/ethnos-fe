@@ -33,6 +33,7 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
     const [showPasswordModal, setShowPasswordModal] = useState<boolean>(false);
     const [submitting, setSubmitting] = useState<boolean>(false);
     const currentPlayer = gameState.players.find(player => player.userId === auth.userId);
+    const isGameCreator = auth.userId === gameState.creatorId;
 
     useEffect(() => {
         const getTribes = async () => {
@@ -55,6 +56,11 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
     const handleSelectTribe = async (tribeName: TribeName) => {
         let newSelectedTribes;
 
+        if (!isGameCreator) {
+            toast.info('Only the game creator can select tribes');
+            return;
+        }
+
         if (selectedTribes.includes(tribeName)) {
             newSelectedTribes = selectedTribes.filter((name) => name !== tribeName);
         } else if (selectedTribes.length >= 6) {
@@ -70,6 +76,10 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
     };
 
     const randomizeTribes = async () => {
+        if (!isGameCreator) {
+            return;
+        }
+
         const newSelectedTribes = shuffle(tribes).slice(0, 6).map((tribe) => tribe.name);
         setSelectedTribes(newSelectedTribes);
         await GameApi.updateSettings(gameState.id, { tribes: newSelectedTribes});
@@ -214,7 +224,7 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                             {user.username}
                             </Link>
                             {
-                                user.isBot && auth.userId === gameState.creatorId ?
+                                user.isBot && isGameCreator ?
                                 <FontAwesomeIcon
                                     onClick={() => submitRemoveBotPlayer(playerId)}
                                     className="remove-bot-icon"
@@ -272,13 +282,13 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                             </span>
                             <span className="instructions-separator">OR</span>
                             <button
-                                className="btn btn-action btn-3d btn-mini"
+                                className={`btn btn-action btn-3d btn-mini ${isGameCreator ? '' : 'btn-disabled'}`}
                                 onClick={randomizeTribes}
                             >
                                 Randomize
                             </button>
                         </div>
-                        <div className="tribes">
+                        <div className={`tribes ${isGameCreator ? '' : 'readonly'}`}>
                             {tribes.map((tribe, index) =>
                                 <TribeIcon
                                     key={`tribe-icon-${index}`}

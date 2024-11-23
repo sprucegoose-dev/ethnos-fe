@@ -131,6 +131,16 @@
             flex-wrap: wrap;
             justify-content: space-evenly;
 
+            &.readonly {
+
+                .tribe-icon {
+
+                    .tribe-img {
+                        cursor: not-allowed;
+                    }
+                }
+            }
+
             .tribe-icon {
                 flex: 0 0 calc(33.33% - 10px);
                 margin-bottom: 10px;

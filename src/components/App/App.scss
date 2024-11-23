@@ -33,13 +33,16 @@ iframe {
 @media screen and (orientation: portrait) {
 
     .app.in-game {
-        height: 100vw;
-        left: 0;
-        transform: rotate(-90deg);
-        transform-origin: left top;
-        width: 100vh;
-        overflow-x: hidden;
-        position: absolute;
-        top: 100%;
+
+        .game-container:not(.created) {
+            height: 100vw;
+            left: 0;
+            transform: rotate(-90deg);
+            transform-origin: left top;
+            width: 100vh;
+            overflow-x: hidden;
+            position: absolute;
+            top: 100%;
+        }
     }
 }
