@@ -1,25 +1,39 @@
 
 .band {
-    flex: 1 1 calc(25% - 20px);
-    max-width: calc(25% - 20px);
+    flex: 0 1 calc(25% - 20px);
     display: flex;
     flex-direction: column;
-    align-items: center;
     margin-bottom: 35px;
     position: relative;
+    align-self: flex-start;
 
     .card {
 
         .tribe-description {
-            visibility: hidden;
+            display: none;
         }
     }
 
-    @for $i from 2 through 100 {
+    @for $i from 2 through 20 {
         .card:nth-child(#{$i}) {
             position: absolute;
             transform: translateY(calc((#{$i} - 1) * 25%));
             z-index: $i + 10;
         }
+    }
+
+    .band-score {
+        background: rgba(0, 0, 0, .7);
+        bottom: 7px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        color: white;
+        z-index: 100;
+        font-size: .9rem;
+        text-shadow: .5px .5px 3px black;
+        padding: 2px 4px;
+        border-radius: 2.5px;
     }
 }

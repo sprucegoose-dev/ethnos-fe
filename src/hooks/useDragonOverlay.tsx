@@ -18,6 +18,11 @@ export function useDragonOverlay(gameState: IGameState) {
             return;
         }
 
+        if (prevRevealedDragonsCount.current === 0 && revealedDragonsCount !== 0) {
+            prevRevealedDragonsCount.current = revealedDragonsCount;
+            return;
+        }
+
         if (revealedDragonsCount > prevRevealedDragonsCount.current) {
             setShowDragonOverlay(true);
 

@@ -130,7 +130,6 @@ export function Card(props: ICardProps): JSX.Element {
                     {tribe.description}
                 </div>
             </div>
-
             {isLeader ?
                 <>
                     <FontAwesomeIcon

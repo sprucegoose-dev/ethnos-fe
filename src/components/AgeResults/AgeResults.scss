@@ -10,6 +10,9 @@
     padding: 30px;
     box-sizing: border-box;
     font-family: QuadratDemibold;
+    overflow-y: auto;
+    height: 85vh;
+    overflow-y: auto;
 
     .title {
         text-align: center;
@@ -21,8 +24,9 @@
 
     .player-scores {
         display: flex;
+        justify-content: center;
         gap: 30px;
-        margin-bottom: 10px;
+        margin: 50px auto 45px;
 
         .player {
             position: relative;
@@ -79,6 +83,15 @@
             transform: translateX(-50%);
             font-size: 1.5rem;
             color: $gold-alt;
+        }
+    }
+
+    .scores-breakdown-table {
+        background: rgba(0, 0, 0, .7);
+        margin-bottom: 65px;
+
+        td {
+            padding: 10px;
         }
     }
 }

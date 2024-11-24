@@ -29,8 +29,6 @@ export function OrcBoard(props: IMerfolkTrackProps): JSX.Element {
         6: 20,
     };
 
-    console.log(player.orcTokens);
-
     return (
         <div className="orc-board-container">
             <div className="orc-board">
@@ -49,7 +47,7 @@ export function OrcBoard(props: IMerfolkTrackProps): JSX.Element {
                     )
                 }
             </div>
-            <table className="points-chart">
+            <table className="table points-chart">
                 <thead>
                     <tr>
                         <th className="row-header">
@@ -76,7 +74,6 @@ export function OrcBoard(props: IMerfolkTrackProps): JSX.Element {
                             )
                         }
                     </tr>
-
                 </tbody>
             </table>
         </div>

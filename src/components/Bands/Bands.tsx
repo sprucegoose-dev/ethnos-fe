@@ -4,23 +4,19 @@ import { IBandsProps } from './Bands.types';
 import { Band } from '../Band/Band';
 
 import './Bands.scss';
+import { groupCardsByLeader } from '../Game/helpers';
 
 export function Bands(props: IBandsProps): JSX.Element {
     const {
         player,
+        showBandScore,
     } = props;
 
     const cardsInBands = player.cards.filter(card =>
         card.state === CardState.IN_BAND
     );
 
-    const groupedByLeader = cardsInBands.reduce<{[key: string]: ICard[]}>((acc, card) => {
-        if (!acc[card.leaderId]) {
-            acc[card.leaderId] = [];
-        }
-        acc[card.leaderId].push(card);
-        return acc;
-    }, {});
+    const groupedByLeader = groupCardsByLeader(cardsInBands);
 
     return (
         <div className="bands-container">
@@ -30,6 +26,7 @@ export function Bands(props: IBandsProps): JSX.Element {
                         key={`band-${leaderId}`}
                         cards={cards}
                         leaderId={Number(leaderId)}
+                        showBandScore={showBandScore}
                     />
                 ))}
             </div>

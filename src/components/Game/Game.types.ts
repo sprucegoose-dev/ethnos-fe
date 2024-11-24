@@ -119,8 +119,21 @@ export interface IActiveGame extends IGameState {
     hasPassword: boolean;
 }
 
+export interface IAgePointsBreakdown {
+    bands: number;
+    giants: number;
+    orcs: number;
+    merfolk: number;
+    regions: number;
+}
+
+export interface IPointsBreakdown {
+    [age: string]: IAgePointsBreakdown;
+}
+
 export interface IPlayer {
     id: number;
+    cardsInHand?: ICard[];
     color: PlayerColor;
     userId: number;
     gameId: number;
@@ -129,5 +142,5 @@ export interface IPlayer {
     trollTokens: number[];
     merfolkTrackScore: number;
     points: number;
-    cardsInHand?: ICard[];
+    pointsBreakdown: IPointsBreakdown;
 }
