@@ -9,6 +9,7 @@ import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 export function ActionsLog(props: IActionsLogProps): JSX.Element {
     const {
         actionsLog,
+        cards,
     } = props;
 
     const [logExpanded, setLogExpanded] = useState<boolean>(false)
@@ -29,6 +30,12 @@ export function ActionsLog(props: IActionsLogProps): JSX.Element {
         }, [] as (string | JSX.Element)[]);
     };
 
+    const getCardsByLeader = (leaderId: number) => {
+        const leader = cards.find(card => card.id === leaderId);
+        const cardsInBand = cards.filter(card => card.id !== leaderId && card.leaderId === leaderId);
+        return [leader, ...cardsInBand];
+    }
+
     return (
         <div className={`actions-log-container ${logExpanded ? 'expanded' : ''}`}>
             <div className="logs">
@@ -43,10 +50,16 @@ export function ActionsLog(props: IActionsLogProps): JSX.Element {
                                 {highlightColor(log.label)}
                             </div>
                             {log.card ?
-                                <Card
-                                    card={log.card}
-                                ></Card> :
+                                <Card card={log.card} /> :
                                 null
+                            }
+                            {log.leaderId ?
+                                getCardsByLeader(log.leaderId).map(card =>
+                                    <Card
+                                        key={`card-in-band-${card.id}`}
+                                        card={card}
+                                    />
+                                ) : null
                             }
                         </div>
                     )

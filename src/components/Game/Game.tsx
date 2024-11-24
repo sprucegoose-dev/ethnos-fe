@@ -81,6 +81,7 @@ export function Game(): JSX.Element {
     const [ageResults, setAgeResults] = useState<IGameState>(null);
     const [showAgeResults, setShowAgeResults] = useState<boolean>(false);
     const [audioInitialised, setAudioInitialized] = useState<boolean>(false);
+    const [gameCards, setGameCards] = useState<ICard[]>([]);
     const prevAge = useRef<number>(0);
     const prevState = useRef<GameState>(null);
     const audioRef = useRef<HTMLAudioElement>(null);
@@ -127,6 +128,12 @@ export function Game(): JSX.Element {
             setCardsInHand(await response.json());
         };
 
+        const getGameCards = async () => {
+            const response = await GameApi.getGameCards(Number(gameId))
+            const payload: ICard[] = await response.json();
+            setGameCards(payload);
+        };
+
         const getPlayerHands = async () => {
             const response = await GameApi.getPlayerHands(parseInt(gameId, 10));
             setPlayerHands(await response.json());
@@ -155,6 +162,10 @@ export function Game(): JSX.Element {
                 setActivePlayer(nextActivePlayer);
                 getActionsLog();
                 handleTurnNotification(nextActivePlayer, audioRef.current, audioMuted);
+
+                if (!gameCards.length) {
+                    getGameCards();
+                }
             }
         };
 
@@ -182,6 +193,10 @@ export function Game(): JSX.Element {
                 getPlayerHands();
                 getActionsLog();
                 handleTurnNotification(nextActivePlayer, audioRef.current, audioMuted);
+
+                if (!gameCards.length) {
+                    getGameCards();
+                }
             }
         }
 
@@ -322,10 +337,10 @@ export function Game(): JSX.Element {
                     {showDragonOverlay ?
                         <div className="dragon-overlay"></div> : null
                     }
-                    {actionsLog.length ?
+                    {actionsLog.length && gameCards.length ?
                         <ActionsLog
                             actionsLog={actionsLog}
-                            cards={gameState.players.reduce((acc, player) => acc.concat([...player.cards]), [])}
+                            cards={gameCards}
                         /> : null
                     }
                     {openWidgetModal.type ?

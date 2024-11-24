@@ -22,10 +22,16 @@
         margin: 0 auto;
 
         .orc-token {
-            opacity: .5;
 
             &.claimed {
-                opacity: 1;
+
+                .orc-token-img {
+                    opacity: 1;
+                }
+            }
+
+            .orc-token-img {
+                opacity: .5;
             }
         }
 

@@ -21,12 +21,12 @@ const orcTokens = {
 
 export function OrcToken({ className = '', color }: IOrcTokenProps): JSX.Element {
     return (
-        <span className={`token-element orc-token ${color} ${className}`}>
+        <div className={`token-element orc-token ${color} ${className}`}>
             <img
                 className={`orc-token-img ${color}`}
                 src={orcTokens[color]}
                 alt={`orc token ${color}`}
             />
-        </span>
+        </div>
     );
 }
