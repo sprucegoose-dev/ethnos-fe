@@ -21,6 +21,18 @@ export function AgeResults(props: IAgeResultsProps): JSX.Element {
     const getBandCards = (player: IPlayer) =>
         player.cards.filter(card => card.state == CardState.IN_BAND);
 
+    const calculateAgeTotal = (player: IPlayer) => {
+        const {
+            bands,
+            regions,
+            merfolk,
+            giants,
+            orcs,
+        } = player.pointsBreakdown[`${gameState.age}`];
+
+        return (bands || 0) + (regions || 0) + (merfolk || 0) + (giants || 0) + (orcs || 0);
+    }
+
     return (
         <div className="age-results-container">
             <div className="title">
@@ -70,6 +82,9 @@ export function AgeResults(props: IAgeResultsProps): JSX.Element {
                                 Orcs (VP)
                             </th> : null
                         }
+                        <th>
+                            Total (VP)
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -102,6 +117,9 @@ export function AgeResults(props: IAgeResultsProps): JSX.Element {
                                 {player.pointsBreakdown[`${gameState.age}`]?.orcs || 0}
                             </td> : null
                         }
+                        <td>
+                            {calculateAgeTotal(player)}
+                        </td>
                        </tr>
                     )}
                 </tbody>
