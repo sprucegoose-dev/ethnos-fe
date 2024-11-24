@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import throttle from 'lodash.throttle';
+
 import { IRegionProps } from './Region.types';
 import { Color } from '../Game/Shared.types';
 import { PlayerColor } from '../Game/Game.types';
@@ -33,9 +36,9 @@ const regionImages = {
     [`${Color.RED}_outlined`]: redRegionOutlined,
 };
 
-
 export function Region(props: IRegionProps): JSX.Element {
     const { onSelect, region, players } = props;
+    const [ hovered, setHovered ] = useState<boolean>(false);
 
     const playerColors: { [playerId: number]: PlayerColor } = players.reduce<{ [playerId: number]: PlayerColor }>((acc, player) => {
         acc[player.id] = player.color;
@@ -48,8 +51,17 @@ export function Region(props: IRegionProps): JSX.Element {
         return acc;
     }, {});
 
+
+    const handleMouseEnter = throttle(() => {
+        setHovered(true);
+    }, 500);
+
+    const handleMouseLeave = throttle(() => {
+        setHovered(false);
+    }, 500);
+
     return (
-        <div className={`region ${region.color}`} onClick={() => onSelect(region)}>
+        <div className={`region ${region.color} ${hovered ? 'hover' : ''}`}>
             <img
                 className="region-img"
                 src={regionImages[region.color]}
@@ -83,7 +95,13 @@ export function Region(props: IRegionProps): JSX.Element {
                     </div>
                 )}
             </div>
-
+            <div
+                className="selectable-area"
+                onClick={() => onSelect(region)}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+            >
+            </div>
         </div>
     );
 }
