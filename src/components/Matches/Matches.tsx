@@ -8,6 +8,7 @@ import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
 import './Matches.scss';
 import { MatchRow } from '../MatchRow/MatchRow';
+import Paginator from '../Paginator/Paginator';
 
 export function Matches(_props: IMatchesProps): JSX.Element {
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
@@ -15,6 +16,7 @@ export function Matches(_props: IMatchesProps): JSX.Element {
     const [matches, setMatches] = useState<IMatch[]>([]);
     const navigate = useNavigate();
     const [ page, setPage ] = useState<number>(1);
+    const [ totalPages, setTotalPages ] = useState<number[]>([]);
 
     useEffect(() => {
         if (!auth.userId) {
@@ -28,11 +30,27 @@ export function Matches(_props: IMatchesProps): JSX.Element {
             if (response.ok) {
                 const payload: IMatchesResponse = await response.json();
                 setMatches(payload.data);
+                setPage(page);
+                setTotalPages(getTotalPagesArray(payload.pages));
             }
         };
 
         getUserMatches();
     }, []);
+
+    const goToPage = async (page: number) => {
+        const response = await UserApi.getMatches(username, page);
+
+        if (response.ok) {
+            const payload: IMatchesResponse = await response.json();
+            setMatches(payload.data);
+            setPage(page);
+            setTotalPages(getTotalPagesArray(payload.pages));
+        }
+    };
+
+    const getTotalPagesArray = (pages: number) =>
+        Array.from({ length: pages  }, (_, i) => i + 1);
 
     return (
         <div className="matches-container">
@@ -69,7 +87,11 @@ export function Matches(_props: IMatchesProps): JSX.Element {
                     }
                 </tbody>
             </table>
-
+            <Paginator
+                currentPage={page}
+                onGoToPageCallback={goToPage}
+                pages={totalPages}
+            />
         </div>
     );
 }

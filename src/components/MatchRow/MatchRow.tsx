@@ -55,7 +55,7 @@ export function MatchRow(props: IMatchRowProps): JSX.Element {
             </td>
             <td>
                 {tribeRows.map((tribeRow, index) =>
-                   <div className="tribes"  key={`match-${match.id}-tribes-row-${index}`}>
+                   <div className="tribes-row"  key={`match-${match.id}-tribes-row-${index}`}>
                         {tribeRow.map(tribeName =>
                             <TribeIcon
                                 key={`match-${match.id}-tribe-${tribeName}`}

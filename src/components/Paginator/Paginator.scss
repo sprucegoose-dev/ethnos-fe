@@ -1,0 +1,50 @@
+@import '../../styles/variables.scss';
+
+.paginator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .page-wrapper {
+        margin: 0 5px;
+
+        .page {
+            background: rgba(0, 0, 0, .5);
+            border: 1px solid white;
+            padding: 2px 10px;
+            display: inline-block;
+            cursor: pointer;
+            margin-bottom: 10px;
+            color: white;
+            font-family: QuadratDemibold;
+
+            &.active {
+                border-width: 3px;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+.direct-navigation {
+    display: flex;
+    justify-content: center;
+    font-size: .9em;
+
+    .form-control {
+        max-width: 75px;
+        min-height: 36px;
+        padding: 6px 10px;
+    }
+
+    .submit-btn {
+        margin-left: 10px;
+        padding: 6px 15px;
+    }
+}
+
+@media only screen and (min-width: $screen-sm) {
+    .paginator {
+        margin: 0 20%;
+    }
+}

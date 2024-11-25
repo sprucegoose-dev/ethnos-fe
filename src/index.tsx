@@ -39,7 +39,7 @@ root.render(
                     </Routes>
                 </BrowserRouter>
             </PersistGate>
-    </Provider>,
+    </Provider>
   </React.StrictMode>
 );
 
