@@ -1,9 +1,18 @@
+@import '../../styles/variables.scss';
+
 .matches-container {
     box-sizing: border-box;
     overflow-y: auto;
     padding: 20px;
     text-align: center;
-    height: 90%;
+    height: 92%;
+
+    .matches-table {
+
+        .hide-mobile {
+            display: none;
+        }
+    }
 
     .title {
         background: rgba(0, 0, 0, .5);
@@ -20,5 +29,19 @@
         bottom: 0;
         left: 50%;
         transform: translateX(-50%);
+    }
+}
+
+@media only screen and (min-width: $screen-sm) {
+
+    .matches-container {
+        height: 90%;
+
+        .matches-table {
+
+            .hide-mobile {
+                display: table-cell;
+            }
+        }
     }
 }

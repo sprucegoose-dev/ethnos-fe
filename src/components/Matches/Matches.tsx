@@ -63,7 +63,7 @@ export function Matches(_props: IMatchesProps): JSX.Element {
                         <th>
                             Date
                         </th>
-                        <th>
+                        <th className="hide-mobile">
                             Room Name
                         </th>
                         <th className="players-header">

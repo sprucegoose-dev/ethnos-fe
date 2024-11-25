@@ -38,7 +38,7 @@ export function MatchRow(props: IMatchRowProps): JSX.Element {
             <td>
                 {formatDate(match.createdAt)}
             </td>
-            <td>
+            <td className="hide-mobile">
                 {formatRoomName(match)}
             </td>
             <td className="players-cell">
