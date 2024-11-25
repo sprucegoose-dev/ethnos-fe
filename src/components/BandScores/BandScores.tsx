@@ -12,7 +12,11 @@ export function BandScores(props: IBandScoresProps): JSX.Element {
     return (
         <div className="band-scores" key={`band-scores-${player.id}`}>
             <PlayerIcon player={player} />
-            <Bands player={player} showBandScore={true} />
+            <Bands
+                player={player}
+                showBandScore={true}
+                showPointsTable={false}
+            />
         </div>
     );
 }

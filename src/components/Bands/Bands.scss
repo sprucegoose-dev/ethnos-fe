@@ -4,11 +4,22 @@
     background-repeat: no-repeat;
     background-size: cover;
     margin: 0 auto;
-    padding: 30px;
+    padding: 30px 30px 80px;
     width: 100%;
     height: 80vh;
     overflow-y: auto;
     box-sizing: border-box;
+    font-family: QuadratDemibold;
+
+    .band-points-table {
+        position: absolute;
+        width: auto;
+        bottom: 15px;
+        right: 15px;
+        border: 1px solid white;
+        font-weight: bold;
+        z-index: 100;
+    }
 
     .bands {
         display: flex;

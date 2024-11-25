@@ -15,7 +15,7 @@ import { PasswordForm } from '../PasswordForm/PasswordForm';
 import { useSelector } from 'react-redux';
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
-import { sortPlayersByBotStatus } from '../Game/helpers';
+import { renderRoomName, sortPlayersByBotStatus } from '../Game/helpers';
 
 import centaurIcon from '../../assets/tribes/circle_icon_centaur.png';
 import dwarfIcon from '../../assets/tribes/circle_icon_dwarf.png';
@@ -49,11 +49,6 @@ export function Room({game}: IRoomProps): JSX.Element {
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
     const [showPasswordModal, setShowPasswordModal] = useState<boolean>(false);
     const navigate = useNavigate();
-
-    const renderRoomName = () => {
-        const username = game.creator.username;
-        return `${username}${username.charAt(-1) === 's'? "'" : "'s"} Room`
-    };
 
     const userInGame = () => {
         return game.players.find(player => player.userId === auth.userId);
@@ -120,7 +115,7 @@ export function Room({game}: IRoomProps): JSX.Element {
         <div className="room">
             <div className="room-title">
                 <div className="room-name">
-                    {renderRoomName()}
+                    {renderRoomName(game.creator.username)}
                 </div>
                 <span className="player-count-label">
                     <FontAwesomeIcon
@@ -139,7 +134,7 @@ export function Room({game}: IRoomProps): JSX.Element {
             <div className="players">
                 {sortedPlayers.map(({ user }, index) =>
                     <Link
-                        to={`/matches/${decodeURIComponent(user.username)}`}
+                        to={`/matches/${encodeURIComponent(user.username)}`}
                         key={`player-${index}`}
                         className="player"
                     >

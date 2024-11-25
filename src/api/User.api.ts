@@ -41,4 +41,13 @@ export default class UserApi {
         return await api.request(Method.GET, '/user', options);
     }
 
+
+    static async getMatches(username: string, page: number) {
+        const options = {
+            ...requestOptions,
+            authorize: true,
+        };
+
+        return await api.request(Method.GET, `/user/${username}/matches?page=${page}`, options);
+    }
 }

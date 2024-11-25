@@ -1,5 +1,5 @@
-import { IPlayer, TribeName } from '../Game/Game.types';
+import { IPlayer } from '../Game/Game.types';
 
 export interface IPlayerIconProps {
-    player: IPlayer;
+    player: Pick<IPlayer, 'color' | 'user'>;
 }

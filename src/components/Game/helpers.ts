@@ -97,4 +97,8 @@ export const groupCardsByLeader = (cardsInBands: ICard[]) => {
         acc[card.leaderId].push(card);
         return acc;
     }, {});
-}
+};
+
+export const renderRoomName = (username: string) => {
+    return `${username}${username.charAt(-1) === 's'? "'" : "'s"} Room`
+};

@@ -18,6 +18,7 @@ import skeletonImg from '../../assets/tribes/skeletons.png';
 import trollImg from '../../assets/tribes/trolls.png';
 import wingfolkImg from '../../assets/tribes/wingfolk.png';
 import wizardImg from '../../assets/tribes/wizards.png';
+import dragonImg from '../../assets/tribes/dragon.png';
 
 import './Card.scss';
 
@@ -34,6 +35,7 @@ const tribeImgs = {
     [TribeName.TROLLS]: trollImg,
     [TribeName.WINGFOLK]: wingfolkImg,
     [TribeName.WIZARDS]: wizardImg,
+    [TribeName.DRAGON]: dragonImg,
 };
 
 const convertToSingularName = (tribeName: TribeName) => {

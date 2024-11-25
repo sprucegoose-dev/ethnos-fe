@@ -218,7 +218,7 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                                 /> : null
                             }
                             <Link
-                                to={`/matches/${decodeURIComponent(user.username)}`}
+                                 to={`/matches/${encodeURIComponent(user.username)}`}
                                 key={`player-${index}`}
                             >
                             {user.username}

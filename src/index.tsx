@@ -15,6 +15,7 @@ import { Game } from './components/Game/Game';
 import { Account } from './components/Account/Account';
 
 import './index.css';
+import { Matches } from './components/Matches/Matches';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -30,8 +31,10 @@ root.render(
                             <Route path="login" element={<LoginForm />} />
                             <Route path="rooms" element={<RoomList />} />
                             <Route path="account" element={<Account />} />
-                            <Route path="/" element={<Home />} />
                             <Route path="game/:id" element={<Game />} />
+                            <Route path="/matches/:username" element={<Matches />} />
+                            <Route path="/matches" element={<Matches />} />
+                            <Route path="/" element={<Home />} />
                         </Route>
                     </Routes>
                 </BrowserRouter>

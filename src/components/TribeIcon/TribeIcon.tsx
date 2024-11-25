@@ -42,6 +42,7 @@ export function TribeIcon(props: ITribeIconProps): JSX.Element {
         tribe,
         showTribeName = true,
     } = props;
+
     return (
         <div className="tribe-icon">
             <img

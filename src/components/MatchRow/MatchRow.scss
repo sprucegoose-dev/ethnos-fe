@@ -1,0 +1,29 @@
+.match-row {
+
+    .players-header,
+    .players-cell {
+        max-width: 225px;
+    }
+
+    .players-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 25px;
+        justify-content: center;
+        align-items: center;
+
+        &:nth-of-type(2) {
+            margin-top: 10px;
+        }
+    }
+
+    .tribes {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+
+        .tribe-icon {
+            box-sizing: border-box;
+        }
+    }
+}
