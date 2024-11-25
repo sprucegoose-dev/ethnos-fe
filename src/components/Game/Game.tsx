@@ -87,7 +87,7 @@ export function Game(): JSX.Element {
     const audioRef = useRef<HTMLAudioElement>(null);
     const navigate = useNavigate();
     const isSpectator = auth.userId &&
-        gameState?.state === STARTED &&
+        gameState?.state !== CREATED &&
         !gameState?.players.find(player => player.userId === auth.userId);
     let  currentPlayer: IPlayer;
     let playerPosition: {[userId: number]: string};
