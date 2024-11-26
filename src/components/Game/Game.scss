@@ -144,6 +144,16 @@
         font-size: .9rem;
         z-index: 100;
     }
+
+    .chat {
+        position: absolute;
+        bottom: 2%;
+        right: 12.5%;
+
+        &.expanded {
+            right: 1.5%;
+        }
+    }
 }
 
 @media only screen and (min-width: $screen-sm) {

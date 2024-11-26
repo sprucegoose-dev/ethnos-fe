@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import pako, { Data } from 'pako';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faVolumeHigh, faVolumeXmark } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faComment, faVolumeHigh, faVolumeXmark } from '@fortawesome/free-solid-svg-icons';
 
 import {
     getHighestGiantTokenValue,
@@ -50,6 +50,7 @@ import { setAudioEnabled, setAudioMuted } from '../App/App.reducer';
 import { IAppReducer } from '../App/App.reducer.types';
 import './Game.scss';
 import { useDragonOverlay } from '../../hooks/useDragonOverlay';
+import { Chat } from '../Chat/Chat';
 
 const {
     CREATED,
@@ -80,6 +81,7 @@ export function Game(): JSX.Element {
     const [openWidgetModal, setOpenWidgetModal] = useState<IActiveWidgetModal>({ type: null, player: null });
     const [ageResults, setAgeResults] = useState<IGameState>(null);
     const [showAgeResults, setShowAgeResults] = useState<boolean>(false);
+    const [showChat, setShowChat] = useState<boolean>(false);
     const [audioInitialised, setAudioInitialized] = useState<boolean>(false);
     const [gameCards, setGameCards] = useState<ICard[]>([]);
     const prevAge = useRef<number>(0);
@@ -364,6 +366,7 @@ export function Game(): JSX.Element {
                             <AgeResults gameState={ageResults} />
                         </Modal> : null
                     }
+                    {isSpectator ? null : <Chat gameId={parseInt(gameId, 10)} players={gameState.players} />}
                     <button className="btn btn-outline btn-round toggle-sound-btn" onClick={toggleAudio}>
                         <FontAwesomeIcon icon={audioMuted ? faVolumeXmark : faVolumeHigh} />
                     </button>

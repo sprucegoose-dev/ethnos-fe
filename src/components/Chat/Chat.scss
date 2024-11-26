@@ -1,0 +1,225 @@
+@import '../../styles/variables.scss';
+
+.chat {
+    z-index: 200;
+    border-radius: 4px;
+    font-family: 'Avenir', Helvetica, Arial, 'RobotoSlab', sans-serif;
+
+    .toggle-chat-btn {
+        display: inline-block;
+    }
+
+    &.expanded {
+        background: white;
+        width: 100%;
+        border: 1px solid $light-gray;
+
+        .chat-title {
+            border-bottom: 1px solid $light-gray;
+            color: $dark-gray;
+            padding: 8px 10px;
+        }
+
+        .chat-inner-wrapper {
+            display: block;
+        }
+
+        .chat-toggle {
+
+            .toggle-icon {
+                vertical-align: middle;
+            }
+        }
+    }
+
+    .chat-inner-wrapper {
+        display: none;
+    }
+
+    .chat-title {
+        text-transform: uppercase;
+        font-weight: bold;
+        line-height: 1.5em;
+        vertical-align: middle;
+        color: $dark-brown;
+        position: relative;
+        cursor: pointer;
+
+        .title-text {
+            font-family: QuadratDemibold;
+            font-size: 1.3em;
+            vertical-align: middle;
+            text-align: center;
+        }
+    }
+
+    .chat-toggle {
+        color: $dark-gray;
+        cursor: pointer;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+
+        .toggle-icon {
+            vertical-align: middle;
+            font-size: 1.1em;
+
+            &.expand-icon {
+                margin-bottom: 1px;
+            }
+        }
+    }
+
+    .messages {
+        text-align: left;
+        height: 150px;
+        overflow: auto;
+        margin: 10px auto;
+        color: $dark-gray;
+
+        .message-wrapper {
+            padding: .35em 1.5em;
+
+            .username {
+                display: inline-block;
+                margin-right: 4px;
+
+                .label {
+                    display: inline-block;
+                    font-weight: bold;
+                }
+            }
+
+            .message {
+                display: inline;
+                word-break: break-word;
+                white-space: pre-wrap;
+            }
+        }
+    }
+
+    .unread-messages-count {
+        position: absolute;
+        right: -10px;
+        top: -12px;
+        font-size: .85em;
+        background: $teal;
+        color: white;
+        border-radius: 50%;
+        width: 22px;
+        height: 22px;
+        vertical-align: middle;
+        line-height: 22px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .chat-form {
+        padding: 12px;
+        position: relative;
+
+        .chat-input {
+            background: $extra-light-gray;
+            color: $dark-gray;
+            font-weight: 300;
+            border: 2px solid transparent;
+            padding: 14px 80px 14px 12px;
+            font-family: 'Avenir', Helvetica, Arial, 'RobotoSlab', sans-serif;
+            resize: none;
+
+            &:focus {
+                background: white;
+                border-color: $teal-alt;
+            }
+        }
+
+        .submit-btn {
+            font-size: .9em;
+            min-height: 39px;
+            position: absolute;
+            right: 26px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+
+    .username {
+
+        .label {
+
+            &.black {
+                color: $token-black;
+            }
+
+            &.blue {
+                color: $token-blue;
+            }
+
+            &.green {
+                color: $token-green;
+            }
+
+            &.pink {
+                color: $token-pink;
+            }
+
+            &.white {
+                color: $medium-dark-gray;
+            }
+
+            &.yellow {
+                color: $token-yellow;
+            }
+        }
+    }
+}
+
+.game-container {
+
+    .chat {
+
+        &:not(.expanded) {
+
+            .chat-title {
+                display: none;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: $screen-sm) {
+
+    .game-container {
+
+        .chat {
+            z-index: 150;
+
+            &.expanded {
+                width: 340px;
+            }
+
+            &:not(.expanded) {
+                .chat-title {
+                    display: block;
+                }
+            }
+
+            .messages {
+                height: 200px;
+            }
+
+            .chat-form {
+                padding: 12px;
+
+                .chat-input {
+                    padding-right: 12px;
+                }
+
+                .submit-btn {
+                    display: none;
+                }
+            }
+        }
+    }
+}

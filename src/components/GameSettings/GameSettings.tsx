@@ -77,6 +77,7 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
 
     const randomizeTribes = async () => {
         if (!isGameCreator) {
+            toast.info('Only the game creator can select tribes');
             return;
         }
 
