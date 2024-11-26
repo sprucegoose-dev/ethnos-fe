@@ -155,7 +155,7 @@ export function Game(): JSX.Element {
             if (payload.state !== GameState.CREATED) {
                 const nextActivePlayer = payload.players.find(player => player.id === payload.activePlayerId);
 
-                if (!isSpectator) {
+                if (payload.players.find(player => player.user.id === auth.userId)) {
                     getCardsInHand();
                     getActions();
                 }
@@ -187,7 +187,7 @@ export function Game(): JSX.Element {
 
                 setActivePlayer(nextActivePlayer);
 
-                if (!isSpectator) {
+                if (payload.players.find(player => player.user.id === auth.userId)) {
                     getCardsInHand();
                     getActions();
                 }
