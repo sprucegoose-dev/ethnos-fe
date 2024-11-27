@@ -116,6 +116,10 @@
     .widget-modal {
         max-width: 90%;
 
+        &.giants {
+            border: none;
+        }
+
         &.orcs,
         &.merfolk,
         &.trolls {

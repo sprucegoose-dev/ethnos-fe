@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import pako, { Data } from 'pako';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faComment, faVolumeHigh, faVolumeXmark } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faVolumeHigh, faVolumeXmark } from '@fortawesome/free-solid-svg-icons';
 
 import {
     getHighestGiantTokenValue,
@@ -41,16 +41,16 @@ import { ActionsLog } from '../ActionsLog/ActionsLog';
 import { Modal } from '../Modal/Modal';
 import { MerfolkTrack } from '../MerfolkTrack/MerfolkTrack';
 import { TrollTokens } from '../TrollTokens/TrollTokens';
-
 import { OrcBoard } from '../OrcBoard/OrcBoard';
 import { Bands } from '../Bands/Bands';
 import { AgeResults } from '../AgeResults/AgeResults';
 import { Regions } from '../Regions/Regions';
 import { setAudioEnabled, setAudioMuted } from '../App/App.reducer';
 import { IAppReducer } from '../App/App.reducer.types';
-import './Game.scss';
 import { useDragonOverlay } from '../../hooks/useDragonOverlay';
 import { Chat } from '../Chat/Chat';
+import { GiantToken } from '../GiantToken/GiantToken';
+import './Game.scss';
 
 const {
     CREATED,
@@ -81,7 +81,6 @@ export function Game(): JSX.Element {
     const [openWidgetModal, setOpenWidgetModal] = useState<IActiveWidgetModal>({ type: null, player: null });
     const [ageResults, setAgeResults] = useState<IGameState>(null);
     const [showAgeResults, setShowAgeResults] = useState<boolean>(false);
-    const [showChat, setShowChat] = useState<boolean>(false);
     const [audioInitialised, setAudioInitialized] = useState<boolean>(false);
     const [gameCards, setGameCards] = useState<ICard[]>([]);
     const prevAge = useRef<number>(0);
@@ -358,6 +357,9 @@ export function Game(): JSX.Element {
                             }
                             {openWidgetModal.type === WidgetModal.BANDS ?
                                 <Bands player={openWidgetModal.player} /> : null
+                            }
+                            {openWidgetModal.type === WidgetModal.GIANTS ?
+                                <GiantToken players={gameState.players} /> : null
                             }
                         </Modal> : null
                     }

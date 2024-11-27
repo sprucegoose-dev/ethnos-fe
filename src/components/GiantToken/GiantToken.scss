@@ -1,0 +1,64 @@
+@import '../../styles/variables.scss';
+
+.giant-token-container {
+    font-family: QuadratDemibold;
+    padding: 12px;
+    box-sizing: border-box;
+
+    .tribe-icon {
+
+        .tribe-img {
+            height: 200px;
+            width: 200px;
+        }
+    }
+
+    .squares {
+        display: flex;
+        position: absolute;
+        bottom: 23%;
+        left: 50%;
+        transform: translateX(-50%);
+        gap: 8px;
+    }
+
+    .square {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid $light-gray-2;
+        position: relative;
+        text-align: center;
+        border-radius: 5px;
+        box-sizing: border-box;
+        color: $off-white;
+        height: 35px;
+        width: 35px;
+
+        &.square-age {
+
+            .number {
+                margin-bottom: 2px;
+            }
+        }
+
+        .age {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -135%);
+        }
+
+
+        .victory-points-icon {
+            position: absolute;
+            fill: rgba(255, 255, 255, .5);
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            height: 100%;
+            width: 100%;
+         }
+    }
+}

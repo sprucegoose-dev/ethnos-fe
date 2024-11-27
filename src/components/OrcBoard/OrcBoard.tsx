@@ -8,9 +8,7 @@ import tokenIcon from '../../assets/tokens/marker_w.webp';
 import './OrcBoard.scss';
 import { OrcToken } from '../OrcToken/OrcToken';
 
-export function OrcBoard(props: IMerfolkTrackProps): JSX.Element {
-    const { player } = props;
-
+export function OrcBoard({ player }: IMerfolkTrackProps): JSX.Element {
     const colors = [
         Color.GRAY,
         Color.BLUE,
