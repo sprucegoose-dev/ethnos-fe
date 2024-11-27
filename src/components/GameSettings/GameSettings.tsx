@@ -197,6 +197,14 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
         <div className="game-settings">
             <div className="room-title">
                 {renderRoomName()}
+                {botCanBeAdded() &&
+                    <button
+                        className="btn btn-action btn-3d btn-mini add-bot-btn"
+                        onClick={submitAddBotPlayer}
+                    >
+                        Add bot
+                    </button>
+                }
             </div>
             <div className="content">
                 <div className="section players">
@@ -234,14 +242,6 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                             }
                         </span>
                     )}
-                    {botCanBeAdded() &&
-                        <button
-                            className="btn btn-action btn-3d btn-mini"
-                            onClick={submitAddBotPlayer}
-                        >
-                            Add bot
-                        </button>
-                    }
                     {playerCanJoin() &&
                         <button
                             className="btn btn-action btn-3d btn-mini"

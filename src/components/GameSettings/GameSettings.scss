@@ -14,6 +14,20 @@
     text-align: center;
     width: 100%;
 
+    .room-title {
+        font-family: QuadratDemibold;
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        position: relative;
+
+        .add-bot-btn {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+        }
+    }
+
     .section {
         border-top: 1px solid $light-gray-2;
         margin-bottom: 20px;
@@ -62,12 +76,6 @@
                 color: $dark-gray;
             }
         }
-    }
-
-    .room-title {
-        font-family: QuadratDemibold;
-        font-size: 1.2rem;
-        margin-bottom: 20px;
     }
 
     .colors {
