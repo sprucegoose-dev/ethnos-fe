@@ -1,7 +1,6 @@
 @import '../../styles/variables.scss';
 
 .chat {
-    z-index: 200;
     border-radius: 4px;
     font-family: 'Avenir', Helvetica, Arial, 'RobotoSlab', sans-serif;
 
@@ -193,7 +192,6 @@
     .game-container {
 
         .chat {
-            z-index: 150;
 
             &.expanded {
                 width: 340px;
