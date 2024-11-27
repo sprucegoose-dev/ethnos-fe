@@ -63,7 +63,7 @@ export function Bands(props: IBandsProps): JSX.Element {
                             </td>
                             {
                                 Object.values(bandValues).map((points) =>
-                                    <th key={`table-header-${points}`}>
+                                    <th key={`table-cell-${points}`}>
                                         {points}
                                     </th>
                                 )

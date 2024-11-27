@@ -7,6 +7,17 @@
     background-size: cover;
     padding: 30px;
     box-sizing: border-box;
+    font-family: QuadratDemibold;
+
+    .age-points-table {
+        max-width: 125px;
+        font-size: .8rem;
+        margin-bottom: -35px;
+
+        th, td {
+            padding: 5px;
+        }
+    }
 
     .merfolk-track {
         transform: rotate(180deg);
@@ -19,6 +30,8 @@
             margin: auto;
             grid-auto-flow: dense;
             margin-bottom: 10px;
+            justify-content: center;
+            justify-items: center;
 
             &:nth-child(odd){
                 direction: rtl;
@@ -32,12 +45,24 @@
             justify-content: center;
             aspect-ratio: 1 / 1;
             border: 1px solid $light-gray-2;
+            height: 100%;
             position: relative;
             text-align: center;
             border-radius: 5px;
             box-sizing: border-box;
             color: $off-white;
             transform: rotate(180deg);
+            width: 100%;
+
+            &.square-invisible {
+                visibility: hidden;
+            }
+
+            &.square-age {
+                max-width: 75%;
+                max-height: 75%;
+                align-self: center;
+            }
 
             &.checkpoint {
                 scale: 1.1;
@@ -58,10 +83,34 @@
                     background-size: cover;
                 }
             }
+
+            &.square-age {
+
+                .number {
+                    font-size: .9rem;
+                    margin-bottom: 2px;
+                }
+            }
+
+            .age {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translate(-50%, -135%);
+            }
+
+            .victory-points-icon {
+               position: absolute;
+               fill: rgba(255, 255, 255, .5);
+               left: 50%;
+               top: 50%;
+               transform: translate(-50%, -50%);
+               height: 100%;
+               width: 100%;
+            }
         }
 
         .number {
-            font-family: QuadratDemibold;
             line-height: 1;
             font-weight: bold;
             z-index: 1;

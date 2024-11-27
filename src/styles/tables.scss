@@ -4,11 +4,20 @@
     color: $off-white;
     font-size: .9rem;
     font-weight: bold;
-    margin-top: 25px;
     width: 100%;
 
     tr {
         border-bottom: 1px solid white;
+    }
+
+    tbody {
+
+        tr {
+
+            &:last-of-type {
+                border-bottom: none;
+            }
+        }
     }
 
     th, td {
