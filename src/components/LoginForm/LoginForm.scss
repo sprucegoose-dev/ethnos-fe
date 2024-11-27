@@ -10,7 +10,7 @@
     position: relative;
     text-align: center;
     width: 100%;
-    max-width: 375px;
+    max-width: 90%;
 
     .form-title {
         margin: 8px 0 15px;
@@ -36,5 +36,12 @@
         left: 50%;
         position: absolute;
         transform: translateX(-50%);
+    }
+}
+
+@media only screen and (min-width: $screen-sm) {
+
+    .login-form-wrapper {
+        max-width: 375px;
     }
 }
