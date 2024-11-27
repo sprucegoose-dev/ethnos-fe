@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { MobileMenu } from '../MobileMenu/MobileMenu';
 import { DesktopMenu } from '../DesktopMenu/DesktopMenu';
-import logo from '../../assets/logos/ethnos_logo.png';
+import logo from '../../assets/logos/ethnos_logo.webp';
 
 import './Header.scss';
 

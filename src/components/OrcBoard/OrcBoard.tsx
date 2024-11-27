@@ -3,7 +3,7 @@ import { Color } from '../Game/Shared.types';
 
 import Icon from '../Icon/Icon';
 
-import tokenIcon from '../../assets/tokens/marker_w.png';
+import tokenIcon from '../../assets/tokens/marker_w.webp';
 
 import './OrcBoard.scss';
 import { OrcToken } from '../OrcToken/OrcToken';

@@ -1,12 +1,12 @@
 import { Color } from '../Game/Shared.types';
 import { IOrcTokenProps } from './OrcToken.types';
 
-import orcTokenGreen from '../../assets/orc_tokens/orc_token_green.png';
-import orcTokenGray from '../../assets/orc_tokens/orc_token_gray.png';
-import orcTokenPurple from '../../assets/orc_tokens/orc_token_purple.png';
-import orcTokenOrange from '../../assets/orc_tokens/orc_token_orange.png';
-import orcTokenRed from '../../assets/orc_tokens/orc_token_red.png';
-import orcTokenBlue from '../../assets/orc_tokens/orc_token_blue.png';
+import orcTokenGreen from '../../assets/orc_tokens/orc_token_green.webp';
+import orcTokenGray from '../../assets/orc_tokens/orc_token_gray.webp';
+import orcTokenPurple from '../../assets/orc_tokens/orc_token_purple.webp';
+import orcTokenOrange from '../../assets/orc_tokens/orc_token_orange.webp';
+import orcTokenRed from '../../assets/orc_tokens/orc_token_red.webp';
+import orcTokenBlue from '../../assets/orc_tokens/orc_token_blue.webp';
 
 import './OrcToken.scss';
 

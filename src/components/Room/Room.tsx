@@ -17,18 +17,18 @@ import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
 import { renderRoomName, sortPlayersByBotStatus } from '../Game/helpers';
 
-import centaurIcon from '../../assets/tribes/circle_icon_centaur.png';
-import dwarfIcon from '../../assets/tribes/circle_icon_dwarf.png';
-import elfIcon from '../../assets/tribes/circle_icon_elf.png';
-import giantIcon from '../../assets/tribes/circle_icon_giant.png';
-import halflingIcon from '../../assets/tribes/circle_icon_halfling.png';
-import merfolkIcon from '../../assets/tribes/circle_icon_merfolk.png';
-import minotaurIcon from '../../assets/tribes/circle_icon_minotaur.png';
-import orcIcon from '../../assets/tribes/circle_icon_orc.png';
-import skeletonIcon from '../../assets/tribes/circle_icon_skeleton.png';
-import trollIcon from '../../assets/tribes/circle_icon_troll.png';
-import wingfolkIcon from '../../assets/tribes/circle_icon_wingfolk.png';
-import wizardIcon from '../../assets/tribes/circle_icon_wizard.png';
+import centaurIcon from '../../assets/tribes/circle_icon_centaur.webp';
+import dwarfIcon from '../../assets/tribes/circle_icon_dwarf.webp';
+import elfIcon from '../../assets/tribes/circle_icon_elf.webp';
+import giantIcon from '../../assets/tribes/circle_icon_giant.webp';
+import halflingIcon from '../../assets/tribes/circle_icon_halfling.webp';
+import merfolkIcon from '../../assets/tribes/circle_icon_merfolk.webp';
+import minotaurIcon from '../../assets/tribes/circle_icon_minotaur.webp';
+import orcIcon from '../../assets/tribes/circle_icon_orc.webp';
+import skeletonIcon from '../../assets/tribes/circle_icon_skeleton.webp';
+import trollIcon from '../../assets/tribes/circle_icon_troll.webp';
+import wingfolkIcon from '../../assets/tribes/circle_icon_wingfolk.webp';
+import wizardIcon from '../../assets/tribes/circle_icon_wizard.webp';
 
 const tribeIcons = {
     [TribeName.CENTAURS]: centaurIcon,
