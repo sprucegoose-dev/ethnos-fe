@@ -30,7 +30,7 @@
         &:after {
             content: '';
             position: absolute;
-            width: 103%;
+            width: 104%;
             height: 102.5%;
             border-radius: $card-border-radius;
             top: 50%;
@@ -48,8 +48,8 @@
         &:after {
             content: '';
             position: absolute;
-            width: 105%;
-            height: 103.5%;
+            height: 102.5%;
+            width: 104%;
             border-radius: $card-border-radius;
             top: 50%;
             left: 50%;
