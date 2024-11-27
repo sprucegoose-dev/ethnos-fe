@@ -48,6 +48,7 @@ const tribeIcons = {
 export function Room({game}: IRoomProps): JSX.Element {
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
     const [showPasswordModal, setShowPasswordModal] = useState<boolean>(false);
+    const [showConfirmLeaveModal, setShowConfirmLeaveModal] = useState<boolean>(false);
     const navigate = useNavigate();
 
     const userInGame = () => {
@@ -199,7 +200,7 @@ export function Room({game}: IRoomProps): JSX.Element {
                         <button
                             className="btn btn-outline btn-block btn-3d leave-btn"
                             type="submit"
-                            onClick={submitLeaveGame}
+                            onClick={() =>  setShowConfirmLeaveModal(true)}
                         >
                             Leave
                         </button>
@@ -228,6 +229,22 @@ export function Room({game}: IRoomProps): JSX.Element {
             {showPasswordModal ?
                 <Modal onClose={() => setShowPasswordModal(false)}>
                     <PasswordForm gameId={game.id} onSuccess={onPasswordSuccess} />
+                </Modal>
+            : null}
+            {showConfirmLeaveModal ?
+                <Modal onClose={() => setShowConfirmLeaveModal(false)} modalClass="confirm-leave-modal">
+                    <div className="modal-form">
+                        Are you sure you want to leave the game?
+
+                        <div className="footer">
+                            <button className="btn btn-muted btn-3d" onClick={() => setShowConfirmLeaveModal(false)}>
+                                Cancel
+                            </button>
+                            <button className="btn btn-action btn-3d" onClick={submitLeaveGame}>
+                                Confirm
+                            </button>
+                        </div>
+                    </div>
                 </Modal>
             : null}
         </div>

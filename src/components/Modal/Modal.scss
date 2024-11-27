@@ -20,9 +20,27 @@
     transform: translate(-50%, -25%);
     border: 5px solid rgba(255, 255, 255, 0.5);
 
+    .modal-form {
+        background: rgba(0, 0, 0, .8);
+        border-radius: 4px;
+        box-sizing: border-box;
+        color: $light-gray;
+        min-width: 300px;
+        padding: 30px;
+        position: relative;
+        text-align: center;
+    }
+
     .modal-header {
         position: relative;
         z-index: 1;
+    }
+
+    .footer {
+        background: none;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 25px;
     }
 
     .btn-close {
