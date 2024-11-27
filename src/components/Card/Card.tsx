@@ -6,19 +6,19 @@ import { useRef } from 'react';
 import { TribeName } from '../Game/Game.types';
 import { ICardProps } from './Card.types';
 
-import centaurImg from '../../assets/tribes/centaurs.png';
-import dwarfImg from '../../assets/tribes/dwarves.png';
-import elfImg from '../../assets/tribes/elves.png';
-import giantImg from '../../assets/tribes/giants.png';
-import halflingImg from '../../assets/tribes/halflings.png';
-import merfolkImg from '../../assets/tribes/merfolk.png';
-import minotaurImg from '../../assets/tribes/minotaurs.png';
-import orcImg from '../../assets/tribes/orcs.png';
-import skeletonImg from '../../assets/tribes/skeletons.png';
-import trollImg from '../../assets/tribes/trolls.png';
-import wingfolkImg from '../../assets/tribes/wingfolk.png';
-import wizardImg from '../../assets/tribes/wizards.png';
-import dragonImg from '../../assets/tribes/dragon.png';
+import centaurImg from '../../assets/tribes/centaurs.webp';
+import dwarfImg from '../../assets/tribes/dwarves.webp';
+import elfImg from '../../assets/tribes/elves.webp';
+import giantImg from '../../assets/tribes/giants.webp';
+import halflingImg from '../../assets/tribes/halflings.webp';
+import merfolkImg from '../../assets/tribes/merfolk.webp';
+import minotaurImg from '../../assets/tribes/minotaurs.webp';
+import orcImg from '../../assets/tribes/orcs.webp';
+import skeletonImg from '../../assets/tribes/skeletons.webp';
+import trollImg from '../../assets/tribes/trolls.webp';
+import wingfolkImg from '../../assets/tribes/wingfolk.webp';
+import wizardImg from '../../assets/tribes/wizards.webp';
+import dragonImg from '../../assets/tribes/dragon.webp';
 
 import './Card.scss';
 

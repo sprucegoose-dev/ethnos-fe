@@ -2,7 +2,7 @@
 @import '../../styles/animations.scss';
 
 .game-container {
-    background-image: url('../../assets/backgrounds/ocean_bkg.png');
+    background-image: url('../../assets/backgrounds/ocean_bkg.webp');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -15,7 +15,7 @@
     overflow: hidden;
 
     &.created {
-        background-image: url('../../assets/backgrounds/dragon_bkg.png');
+        background-image: url('../../assets/backgrounds/dragon_bkg.webp');
         background-position-y: top;
         background-size: cover;
         overflow: visible;
@@ -103,7 +103,7 @@
         top: 0;
         height: 100%;
         width: 100%;
-        background-image: url('../../assets/backgrounds/dragon_overlay.png');
+        background-image: url('../../assets/backgrounds/dragon_overlay.webp');
         background-position-x: center;
         background-repeat: no-repeat;
         background-size: cover;

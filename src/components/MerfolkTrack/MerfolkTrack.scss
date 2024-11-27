@@ -1,7 +1,7 @@
 @import '../../styles/variables.scss';
 
 .merfolk-track-container {
-    background-image: url('../../assets/backgrounds/merfolk_track_bkg.png');
+    background-image: url('../../assets/backgrounds/merfolk_track_bkg.webp');
     background-position-x: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -52,7 +52,7 @@
                     height: 85%;
                     content: '';
                     opacity: .3;
-                    background-image: url('../../assets/tokens/marker_w.png');
+                    background-image: url('../../assets/tokens/marker_w.webp');
                     background-position-x: center;
                     background-repeat: no-repeat;
                     background-size: cover;
