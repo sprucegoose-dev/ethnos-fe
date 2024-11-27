@@ -250,7 +250,8 @@ export function PlayerHand(props: IPlayerHandProps): JSX.Element {
                                         totalCards: cardsInHand.length,
                                         hoveredCardIndex,
                                         dragging,
-                                        playerPosition: 'bottom'
+                                        playerPosition: 'bottom',
+                                        selected: selectedCardIds.includes(card.id)
                                     })}
                                     isLeader={selectedLeaderId && selectedLeaderId === card.id}
                                     selectable={selectedCardIds.length && isSelectable(card.id)}

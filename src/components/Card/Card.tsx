@@ -114,7 +114,7 @@ export function Card(props: ICardProps): JSX.Element {
                 {convertToSingularName(tribe.name)}
             </div>
             <div className="bottom-section">
-                {!isLeader && selected &&  tribe.name !== TribeName.SKELETONS ?
+                {!isLeader && selected && tribe.name !== TribeName.SKELETONS ?
                     <div className="set-leader-btn-wrapper">
                         <button
                             ref={makeLeaderBtnRef}

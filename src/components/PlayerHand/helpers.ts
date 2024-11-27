@@ -3,6 +3,7 @@ interface ICalculateCardStyleParams {
     hoveredCardIndex?: number;
     index: number;
     playerPosition?: string;
+    selected?: boolean;
     totalCards: number,
 }
 
@@ -10,6 +11,7 @@ export const calculateCardStyle = ({
     hoveredCardIndex,
     index,
     totalCards,
+    selected,
 }: ICalculateCardStyleParams) => {
     let middle = (totalCards / 2);
     middle = middle % 2 ? middle - .5 : middle;
@@ -29,6 +31,8 @@ export const calculateCardStyle = ({
     if (hoveredCardIndex === index) {
         translateY = -62;
         rotate = 0;
+    } else if (selected && totalCards > 1) {
+        translateY -= 10;
     }
 
     return {
