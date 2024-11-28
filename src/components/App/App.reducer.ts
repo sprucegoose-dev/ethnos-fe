@@ -13,10 +13,10 @@ export const appReducer = createSlice({
     audioMuted: false,
   },
   reducers: {
-    setAudioEnabled: (state: IAppReducer, {payload}:  PayloadAction<ISetAudioEnabledAction>) => {
+    setAudioEnabled: (state: IAppReducer, {payload}: PayloadAction<ISetAudioEnabledAction>) => {
         state.audioEnabled = payload.audioEnabled;
     },
-    setAudioMuted: (state: IAppReducer, {payload}:  PayloadAction<ISetAudioMutedAction>) => {
+    setAudioMuted: (state: IAppReducer, {payload}: PayloadAction<ISetAudioMutedAction>) => {
         state.audioMuted = payload.audioMuted;
     },
   },

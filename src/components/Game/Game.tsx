@@ -46,6 +46,7 @@ import { Bands } from '../Bands/Bands';
 import { AgeResults } from '../AgeResults/AgeResults';
 import { Regions } from '../Regions/Regions';
 import { setAudioEnabled, setAudioMuted } from '../App/App.reducer';
+import { clearSelections } from '../Game/Game.reducer';
 import { IAppReducer } from '../App/App.reducer.types';
 import { useDragonOverlay } from '../../hooks/useDragonOverlay';
 import { Chat } from '../Chat/Chat';
@@ -259,6 +260,7 @@ export function Game(): JSX.Element {
             getAgeResults(prevAge.current);
             prevAge.current = gameState.age;
             prevState.current = gameState.state;
+            clearSelections();
             return;
         }
     }, [gameState?.age, gameState?.state, gameId]);

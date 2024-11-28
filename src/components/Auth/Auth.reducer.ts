@@ -10,7 +10,7 @@ export const authReducer = createSlice({
     sessionExp: null,
   },
   reducers: {
-    setAuthDetails: (state: IAuthReducer, {payload}:  PayloadAction<ISetAuthDetailsAction>) => {
+    setAuthDetails: (state: IAuthReducer, {payload}: PayloadAction<ISetAuthDetailsAction>) => {
         state.userId = payload.id;
         state.username = payload.username;
         state.sessionExp = payload.sessionExp;

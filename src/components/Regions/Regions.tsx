@@ -3,9 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import GameApi from '../../api/Game.api';
 import {
-    setSelectedCardIds,
-    setSelectedCardIdsToKeep,
-    setSelectedLeaderId
+    clearSelections,
 } from '../Game/Game.reducer';
 
 import {
@@ -42,12 +40,6 @@ export function Regions(props: IRegionsProps): JSX.Element {
     const keepCardsAction = actions.find(action => action.type === ActionType.KEEP_CARDS) as IKeepCardsPayload;
 
     const dispatch = useDispatch();
-
-    const clearSelections = () => {
-        dispatch(setSelectedCardIds({ cardIds: [] }));
-        dispatch(setSelectedLeaderId({ leaderId: null }));
-        dispatch(setSelectedCardIdsToKeep({ cardIds: [] }));
-    }
 
     const onSelectRegion = async (region?: IRegion) => {
         let payload: IActionPayload;
@@ -103,7 +95,7 @@ export function Regions(props: IRegionsProps): JSX.Element {
         const response = await GameApi.sendAction(gameState.id, payload);
 
         if (response.ok) {
-            clearSelections();
+            dispatch(clearSelections());
         }
     }
 
@@ -117,7 +109,7 @@ export function Regions(props: IRegionsProps): JSX.Element {
         const response = await GameApi.sendAction(gameState.id, payload);
 
         if (response.ok) {
-            clearSelections();
+            dispatch(clearSelections());
         }
     };
 
