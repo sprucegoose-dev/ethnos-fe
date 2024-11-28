@@ -25,7 +25,7 @@ export function useTurnNotification() {
         }
 
         if (auth.userId === activePlayer.user.id && audio && !audioMuted) {
-            audio.volume = .5;
+            audio.volume = .4;
             audio.play();
         }
 

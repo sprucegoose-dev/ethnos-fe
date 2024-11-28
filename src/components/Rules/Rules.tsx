@@ -90,7 +90,7 @@ export function Rules(_props: IRulesProps): JSX.Element {
                         </ul>
                     </li>
                     <div className="footnote">
-                        <sup>*</sup> The hand limit is 10 cards
+                        <sup>*</sup> The hand limit is 10 cards.
                     </div>
                 </ul>
             </div>
