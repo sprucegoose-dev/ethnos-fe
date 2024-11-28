@@ -74,7 +74,7 @@ export function Region(props: IRegionProps): JSX.Element {
                 alt={`${region.color} region - outlined`}
                 draggable={false}
             />
-            <div className="region-values">
+            <div className={`region-values count-${region.values.length}`}>
                 {region.values.map((value, index) =>
                     <span className="region-value" key={`region-${region.color}-${index}-${value}`}>
                         {value}

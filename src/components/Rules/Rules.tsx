@@ -79,7 +79,7 @@ export function Rules(_props: IRulesProps): JSX.Element {
                     <li>
                         Play a band of cards:
                         <ul>
-                            <li>Choose cards from your hand sharing the same <strong>color</strong> or <strong>Tribe</strong>.</li>
+                            <li>Choose cards from your hand that share the same <strong>color</strong> or <strong>Tribe</strong>.</li>
                             <li>Choose a Leader to activate its special ability.</li>
                             <li>If the band size is greater than the number of tokens in the region matching the leader's color,
                                 place a control marker there.
