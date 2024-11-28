@@ -90,6 +90,7 @@ export function Game(): JSX.Element {
     const isSpectator = auth.userId &&
         gameState?.state !== CREATED &&
         !gameState?.players.find(player => player.userId === auth.userId);
+    const showChat = auth.userId && gameState?.players.find(player => player.userId === auth.userId);
     let  currentPlayer: IPlayer;
     let playerPosition: {[userId: number]: string};
     let highestGiantToken: number;
@@ -373,12 +374,12 @@ export function Game(): JSX.Element {
                             <AgeResults gameState={ageResults} />
                         </Modal> : null
                     }
-                    {isSpectator ? null : <Chat gameId={parseInt(gameId, 10)} players={gameState.players} />}
-                    <button className="btn btn-outline btn-round toggle-sound-btn" onClick={toggleAudio}>
-                        <FontAwesomeIcon icon={audioMuted ? faVolumeXmark : faVolumeHigh} />
-                    </button>
                 </div> : null
             }
+            <button className="btn btn-outline btn-round toggle-sound-btn" onClick={toggleAudio}>
+                <FontAwesomeIcon icon={audioMuted ? faVolumeXmark : faVolumeHigh} />
+            </button>
+            {showChat ? <Chat gameId={parseInt(gameId, 10)} players={gameState.players} /> : null}
         </div>
     );
 }
