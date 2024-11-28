@@ -13,9 +13,10 @@ import { Home } from './components/Home/Home';
 import { RoomList } from './components/RoomList/RoomList';
 import { Game } from './components/Game/Game';
 import { Account } from './components/Account/Account';
+import { Matches } from './components/Matches/Matches';
+import { Rules } from './components/Rules/Rules';
 
 import './index.css';
-import { Matches } from './components/Matches/Matches';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -34,6 +35,7 @@ root.render(
                             <Route path="game/:id" element={<Game />} />
                             <Route path="/matches/:username" element={<Matches />} />
                             <Route path="/matches" element={<Matches />} />
+                            <Route path="/rules" element={<Rules />} />
                             <Route path="/" element={<Home />} />
                         </Route>
                     </Routes>

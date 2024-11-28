@@ -206,7 +206,12 @@ export function Game(): JSX.Element {
                 if (!socket.connected) {
                     await socket.connect();
                     await socket.emit('onJoinGame', gameId);
-                    getGameState();
+
+                    try {
+                        await getGameState();
+                    } catch (error) {
+                        console.log(error);
+                    }
                 }
             }, 3000));
         }

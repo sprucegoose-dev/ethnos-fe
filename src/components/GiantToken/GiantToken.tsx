@@ -12,7 +12,7 @@ export function GiantToken({ players }: IGiantTokenProps): JSX.Element {
         [2, 5]);
 
 
-    const renderAgeSquare = (ages: number, points: number, index: number) => {
+    const renderAgeSquare = (points: number, index: number) => {
         return (
             <div
                 key={`age-square-${index}`}
@@ -39,7 +39,7 @@ export function GiantToken({ players }: IGiantTokenProps): JSX.Element {
                 tribe={{ name: TribeName.GIANTS, description: '', id: null }}
             />
             <div className="squares">
-                {agePoints.map((points, index) => renderAgeSquare(agePoints.length, points, index))}
+                {agePoints.map((points, index) => renderAgeSquare(points, index))}
             </div>
         </div>
     );

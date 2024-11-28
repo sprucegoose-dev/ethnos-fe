@@ -1,10 +1,11 @@
-import { CardState, ICard } from '../Game/Game.types';
+import { CardState } from '../Game/Game.types';
 import { IBandsProps } from './Bands.types';
 
 import { Band } from '../Band/Band';
 
 import './Bands.scss';
 import { groupCardsByLeader } from '../Game/helpers';
+import { BandPointsTable } from '../BandPointsTable/BandPointsTable';
 
 export function Bands(props: IBandsProps): JSX.Element {
     const {
@@ -19,15 +20,6 @@ export function Bands(props: IBandsProps): JSX.Element {
 
     const groupedByLeader = groupCardsByLeader(cardsInBands);
 
-    const bandValues: { [key: number]: number } = {
-        1: 0,
-        2: 1,
-        3: 3,
-        4: 6,
-        5: 10,
-        6: 15
-    };
-
     return (
         <div className="bands-container">
             <div className="bands">
@@ -40,38 +32,7 @@ export function Bands(props: IBandsProps): JSX.Element {
                     />
                 ))}
             </div>
-            {showPointsTable ?
-                <table className="table band-points-table">
-                    <thead>
-                        <tr>
-                            <th className="row-header">
-                                Band Size
-                            </th>
-                            {
-                                Object.keys(bandValues).map((bandSize) =>
-                                    <th key={`table-header-${bandSize}`}>
-                                        {bandSize}{Number(bandSize) === 6 ? '+' : ''}
-                                    </th>
-                                )
-                            }
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td className="row-header">
-                                Points
-                            </td>
-                            {
-                                Object.values(bandValues).map((points) =>
-                                    <th key={`table-cell-${points}`}>
-                                        {points}
-                                    </th>
-                                )
-                            }
-                        </tr>
-                    </tbody>
-                </table> : null
-            }
+            {showPointsTable ? <BandPointsTable/> : null}
         </div>
     );
 }

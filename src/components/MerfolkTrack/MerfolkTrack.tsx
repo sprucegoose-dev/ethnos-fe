@@ -91,7 +91,7 @@ export function MerfolkTrack({ players }: IMerfolkTrackProps): JSX.Element {
             <div className="merfolk-track">
                 {
                     rows.map((row, index) =>
-                        <div className="row">
+                        <div className="row" key={`merfolk-track-row-${index}`}>
                             {
                                 row.map(squareIndex =>
                                     renderTrackSquare(squareIndex)
