@@ -170,6 +170,8 @@ export function Game(): JSX.Element {
                     getGameCards();
                 }
             }
+
+
         };
 
         getGameState();
@@ -266,7 +268,13 @@ export function Game(): JSX.Element {
     }, [gameState?.age, gameState?.state, gameId]);
 
     if (!gameState) {
-        return;
+        return (
+            <div className="game-container loading">
+                <div className="loading-text">
+                    Loading<span className="dots"></span>
+                </div>
+            </div>
+        )
     }
 
     if ([STARTED, ENDED, CANCELLED].includes(gameState.state)) {

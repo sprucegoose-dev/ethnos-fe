@@ -6,7 +6,7 @@ export function useDragonOverlay(gameState: IGameState) {
     const prevRevealedDragonsCount = useRef(0);
     const prevAge = useRef(gameState?.age || 1);
 
-    const revealedDragonsCount = gameState?.cards.filter(card =>
+    const revealedDragonsCount = gameState?.cards?.filter(card =>
         card.tribe.name === TribeName.DRAGON &&
         card.state === CardState.REVEALED
     )?.length ?? null;
