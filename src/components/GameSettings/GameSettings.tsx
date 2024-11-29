@@ -34,6 +34,7 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
     const [submitting, setSubmitting] = useState<boolean>(false);
     const currentPlayer = gameState.players.find(player => player.userId === auth.userId);
     const isGameCreator = auth.userId === gameState.creatorId;
+    const tribeLimit = gameState.players.length >= 4 ? 6 : 5;
 
     useEffect(() => {
         const getTribes = async () => {
@@ -47,6 +48,14 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
     useEffect(() => {
         setSelectedTribes(gameState.settings.tribes);
     }, [gameState.settings.tribes]);
+
+    useEffect(() => {
+        if (selectedTribes.length === 6 && gameState.players.length < 4) {
+            const newSelectedTribes = shuffle(selectedTribes).slice(0, 5);
+            setSelectedTribes(newSelectedTribes);
+            GameApi.updateSettings(gameState.id, { tribes: newSelectedTribes});
+        }
+    }, [selectedTribes, gameState.id, gameState.players.length, tribes.length]);
 
     const renderRoomName = () => {
         const username = gameState.creator.username;
@@ -63,8 +72,8 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
 
         if (selectedTribes.includes(tribeName)) {
             newSelectedTribes = selectedTribes.filter((name) => name !== tribeName);
-        } else if (selectedTribes.length >= 6) {
-            toast.info('You can only select 6 tribes');
+        } else if (selectedTribes.length >= tribeLimit) {
+            toast.info(`You can only select ${tribeLimit} tribes`);
             return;
         } else {
             newSelectedTribes = [...selectedTribes, tribeName];
@@ -81,7 +90,7 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
             return;
         }
 
-        const newSelectedTribes = shuffle(tribes).slice(0, 6).map((tribe) => tribe.name);
+        const newSelectedTribes = shuffle(tribes).slice(0, tribeLimit).map((tribe) => tribe.name);
         setSelectedTribes(newSelectedTribes);
         await GameApi.updateSettings(gameState.id, { tribes: newSelectedTribes});
     };
@@ -126,8 +135,8 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
             return;
         }
 
-        if (selectedTribes.length < 6) {
-            toast.info('Please select 6 tribes');
+        if (selectedTribes.length < tribeLimit) {
+            toast.info(`Please select ${tribeLimit} tribes`);
             return;
         }
 
@@ -188,7 +197,7 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
     }
 
     const startBtnDisabled = auth.userId !== gameState.creatorId ||
-        selectedTribes.length < 6 ||
+        selectedTribes.length < tribeLimit ||
         submitting;
 
     const sortedPlayers = sortPlayersByBotStatus(gameState.players);
@@ -273,7 +282,7 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                             Settings
                         </div>
                         <div className='instructions'>
-                            Select 6 <span className="tribes-text" onClick={() => toggleTribesModal(true)}>tribes
+                            Select {tribeLimit} <span className="tribes-text" onClick={() => toggleTribesModal(true)}>tribes
                                 <span className="info-icon-wrapper">
                                     <FontAwesomeIcon
                                         className="info-icon"
