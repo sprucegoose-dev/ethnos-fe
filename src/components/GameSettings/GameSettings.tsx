@@ -140,6 +140,11 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
             return;
         }
 
+        if (gameState.players.length === 1) {
+            toast.info(`A game must have at least 2 players`);
+            return;
+        }
+
         if (submitting) {
             return;
         }
@@ -198,6 +203,7 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
 
     const startBtnDisabled = auth.userId !== gameState.creatorId ||
         selectedTribes.length < tribeLimit ||
+        gameState.players.length === 1 ||
         submitting;
 
     const sortedPlayers = sortPlayersByBotStatus(gameState.players);

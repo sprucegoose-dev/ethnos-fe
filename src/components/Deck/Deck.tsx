@@ -27,7 +27,8 @@ export function Deck(props: IDeckProps): JSX.Element {
 
     const cardsInDeck = new Array(gameState.cardsInDeckCount).fill(null);
 
-    const selectable = actions.find(action => action.type === ActionType.DRAW_CARD);
+    const selectable = actions.find(action => action.type === ActionType.DRAW_CARD) &&
+        activePlayer.userId === currentPlayer.userId;
 
     const handleDrawCard = async () => {
         if (currentPlayer.cardsInHand.length === 10) {
