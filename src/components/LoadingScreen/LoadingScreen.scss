@@ -1,0 +1,26 @@
+.loading-screen {
+    background-image: url('../../assets/backgrounds/dragon_bkg.webp');
+    background-position-y: top;
+    background-size: cover;
+    overflow: visible;
+    height: 100%;
+    width: 100%;
+
+    .loading-text {
+        color: white;
+        font-family: QuadratDemibold;
+        font-size: 1.5rem;
+        left: 50%;
+        position: absolute;
+        text-shadow: .5px .5px 3px black;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        min-width: 105px;
+
+        .dots::after {
+            content: '';
+            display: inline-block;
+            animation: dots 1.5s steps(4, end) infinite;
+          }
+    }
+}

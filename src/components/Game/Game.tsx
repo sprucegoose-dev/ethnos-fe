@@ -52,6 +52,7 @@ import { useDragonOverlay } from '../../hooks/useDragonOverlay';
 import { Chat } from '../Chat/Chat';
 import { GiantToken } from '../GiantToken/GiantToken';
 import './Game.scss';
+import { LoadingScreen } from '../LoadingScreen/LoadingScreen';
 
 const {
     CREATED,
@@ -268,13 +269,7 @@ export function Game(): JSX.Element {
     }, [gameState?.age, gameState?.state, gameId]);
 
     if (!gameState) {
-        return (
-            <div className="game-container loading">
-                <div className="loading-text">
-                    Loading<span className="dots"></span>
-                </div>
-            </div>
-        )
+        return <LoadingScreen />;
     }
 
     if ([STARTED, ENDED, CANCELLED].includes(gameState.state)) {
