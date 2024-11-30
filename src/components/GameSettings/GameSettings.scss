@@ -21,6 +21,7 @@
         position: relative;
 
         .add-bot-btn {
+            padding: 3px 6px;
             position: absolute;
             top: 50%;
             right: 15px;
@@ -220,6 +221,12 @@
         animation: spin .9s linear infinite;
         margin-right: 5px;
     }
+
+    .btn-submit {
+        display: inline-flex;
+        white-space: nowrap;
+        align-items: center;
+    }
 }
 
 @media only screen and (min-width: $screen-sm) {
@@ -227,6 +234,14 @@
     .game-settings {
         margin-top: 50px;
         max-width: 600px;
+
+
+    .room-title {
+
+        .add-bot-btn {
+            padding: 3px 8px;
+        }
+    }
 
         .settings {
 
@@ -237,7 +252,6 @@
                 }
             }
         }
-
 
         .colors {
 

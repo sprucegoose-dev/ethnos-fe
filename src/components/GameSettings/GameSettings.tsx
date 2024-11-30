@@ -317,7 +317,7 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
                     </div>}
                 <div>
                     <button
-                        className={`btn btn-action btn-3d ${startBtnDisabled ? 'btn-disabled' : ''}`}
+                        className={`btn btn-action btn-3d ${startBtnDisabled ? 'btn-disabled' : ''} btn-submit`}
                         onClick={submitStartGame}
                     >
                         {submitting ?

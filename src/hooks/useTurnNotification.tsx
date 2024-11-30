@@ -1,10 +1,10 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { IPlayer } from '../components/Game/Game.types';
 import { ITurnNotificationState } from '../components/TurnNotification/TurnNotification.types';
 import { IAuthReducer } from '../components/Auth/Auth.types';
 import { IRootReducer } from '../reducers/reducers.types';
-import { useSelector } from 'react-redux';
 
 export function useTurnNotification() {
     const [ turnNotificationState, setTurnNotificationState ] = useState<ITurnNotificationState>({
