@@ -10,7 +10,7 @@ export default class UndoApi {
             authorize: true,
         };
 
-        return await api.request(Method.POST, `/undo/${gameId}`, options);
+        return await api.request(Method.GET, `/undo/${gameId}`, options);
     }
 
     static async requestUndo(gameId: number) {

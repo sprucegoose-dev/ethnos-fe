@@ -43,7 +43,11 @@ export function useUndoState(gameState: IGameState, currentPlayer: IPlayer) {
 
     useEffect(() => {
         const getUndoState = async () => {
-            const response = await UndoApi.getUndoState(gameState?.id);
+            if (!gameState) {
+                return;
+            }
+
+            const response = await UndoApi.getUndoState(gameState.id);
             const undoState: IUndoRequestResponse = await response.json();
 
             if (undoState.state === UndoRequestState.PENDING) {
