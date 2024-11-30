@@ -41,7 +41,7 @@ export interface IUndoRequestResponse {
     undoRequestId: number;
 }
 
-export interface ICanRequestUndo {
-    canRequest: boolean;
-    error: string;
+export interface ISendDecisionPayload {
+    undoApprovalId: number;
+    decision: UndoRequestState;
 }

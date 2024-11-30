@@ -21,6 +21,7 @@
         overflow: visible;
     }
 
+    .btn-undo,
     .btn-back {
         box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.3);
         left: 0;
@@ -177,6 +178,12 @@
         .btn-back {
             position: fixed;
             left: 20px;
+            top: 15px;
+        }
+
+        .btn-undo {
+            position: fixed;
+            left: 105px;
             top: 15px;
         }
 

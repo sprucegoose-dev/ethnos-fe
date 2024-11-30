@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import pako, { Data } from 'pako';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faVolumeHigh, faVolumeXmark } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faRotateLeft, faVolumeHigh, faVolumeXmark } from '@fortawesome/free-solid-svg-icons';
 
 import {
     getHighestGiantTokenValue,
@@ -53,6 +53,8 @@ import { Chat } from '../Chat/Chat';
 import { GiantToken } from '../GiantToken/GiantToken';
 import './Game.scss';
 import { LoadingScreen } from '../LoadingScreen/LoadingScreen';
+import { useUndoState } from '../../hooks/useUndoState';
+import { UndoApproval } from '../UndoApproval/UndoApproval';
 
 const {
     CREATED,
@@ -93,14 +95,15 @@ export function Game(): JSX.Element {
         gameState?.state !== CREATED &&
         !gameState?.players.find(player => player.userId === auth.userId);
     const showChat = auth.userId && gameState?.players.find(player => player.userId === auth.userId);
-    let  currentPlayer: IPlayer;
+    let currentPlayer: IPlayer;
+    const { requestUndo, showUndoApprovalModal } = useUndoState(gameState, currentPlayer);
     let playerPosition: {[userId: number]: string};
     let highestGiantToken: number;
     const dispatch = useDispatch();
 
     const toggleAudio = () => {
         dispatch(setAudioMuted({ audioMuted: !audioMuted }));
-    }
+    };
 
     const enableAudio = async () => {
         if (audioInitialised) {
@@ -110,7 +113,7 @@ export function Game(): JSX.Element {
         setAudioInitialized(true);
         dispatch(setAudioEnabled({ audioEnabled: true }));
         audioRef.current = await initAudio();
-    }
+    };
 
     useEffect(() => {
         if (!auth.userId) {
@@ -171,8 +174,6 @@ export function Game(): JSX.Element {
                     getGameCards();
                 }
             }
-
-
         };
 
         getGameState();
@@ -229,7 +230,7 @@ export function Game(): JSX.Element {
             socket.emit('onLeaveGame', gameId);
             socket.off('onUpdateGameState', updateGameState);
         }
-    }, [audioMuted, auth, gameId, navigate, socketRefreshInterval]);
+    }, [audioMuted, auth, gameId, gameCards.length, navigate, socketRefreshInterval]);
 
     useEffect(() => {
         if (!gameState) {
@@ -379,6 +380,14 @@ export function Game(): JSX.Element {
                             <AgeResults gameState={ageResults} />
                         </Modal> : null
                     }
+                    {showUndoApprovalModal ?
+                        <Modal onClose={() => null} modalClass="undo-approval-modal">
+                             <UndoApproval gameState={gameState} currentPlayer={currentPlayer} />
+                         </Modal> : null
+                    }
+                    <button className="btn btn-outline btn-undo" onClick={requestUndo}>
+                        <FontAwesomeIcon icon={faRotateLeft} /> Undo
+                    </button>
                 </div> : null
             }
             <button className="btn btn-outline btn-round toggle-sound-btn" onClick={toggleAudio}>

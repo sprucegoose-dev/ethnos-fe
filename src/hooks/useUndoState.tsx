@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { IGameState, IPlayer } from '../components/Game/Game.types';
@@ -8,31 +8,10 @@ import UndoApi from '../api/Undo.api';
 
 export function useUndoState(gameState: IGameState, currentPlayer: IPlayer) {
     const [ showUndoApprovalModal, setShowUndoApprovalModal ] = useState<boolean>(false);
-    const [ showUndoPendingModal, setShowUndoPendingModal ] = useState<boolean>(false);
     const [ submitting, setSubmitting ] = useState<boolean>(false);
-    const [ approvalId, setApprovalId ] = useState<number>(null);
-
-    const getUndoState = async () => {
-        const response = await UndoApi.getUndoState(gameState.id);
-        const undoState: IUndoRequestResponse = await response.json();
-
-        if (undoState.state === UndoRequestState.PENDING) {
-            if (undoState.playerId === currentPlayer.id) {
-              setShowUndoPendingModal(true);
-            } else {
-
-                const approvalRequired = undoState.requiredApprovals.find(approval =>
-                    approval.playerId === currentPlayer.id &&
-                    approval.state === UndoRequestState.PENDING
-                );
-
-                if (approvalRequired) {
-                    setShowUndoApprovalModal(true);
-                    setApprovalId(approvalRequired.id);
-                }
-            }
-        }
-    };
+    const [ undoApprovalId, setUndoApprovalId ] = useState<number>(null);
+    const [ description, setDescription ] = useState<string>('');
+    const toastId = useRef(null);
 
     const requestUndo = async () => {
         if (submitting) {
@@ -41,7 +20,7 @@ export function useUndoState(gameState: IGameState, currentPlayer: IPlayer) {
 
         setSubmitting(true);
 
-        const response = await UndoApi.requestUndo(gameState.id);
+        const response = await UndoApi.requestUndo(gameState?.id);
 
         if (!response.ok) {
             const error = await response.json();
@@ -51,8 +30,8 @@ export function useUndoState(gameState: IGameState, currentPlayer: IPlayer) {
         setSubmitting(false)
     };
 
-    const sendDecision = async (decision: UndoRequestState) => {
-        const response = await UndoApi.sendDecision(gameState.id, decision);
+    const sendDecision = async (decision: UndoRequestState, undoApprovalId: number) => {
+        const response = await UndoApi.sendDecision(gameState?.id, {undoApprovalId, decision});
 
         if (response.ok) {
             setShowUndoApprovalModal(false);
@@ -63,16 +42,48 @@ export function useUndoState(gameState: IGameState, currentPlayer: IPlayer) {
     };
 
     useEffect(() => {
+        const getUndoState = async () => {
+            const response = await UndoApi.getUndoState(gameState?.id);
+            const undoState: IUndoRequestResponse = await response.json();
+
+            if (undoState.state === UndoRequestState.PENDING) {
+                if (undoState.playerId === currentPlayer?.id) {
+                    toastId.current = toast.info('Waiting for the other player(s) to approve your request.', {
+                        autoClose: false,
+                        hideProgressBar: false,
+                        closeOnClick: false,
+                        pauseOnHover: true,
+                        draggable: false,
+                        progress: undefined,
+                    });
+                } else {
+                    const approvalRequired = undoState.requiredApprovals.find(approval =>
+                        approval.playerId === currentPlayer?.id &&
+                        approval.state === UndoRequestState.PENDING
+                    );
+
+                    if (approvalRequired) {
+                        setDescription(undoState.description);
+                        setUndoApprovalId(approvalRequired.id);
+                        setShowUndoApprovalModal(true);
+                    }
+                }
+            } else {
+                if (toastId.current) {
+                    toast.dismiss(toastId.current);
+                }
+            }
+        };
+
         getUndoState();
-    }, [gameState.updatedAt]);
+    }, [gameState?.updatedAt, gameState?.id, currentPlayer?.id]);
 
     return {
-        approvalId,
+        undoApprovalId,
+        description,
         requestUndo,
         sendDecision,
         setShowUndoApprovalModal,
-        setShowUndoPendingModal,
         showUndoApprovalModal,
-        showUndoPendingModal,
     }
 };

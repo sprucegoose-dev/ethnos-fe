@@ -1,6 +1,6 @@
 import { Method, requestOptions } from './Api.types';
 import api from './Api';
-import { UndoRequestState } from '../components/Undo/Undo.types';
+import { ISendDecisionPayload } from '../components/Undo/Undo.types';
 
 export default class UndoApi {
 
@@ -19,16 +19,14 @@ export default class UndoApi {
             authorize: true,
         };
 
-        return await api.request(Method.POST, `/undo/${gameId}`, options);
+        return await api.request(Method.POST, `/undo/${gameId}/request`, options);
     }
 
-    static async sendDecision(gameId: number, decision: UndoRequestState) {
+    static async sendDecision(gameId: number, payload: ISendDecisionPayload) {
         const options = {
             ...requestOptions,
             authorize: true,
-            payload: {
-                decision
-            }
+            payload
         };
 
         return await api.request(Method.POST, `/undo/${gameId}/decision`, options);
