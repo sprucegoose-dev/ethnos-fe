@@ -33,7 +33,13 @@ export function Market({activePlayer, gameState}: IDeckProps): JSX.Element {
         setSubmitting(true);
 
         if (activePlayer?.userId === auth.userId) {
-            await GameApi.sendAction(gameState.id, { type: ActionType.PICK_UP_CARD, cardId: card.id });
+            const response = await GameApi.sendAction(gameState.id, { type: ActionType.PICK_UP_CARD, cardId: card.id });
+
+
+            if (!response.ok) {
+                const error = await response.json();
+                toast.error(error.message);
+            }
         } else {
             toast.info('Please wait for your turn');
         }

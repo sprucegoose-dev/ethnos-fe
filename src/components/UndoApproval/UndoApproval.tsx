@@ -2,20 +2,24 @@ import { IUndoApprovalProps } from './UndoApproval.types';
 import { useUndoState } from '../../hooks/useUndoState';
 import { UndoRequestState } from '../Undo/Undo.types';
 import './UndoApproval.scss';
+import { IGameReducer } from '../Game/Game.reducer.types';
+import { IRootReducer } from '../../reducers/reducers.types';
+import { useSelector } from 'react-redux';
 
-export function UndoApproval({ currentPlayer, gameState }: IUndoApprovalProps): JSX.Element {
-    const {
-        undoApprovalId,
+export function UndoApproval({ gameState }: IUndoApprovalProps): JSX.Element {
+    const { sendDecision } = useUndoState(gameState);
+    const { undoModal: {
         description,
-        sendDecision
-    } = useUndoState(gameState, currentPlayer);
+        undoApprovalId
+    }  } = useSelector<IRootReducer>((state) => state.game) as IGameReducer;
 
     return (
         <div className="undo-approval">
-            <h2 className="title">Undo requested</h2>
             <div className="modal-form">
-                {description}
-
+                <div className="title">Undo requested</div>
+                <div className="modal-content">
+                    {description}
+                </div>
                 <div className="footer">
                     <button className="btn btn-muted btn-3d" onClick={() => sendDecision(UndoRequestState.REJECTED, undoApprovalId)}>
                         No

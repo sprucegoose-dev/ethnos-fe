@@ -55,6 +55,7 @@ import './Game.scss';
 import { LoadingScreen } from '../LoadingScreen/LoadingScreen';
 import { useUndoState } from '../../hooks/useUndoState';
 import { UndoApproval } from '../UndoApproval/UndoApproval';
+import { IGameReducer } from './Game.reducer.types';
 
 const {
     CREATED,
@@ -66,6 +67,7 @@ const {
 export function Game(): JSX.Element {
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
     const { audioMuted } = useSelector<IRootReducer>((state) => state.app) as IAppReducer;
+    const { undoModal } = useSelector<IRootReducer>((state) => state.game) as IGameReducer;
     const { id: gameId } = useParams();
     const [ gameState, setGameState ] = useState<IGameState>(null);
     const [ actions, setActions ] = useState<IActionPayload[]>([]);
@@ -96,7 +98,7 @@ export function Game(): JSX.Element {
         !gameState?.players.find(player => player.userId === auth.userId);
     const showChat = auth.userId && gameState?.players.find(player => player.userId === auth.userId);
     let currentPlayer: IPlayer;
-    const { requestUndo, showUndoApprovalModal } = useUndoState(gameState, currentPlayer);
+    const { requestUndo } = useUndoState(gameState);
     let playerPosition: {[userId: number]: string};
     let highestGiantToken: number;
     const dispatch = useDispatch();
@@ -380,9 +382,9 @@ export function Game(): JSX.Element {
                             <AgeResults gameState={ageResults} />
                         </Modal> : null
                     }
-                    {showUndoApprovalModal ?
+                    {undoModal.show ?
                         <Modal onClose={() => null} modalClass="undo-approval-modal">
-                             <UndoApproval gameState={gameState} currentPlayer={currentPlayer} />
+                             <UndoApproval gameState={gameState} />
                          </Modal> : null
                     }
                     <button className="btn btn-outline btn-undo" onClick={requestUndo}>

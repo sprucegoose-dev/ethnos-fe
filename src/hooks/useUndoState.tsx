@@ -1,16 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { IGameState, IPlayer } from '../components/Game/Game.types';
+import { IGameState } from '../components/Game/Game.types';
 import { IUndoRequestResponse, UndoRequestState } from '../components/Undo/Undo.types';
+import { socket } from '../socket';
 
 import UndoApi from '../api/Undo.api';
+import { IAuthReducer } from '../components/Auth/Auth.types';
+import { IRootReducer } from '../reducers/reducers.types';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUndoModal } from '../components/Game/Game.reducer';
 
-export function useUndoState(gameState: IGameState, currentPlayer: IPlayer) {
-    const [ showUndoApprovalModal, setShowUndoApprovalModal ] = useState<boolean>(false);
+export function useUndoState(gameState: IGameState) {
+    const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
+    const dispatch = useDispatch();
     const [ submitting, setSubmitting ] = useState<boolean>(false);
-    const [ undoApprovalId, setUndoApprovalId ] = useState<number>(null);
-    const [ description, setDescription ] = useState<string>('');
+    const currentPlayer = gameState?.players.find(player => player.userId === auth.userId);
     const toastId = useRef(null);
 
     const requestUndo = async () => {
@@ -34,60 +39,64 @@ export function useUndoState(gameState: IGameState, currentPlayer: IPlayer) {
         const response = await UndoApi.sendDecision(gameState?.id, {undoApprovalId, decision});
 
         if (response.ok) {
-            setShowUndoApprovalModal(false);
+            dispatch(setUndoModal({ show: false, undoApprovalId: null, description: '' }));
         } else {
             const error = await response.json();
             toast.error(error.message);
         }
     };
 
-    useEffect(() => {
-        const getUndoState = async () => {
-            if (!gameState) {
-                return;
-            }
+    const getUndoState = async () => {
+        if (!gameState) {
+            return;
+        }
 
-            const response = await UndoApi.getUndoState(gameState.id);
-            const undoState: IUndoRequestResponse = await response.json();
+        const response = await UndoApi.getUndoState(gameState.id);
+        const undoState: IUndoRequestResponse = await response.json();
 
-            if (undoState.state === UndoRequestState.PENDING) {
-                if (undoState.playerId === currentPlayer?.id) {
-                    toastId.current = toast.info('Waiting for the other player(s) to approve your request.', {
-                        autoClose: false,
-                        hideProgressBar: false,
-                        closeOnClick: false,
-                        pauseOnHover: true,
-                        draggable: false,
-                        progress: undefined,
-                    });
-                } else {
-                    const approvalRequired = undoState.requiredApprovals.find(approval =>
-                        approval.playerId === currentPlayer?.id &&
-                        approval.state === UndoRequestState.PENDING
-                    );
-
-                    if (approvalRequired) {
-                        setDescription(undoState.description);
-                        setUndoApprovalId(approvalRequired.id);
-                        setShowUndoApprovalModal(true);
-                    }
-                }
+        if (undoState.state === UndoRequestState.PENDING) {
+            if (undoState.playerId === currentPlayer?.id) {
+                toastId.current = toast.info('Waiting for the other player(s) to approve your request.', {
+                    autoClose: false,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                });
             } else {
-                if (toastId.current) {
-                    toast.dismiss(toastId.current);
+                const approvalRequired = undoState.requiredApprovals.find(approval =>
+                    approval.playerId === currentPlayer?.id &&
+                    approval.state === UndoRequestState.PENDING
+                );
+
+                if (approvalRequired) {
+                    dispatch(setUndoModal({
+                        show: true,
+                        undoApprovalId: approvalRequired.id,
+                        description: undoState.description
+                    }));
                 }
             }
-        };
+        } else if (toastId.current) {
+            toast.dismiss(toastId.current);
+        }
+    };
 
+    useEffect(() => {
+        socket.on('onRequestUndo', getUndoState);
+
+        return () => {
+            socket.off('onRequestUndo', getUndoState);
+        }
+    }, []);
+
+    useEffect(() => {
         getUndoState();
-    }, [gameState?.updatedAt, gameState?.id, currentPlayer?.id]);
+    }, [gameState?.updatedAt]);
 
     return {
-        undoApprovalId,
-        description,
         requestUndo,
         sendDecision,
-        setShowUndoApprovalModal,
-        showUndoApprovalModal,
     }
 };

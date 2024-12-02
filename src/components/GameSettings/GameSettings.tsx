@@ -116,6 +116,8 @@ export function GameSettings({gameState}: IGameSettingsProps): JSX.Element {
 
             if (error.code === 403) {
                 setShowPasswordModal(true);
+            } else {
+                toast.error(error);
             }
         }
     }
