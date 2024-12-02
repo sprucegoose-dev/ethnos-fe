@@ -46,7 +46,7 @@ export function useUndoState(gameState: IGameState) {
         }
     };
 
-    const getUndoState = async () => {
+    const getUndoState = async (gameState: IGameState) => {
         if (!gameState) {
             return;
         }
@@ -56,14 +56,16 @@ export function useUndoState(gameState: IGameState) {
 
         if (undoState.state === UndoRequestState.PENDING) {
             if (undoState.playerId === currentPlayer?.id) {
-                toastId.current = toast.info('Waiting for the other player(s) to approve your request.', {
-                    autoClose: false,
-                    hideProgressBar: false,
-                    closeOnClick: false,
-                    pauseOnHover: true,
-                    draggable: false,
-                    progress: undefined,
-                });
+                if (!toastId.current) {
+                    toastId.current = toast.info('Waiting for the other player(s) to approve your undo request.', {
+                        autoClose: false,
+                        hideProgressBar: false,
+                        closeOnClick: false,
+                        pauseOnHover: true,
+                        draggable: false,
+                        progress: undefined,
+                    });
+                }
             } else {
                 const approvalRequired = undoState.requiredApprovals.find(approval =>
                     approval.playerId === currentPlayer?.id &&
@@ -80,20 +82,31 @@ export function useUndoState(gameState: IGameState) {
             }
         } else if (toastId.current) {
             toast.dismiss(toastId.current);
+            toastId.current = null;
         }
     };
 
     useEffect(() => {
-        socket.on('onRequestUndo', getUndoState);
+        if (gameState?.id) {
+            socket.on('onRequestUndo', () => getUndoState(gameState));
+        }
 
         return () => {
             socket.off('onRequestUndo', getUndoState);
         }
-    }, []);
+    }, [gameState?.id]);
 
     useEffect(() => {
-        getUndoState();
-    }, [gameState?.updatedAt]);
+        if (gameState?.id && !toastId.current) {
+            getUndoState(gameState);
+        }
+    }, [gameState?.id, gameState?.updatedAt]);
+
+    useEffect(() => {
+        if (toastId.current) {
+            getUndoState(gameState);
+        }
+    }, [gameState, toastId.current]);
 
     return {
         requestUndo,
