@@ -22,8 +22,6 @@ export default class ChatApi {
             }
         };
 
-        console.log(options);
-
         return await api.request(Method.POST, `/chat/${gameId}/message`, options);
     }
 }

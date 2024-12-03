@@ -88,7 +88,11 @@ export function Room({game}: IRoomProps): JSX.Element {
     }
 
     const submitLeaveGame = async() => {
-        await GameApi.leave(game.id);
+        const response = await GameApi.leave(game.id);
+
+        if (response.ok) {
+            setShowConfirmLeaveModal(false);
+        }
     };
 
     const renderGameState = () => {

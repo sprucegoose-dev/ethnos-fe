@@ -9,7 +9,7 @@ import UndoApi from '../api/Undo.api';
 import { IAuthReducer } from '../components/Auth/Auth.types';
 import { IRootReducer } from '../reducers/reducers.types';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUndoModal } from '../components/Game/Game.reducer';
+import { clearSelections, setUndoModal } from '../components/Game/Game.reducer';
 
 export function useUndoState(gameState: IGameState) {
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
@@ -27,12 +27,18 @@ export function useUndoState(gameState: IGameState) {
 
         const response = await UndoApi.requestUndo(gameState?.id);
 
-        if (!response.ok) {
+        if (response.ok) {
+            const botsOnlyGame = gameState?.players.every(player => player.userId === auth.userId || player.user.isBot);
+
+            if (botsOnlyGame) {
+                dispatch(clearSelections());
+            }
+        } else {
             const error = await response.json();
             toast.info(error.message);
         }
 
-        setSubmitting(false)
+        setSubmitting(false);
     };
 
     const sendDecision = async (decision: UndoRequestState, undoApprovalId: number) => {
@@ -46,6 +52,34 @@ export function useUndoState(gameState: IGameState) {
         }
     };
 
+    const handlePendingUndoState = (undoState: IUndoRequestResponse) => {
+        if (undoState.playerId === currentPlayer?.id) {
+            if (!toastId.current) {
+                toastId.current = toast.info('Waiting for the other player(s) to approve your undo request.', {
+                    autoClose: false,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                });
+            }
+        } else {
+            const approvalRequired = undoState.requiredApprovals.find(approval =>
+                approval.playerId === currentPlayer?.id &&
+                approval.state === UndoRequestState.PENDING
+            );
+
+            if (approvalRequired) {
+                dispatch(setUndoModal({
+                    show: true,
+                    undoApprovalId: approvalRequired.id,
+                    description: undoState.description
+                }));
+            }
+        }
+    }
+
     const getUndoState = async (gameState: IGameState) => {
         if (!gameState) {
             return;
@@ -55,34 +89,11 @@ export function useUndoState(gameState: IGameState) {
         const undoState: IUndoRequestResponse = await response.json();
 
         if (undoState.state === UndoRequestState.PENDING) {
-            if (undoState.playerId === currentPlayer?.id) {
-                if (!toastId.current) {
-                    toastId.current = toast.info('Waiting for the other player(s) to approve your undo request.', {
-                        autoClose: false,
-                        hideProgressBar: false,
-                        closeOnClick: false,
-                        pauseOnHover: true,
-                        draggable: false,
-                        progress: undefined,
-                    });
-                }
-            } else {
-                const approvalRequired = undoState.requiredApprovals.find(approval =>
-                    approval.playerId === currentPlayer?.id &&
-                    approval.state === UndoRequestState.PENDING
-                );
-
-                if (approvalRequired) {
-                    dispatch(setUndoModal({
-                        show: true,
-                        undoApprovalId: approvalRequired.id,
-                        description: undoState.description
-                    }));
-                }
-            }
+            handlePendingUndoState(undoState);
         } else if (toastId.current) {
             toast.dismiss(toastId.current);
             toastId.current = null;
+            dispatch(clearSelections());
         }
     };
 

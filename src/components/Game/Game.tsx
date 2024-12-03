@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import pako, { Data } from 'pako';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faRotateLeft, faVolumeHigh, faVolumeXmark } from '@fortawesome/free-solid-svg-icons';
+import moment from 'moment';
 
 import {
     getHighestGiantTokenValue,
@@ -209,6 +210,9 @@ export function Game(): JSX.Element {
             }
         }
 
+        socket.emit('onJoinGame', gameId);
+        socket.on('onUpdateGameState', updateGameState);
+
         if (!socketRefreshInterval) {
             setSocketRefreshInterval(setInterval(async () => {
                 if (!socket.connected) {
@@ -223,9 +227,6 @@ export function Game(): JSX.Element {
                 }
             }, 3000));
         }
-
-        socket.emit('onJoinGame', gameId);
-        socket.on('onUpdateGameState', updateGameState);
 
         return () => {
             clearInterval(socketRefreshInterval);
@@ -266,9 +267,11 @@ export function Game(): JSX.Element {
             getAgeResults(prevAge.current);
             prevAge.current = gameState.age;
             prevState.current = gameState.state;
-            clearSelections();
+            dispatch(clearSelections());
             return;
         }
+
+
     }, [gameState?.age, gameState?.state, gameId]);
 
     if (!gameState) {

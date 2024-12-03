@@ -20,11 +20,6 @@ export interface IUndoApproval {
     updatedAt: Date;
 }
 
-export interface IUndoApprovalOption {
-    label: string;
-    value: UndoRequestState;
-}
-
 export enum UndoRequestState {
     PENDING = 'pending',
     APPROVED = 'approved',
@@ -33,7 +28,6 @@ export enum UndoRequestState {
 
 export interface IUndoRequestResponse {
     description: string;
-    options: IUndoApprovalOption[];
     canRequestUndo: boolean;
     playerId: number;
     requiredApprovals: IUndoApproval[];
