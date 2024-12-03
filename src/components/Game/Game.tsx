@@ -280,7 +280,7 @@ export function Game(): JSX.Element {
 
     if ([STARTED, ENDED, CANCELLED].includes(gameState.state)) {
         currentPlayer = isSpectator ?
-            gameState.players[0] :
+            gameState.players.find(player => player.id === gameState.turnOrder[0]) :
             gameState.players.find(player => player.userId === auth.userId);
         playerPosition = getPlayerPositions(currentPlayer, gameState.players, gameState.turnOrder);
         highestGiantToken = getHighestGiantTokenValue(gameState.players);
