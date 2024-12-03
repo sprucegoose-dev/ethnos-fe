@@ -54,7 +54,7 @@ import { Chat } from '../Chat/Chat';
 import { GiantToken } from '../GiantToken/GiantToken';
 import './Game.scss';
 import { LoadingScreen } from '../LoadingScreen/LoadingScreen';
-import { useUndoState } from '../../hooks/useUndoState';
+// import { useUndoState } from '../../hooks/useUndoState';
 import { UndoApproval } from '../UndoApproval/UndoApproval';
 import { IGameReducer } from './Game.reducer.types';
 
@@ -99,7 +99,7 @@ export function Game(): JSX.Element {
         !gameState?.players.find(player => player.userId === auth.userId);
     const showChat = auth.userId && gameState?.players.find(player => player.userId === auth.userId);
     let currentPlayer: IPlayer;
-    const { requestUndo } = useUndoState(gameState);
+    // const { requestUndo } = useUndoState(gameState);
     let playerPosition: {[userId: number]: string};
     let highestGiantToken: number;
     const dispatch = useDispatch();
@@ -390,9 +390,9 @@ export function Game(): JSX.Element {
                              <UndoApproval gameState={gameState} />
                          </Modal> : null
                     }
-                    <button className="btn btn-outline btn-undo" onClick={requestUndo}>
+                    {/* <button className="btn btn-outline btn-undo" onClick={requestUndo}>
                         <FontAwesomeIcon icon={faRotateLeft} /> Undo
-                    </button>
+                    </button> */}
                 </div> : null
             }
             <button className="btn btn-outline btn-round toggle-sound-btn" onClick={toggleAudio}>
