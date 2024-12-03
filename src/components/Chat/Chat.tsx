@@ -8,7 +8,7 @@ import ChatApi from '../../api/Chat.api';
 import { socket } from '../../socket';
 import './Chat.scss';
 
-export function Chat({ gameId, players }: IChatProps): JSX.Element {
+export function Chat({ className, gameId, players }: IChatProps): JSX.Element {
     const [message, setMessage] = useState('');
     const [textareaRows, setTextareaRows] = useState(1);
     const messagesRef = useRef(null);
@@ -126,7 +126,7 @@ export function Chat({ gameId, players }: IChatProps): JSX.Element {
     };
 
     return (
-        <div className={`chat ${expanded ? 'expanded' : ''}`}>
+        <div className={`chat ${expanded ? 'expanded' : ''} ${className || ''}`}>
             <div className="chat-title" onClick={toggle}>
                 {expanded ?
                     <div className="title-text">

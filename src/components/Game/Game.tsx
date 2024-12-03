@@ -407,7 +407,14 @@ export function Game(): JSX.Element {
             <button className="btn btn-outline btn-round toggle-sound-btn" onClick={toggleAudio}>
                 <FontAwesomeIcon icon={audioMuted ? faVolumeXmark : faVolumeHigh} />
             </button>
-            {showChat ? <Chat gameId={parseInt(gameId, 10)} players={gameState.players} /> : null}
+            {showChat ?
+                <Chat
+                    gameId={parseInt(gameId, 10)}
+                    className={cardsInHand.length >= 7 ? 'corner-position' : null}
+                    players={gameState.players}
+                />
+                : null
+            }
         </div>
     );
 }

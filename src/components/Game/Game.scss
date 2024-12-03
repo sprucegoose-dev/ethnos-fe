@@ -167,6 +167,10 @@
 
         .chat {
             right: 12.5%;
+
+            &.corner-position {
+                right: 1.5%;
+            }
         }
     }
 }
