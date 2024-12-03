@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faRobot, faUser } from '@fortawesome/free-solid-svg-icons';
+import moment from 'moment';
 
 import { IRoomProps } from './Room.types';
 import { GameState, TribeName } from '../Game/Game.types';
@@ -49,6 +50,7 @@ export function Room({game}: IRoomProps): JSX.Element {
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
     const [showPasswordModal, setShowPasswordModal] = useState<boolean>(false);
     const [showConfirmLeaveModal, setShowConfirmLeaveModal] = useState<boolean>(false);
+    const createdAt = moment(game.createdAt).fromNow()
     const navigate = useNavigate();
 
     const userInGame = () => {
@@ -229,6 +231,9 @@ export function Room({game}: IRoomProps): JSX.Element {
                         </button>
                     </Link>
                 }
+            </div>
+            <div className="footer created-at">
+                Created {createdAt}
             </div>
             {showPasswordModal ?
                 <Modal onClose={() => setShowPasswordModal(false)}>

@@ -1,43 +1,50 @@
 @import '../../styles/variables.scss';
 
-.footer {
-    background: linear-gradient(to top, black, transparent);
-    width: 100%;
+.app {
 
-    .footer-content {
-        color: white;
-        margin: 0 auto;
-        max-width: 80%;
-        padding: 10px 15px 20px;
-        text-align: center;
+    > .footer {
+        background: linear-gradient(to top, black, transparent);
+        width: 100%;
 
-        .copyrights {
-            display: flex;
-            font-size: .915rem;
-            justify-content: center;
-            margin-bottom: 10px;
+        .footer-content {
+            color: white;
+            margin: 0 auto;
+            max-width: 80%;
+            padding: 10px 15px 20px;
+            text-align: center;
 
-            > * {
-                align-self: center;
+            .copyrights {
+                display: flex;
+                font-size: .915rem;
+                justify-content: center;
+                margin-bottom: 10px;
+
+                > * {
+                    align-self: center;
+                }
+
+                .contact-us-link {
+                    margin-left: 5px;
+                }
             }
 
-            .contact-us-link {
-                margin-left: 5px;
+            .disclaimer {
+                font-size: .8rem;
             }
-        }
-
-        .disclaimer {
-            font-size: .8rem;
         }
     }
+
 }
 
 @media only screen and (min-width: $screen-sm) {
 
-    .footer {
+    .app {
 
-        .footer-content {
-            max-width: 55%;
+        > .footer {
+
+            .footer-content {
+                max-width: 55%;
+            }
         }
     }
 }
