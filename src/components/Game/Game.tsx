@@ -185,7 +185,8 @@ export function Game(): JSX.Element {
 
         getGameState();
 
-        const updateGameState = (payload: IGameState) => {
+        const updateGameState = (compressedPayload: Data) => {
+            const payload: IGameState = JSON.parse(pako.inflate(compressedPayload, { to: 'string' }));
             setGameState(payload);
 
             if (payload.state === GameState.CANCELLED) {
@@ -211,8 +212,8 @@ export function Game(): JSX.Element {
                 }
             }
         }
-
-        const updateActionsLog = (payload: IActionLogPayload[]) => {
+        const updateActionsLog = (compressedPayload: Data) => {
+            const payload: IActionLogPayload[] = JSON.parse(pako.inflate(compressedPayload, { to: 'string' }));
             setActionsLog(payload);
         }
 
