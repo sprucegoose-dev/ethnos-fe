@@ -91,6 +91,10 @@
 
     &.skeletons {
         background: $card-brown;
+
+        .tribe-description {
+            font-size: 0.8rem;
+        }
     }
 
     .card-content {
@@ -127,6 +131,10 @@
 
     .set-leader-btn-wrapper {
         margin-bottom: 10px;
+
+        .btn {
+            white-space: nowrap;
+        }
     }
 
     .leader-icon {

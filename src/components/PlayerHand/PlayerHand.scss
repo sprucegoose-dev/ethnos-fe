@@ -106,6 +106,15 @@
         .card-wrapper {
 
             .card {
+
+                &.giants,
+                &.skeletons {
+
+                    .tribe-description {
+                        font-size: .8rem;
+                    }
+                }
+
                 .tribe-name,
                 .tribe-description {
                     opacity: 1;
