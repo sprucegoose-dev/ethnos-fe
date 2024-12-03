@@ -4,8 +4,12 @@ import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import pako, { Data } from 'pako';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faRotateLeft, faVolumeHigh, faVolumeXmark } from '@fortawesome/free-solid-svg-icons';
-import moment from 'moment';
+import {
+    faChevronLeft,
+    // faRotateLeft,
+    faVolumeHigh,
+    faVolumeXmark
+} from '@fortawesome/free-solid-svg-icons';
 
 import {
     getHighestGiantTokenValue,
@@ -201,7 +205,6 @@ export function Game(): JSX.Element {
                 }
 
                 getPlayerHands();
-                getActionsLog();
                 handleTurnNotification(nextActivePlayer, audioRef.current, audioMuted);
 
                 if (!gameCards.length) {
@@ -210,8 +213,13 @@ export function Game(): JSX.Element {
             }
         }
 
+        const updateActionsLog = (payload: IActionLogPayload[]) => {
+            setActionsLog(payload);
+        }
+
         socket.emit('onJoinGame', gameId);
         socket.on('onUpdateGameState', updateGameState);
+        socket.on('onUpdateActionsLog', updateActionsLog);
 
         if (!socketRefreshInterval) {
             setSocketRefreshInterval(setInterval(async () => {
@@ -232,6 +240,7 @@ export function Game(): JSX.Element {
             clearInterval(socketRefreshInterval);
             socket.emit('onLeaveGame', gameId);
             socket.off('onUpdateGameState', updateGameState);
+            socket.off('onUpdateActionsLog', updateActionsLog);
         }
     }, [audioMuted, auth, gameId, gameCards.length, navigate, socketRefreshInterval]);
 
