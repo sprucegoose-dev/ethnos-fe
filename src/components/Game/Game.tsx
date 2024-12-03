@@ -213,7 +213,8 @@ export function Game(): JSX.Element {
             }
         }
 
-        const updateActionsLog = (payload: IActionLogPayload[]) => {
+        const updateActionsLog = (compressedPayload: Data) => {
+            const payload: IActionLogPayload[] = JSON.parse(pako.inflate(compressedPayload, { to: 'string' }));
             setActionsLog(payload);
         }
 
