@@ -29,9 +29,9 @@ export function ActionsLog({ actionsLog, gameId }: IActionsLogProps): JSX.Elemen
         }, [] as (string | JSX.Element)[]);
     };
 
-    const getCardsByLeader = (leaderId: number) => {
+    const getCardsByLeader = (leaderId: number, cardIds: number[] = []) => {
         const leader = cards.find(card => card.id === leaderId);
-        const cardsInBand = cards.filter(card => card.id !== leaderId && card.leaderId === leaderId);
+        const cardsInBand = cards.filter(card => card.id !== leaderId && cardIds.includes(card.id));
         return [leader, ...cardsInBand];
     }
 
@@ -67,9 +67,9 @@ export function ActionsLog({ actionsLog, gameId }: IActionsLogProps): JSX.Elemen
                                 null
                             }
                             {log.leaderId ?
-                                getCardsByLeader(log.leaderId).map(card =>
+                                getCardsByLeader(log.leaderId, log.cardIds).map(card =>
                                     <Card
-                                        key={`card-in-band-${card.id}`}
+                                        key={`card-in-band-${log.id}-${card.id}`}
                                         card={card}
                                     />
                                 ) : null
