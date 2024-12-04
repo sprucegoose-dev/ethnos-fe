@@ -9,7 +9,7 @@ export interface IActionLogPayload {
 }
 
 export interface IActionsLogProps {
+    gameId: number;
     actionsLog: IActionLogPayload[];
-    cards: ICard[];
 }
 

@@ -1,18 +1,17 @@
+import { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { IActionsLogProps } from './ActionsLog.types';
 import './ActionsLog.scss';
 import { TokenIcon } from '../TokenIcon/TokenIcon';
 import { Card } from '../Card/Card';
-import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { ICard } from '../Game/Game.types';
+import GameApi from '../../api/Game.api';
 
-export function ActionsLog(props: IActionsLogProps): JSX.Element {
-    const {
-        actionsLog,
-        cards,
-    } = props;
-
-    const [logExpanded, setLogExpanded] = useState<boolean>(false)
+export function ActionsLog({ actionsLog, gameId }: IActionsLogProps): JSX.Element {
+    const [logExpanded, setLogExpanded] = useState<boolean>(false);
+    const [cards, setCards] = useState<ICard[]>([]);
 
     const logs = actionsLog.slice(0, logExpanded ? actionsLog.length : 1);
 
@@ -34,6 +33,20 @@ export function ActionsLog(props: IActionsLogProps): JSX.Element {
         const leader = cards.find(card => card.id === leaderId);
         const cardsInBand = cards.filter(card => card.id !== leaderId && card.leaderId === leaderId);
         return [leader, ...cardsInBand];
+    }
+
+    useEffect(() => {
+        const getGameCards = async () => {
+            const response = await GameApi.getGameCards(Number(gameId))
+            const payload: ICard[] = await response.json();
+            setCards(payload);
+        };
+
+        getGameCards();
+    }, []);
+
+    if (!cards.length) {
+        return null;
     }
 
     return (

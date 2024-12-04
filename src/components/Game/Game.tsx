@@ -56,12 +56,12 @@ import { IAppReducer } from '../App/App.reducer.types';
 import { useDragonOverlay } from '../../hooks/useDragonOverlay';
 import { Chat } from '../Chat/Chat';
 import { GiantToken } from '../GiantToken/GiantToken';
-import './Game.scss';
 import { LoadingScreen } from '../LoadingScreen/LoadingScreen';
 // import { useUndoState } from '../../hooks/useUndoState';
 import { UndoApproval } from '../UndoApproval/UndoApproval';
 import { IGameReducer } from './Game.reducer.types';
 import { OrcBoardRemoval } from '../OrcTokenRemoval/OrcTokenRemoval';
+import './Game.scss';
 
 const {
     CREATED,
@@ -94,7 +94,6 @@ export function Game(): JSX.Element {
     const [ageResults, setAgeResults] = useState<IGameState>(null);
     const [showAgeResults, setShowAgeResults] = useState<boolean>(false);
     const [audioInitialised, setAudioInitialized] = useState<boolean>(false);
-    const [gameCards, setGameCards] = useState<ICard[]>([]);
     const prevAge = useRef<number>(0);
     const prevState = useRef<GameState>(null);
     const audioRef = useRef<HTMLAudioElement>(null);
@@ -143,12 +142,6 @@ export function Game(): JSX.Element {
             setCardsInHand(await response.json());
         };
 
-        const getGameCards = async () => {
-            const response = await GameApi.getGameCards(Number(gameId))
-            const payload: ICard[] = await response.json();
-            setGameCards(payload);
-        };
-
         const getPlayerHands = async () => {
             const response = await GameApi.getPlayerHands(parseInt(gameId, 10));
             setPlayerHands(await response.json());
@@ -177,10 +170,6 @@ export function Game(): JSX.Element {
                 setActivePlayer(nextActivePlayer);
                 getActionsLog();
                 handleTurnNotification(nextActivePlayer, audioRef.current, audioMuted);
-
-                if (!gameCards.length) {
-                    getGameCards();
-                }
             }
         };
 
@@ -207,10 +196,6 @@ export function Game(): JSX.Element {
 
                 getPlayerHands();
                 handleTurnNotification(nextActivePlayer, audioRef.current, audioMuted);
-
-                if (!gameCards.length) {
-                    getGameCards();
-                }
             }
         }
         const updateActionsLog = (compressedPayload: Data) => {
@@ -243,7 +228,7 @@ export function Game(): JSX.Element {
             socket.off('onUpdateGameState', updateGameState);
             socket.off('onUpdateActionsLog', updateActionsLog);
         }
-    }, [audioMuted, auth, gameId, gameCards.length, navigate, socketRefreshInterval]);
+    }, [audioMuted, auth, gameId, navigate, socketRefreshInterval]);
 
     useEffect(() => {
         if (!gameState) {
@@ -280,8 +265,6 @@ export function Game(): JSX.Element {
             dispatch(clearSelections());
             return;
         }
-
-
     }, [gameState?.age, gameState?.state, gameId]);
 
     if (!gameState) {
@@ -365,11 +348,8 @@ export function Game(): JSX.Element {
                     {showDragonOverlay ?
                         <div className="dragon-overlay"></div> : null
                     }
-                    {actionsLog.length && gameCards.length ?
-                        <ActionsLog
-                            actionsLog={actionsLog}
-                            cards={gameCards}
-                        /> : null
+                    {actionsLog.length ?
+                        <ActionsLog gameId={parseInt(gameId, 10)} actionsLog={actionsLog} /> : null
                     }
                     {openWidgetModal.type ?
                         <Modal onClose={() => setOpenWidgetModal({ type: null, player: null })} modalClass={`widget-modal ${openWidgetModal.type.toLowerCase()}`}>
