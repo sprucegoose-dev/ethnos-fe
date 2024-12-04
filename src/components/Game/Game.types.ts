@@ -17,7 +17,16 @@ export const PLAYER_COLORS = [
     PlayerColor.PINK,
     PlayerColor.WHITE,
     PlayerColor.YELLOW,
-]
+];
+
+export const ORC_BOARD_POINTS: {[tokens: number]: number} = {
+    1: 1,
+    2: 3,
+    3: 6,
+    4: 10,
+    5: 15,
+    6: 20,
+};
 
 export enum TribeName {
     CENTAURS = 'Centaurs',
@@ -73,6 +82,7 @@ export interface IUser {
 }
 
 export interface IPlayer {
+    canRemoveOrcTokens: boolean;
     cards: ICard[];
     gameId: number;
     giantTokenValue: number;

@@ -7,3 +7,12 @@ export enum Color {
     PURPLE = 'purple',
     RED = 'red',
 }
+
+export const COLORS = [
+    Color.BLUE,
+    Color.GRAY,
+    Color.GREEN,
+    Color.ORANGE,
+    Color.PURPLE,
+    Color.RED,
+];

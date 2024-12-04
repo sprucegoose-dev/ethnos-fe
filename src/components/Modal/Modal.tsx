@@ -22,12 +22,15 @@ export function Modal(props: IModalProps): JSX.Element {
                         {props.children}
                     </div>
                 }
-                <span
-                        className="btn-close"
-                        onClick={() => props.onClose()}
-                    >
-                        <FontAwesomeIcon className="btn-close-icon" icon={faRemove} />
-                    </span>
+                {props.onClose ?
+                    <span
+                            className="btn-close"
+                            onClick={() => props.onClose()}
+                        >
+                            <FontAwesomeIcon className="btn-close-icon" icon={faRemove} />
+                        </span>
+                    : null
+                }
             </div>
         </div>
     );

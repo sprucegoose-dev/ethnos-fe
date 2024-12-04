@@ -19,13 +19,14 @@ const orcTokens = {
     [Color.PURPLE]: orcTokenPurple,
 };
 
-export function OrcToken({ className = '', color }: IOrcTokenProps): JSX.Element {
+export function OrcToken({ className = '', color, onSelect }: IOrcTokenProps): JSX.Element {
     return (
         <div className={`token-element orc-token ${color} ${className}`}>
             <img
                 className={`orc-token-img ${color}`}
                 src={orcTokens[color]}
                 alt={`orc token ${color}`}
+                onClick={() => onSelect ? onSelect(color) : null}
             />
         </div>
     );

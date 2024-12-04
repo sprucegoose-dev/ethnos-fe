@@ -20,23 +20,23 @@
         max-width: 225px;
         margin: 0 auto 25px;
 
-        .orc-token {
-
-            &.claimed {
-
-                .orc-token-img {
-                    opacity: 1;
-                }
-            }
-
-            .orc-token-img {
-                opacity: .5;
-            }
-        }
-
         .square {
             max-height: 60px;
             max-width: 60px;
+
+            .orc-token {
+
+                &.claimed {
+
+                    .orc-token-img {
+                        opacity: 1;
+                    }
+                }
+
+                .orc-token-img {
+                    opacity: .5;
+                }
+            }
         }
     }
 

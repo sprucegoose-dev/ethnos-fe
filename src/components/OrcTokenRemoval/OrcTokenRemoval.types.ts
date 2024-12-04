@@ -1,5 +1,5 @@
 import { IPlayer } from '../Game/Game.types';
 
-export interface IOrcBoardProps {
+export interface IOrcTokenRemovalProps {
     player: IPlayer;
 }

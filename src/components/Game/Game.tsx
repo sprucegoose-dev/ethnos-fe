@@ -61,6 +61,7 @@ import { LoadingScreen } from '../LoadingScreen/LoadingScreen';
 // import { useUndoState } from '../../hooks/useUndoState';
 import { UndoApproval } from '../UndoApproval/UndoApproval';
 import { IGameReducer } from './Game.reducer.types';
+import { OrcBoardRemoval } from '../OrcTokenRemoval/OrcTokenRemoval';
 
 const {
     CREATED,
@@ -387,6 +388,11 @@ export function Game(): JSX.Element {
                             {openWidgetModal.type === WidgetModal.GIANTS ?
                                 <GiantToken players={gameState.players} /> : null
                             }
+                        </Modal> : null
+                    }
+                    {currentPlayer.canRemoveOrcTokens && !isSpectator ?
+                        <Modal onClose={null} modalClass="orc-board-removal">
+                           <OrcBoardRemoval player={currentPlayer} />
                         </Modal> : null
                     }
                     {showAgeResults && ageResults ?

@@ -113,6 +113,10 @@
         animation-iteration-count: 1;
     }
 
+    .age-results-modal {
+        z-index: 200;
+    }
+
     .age-results-modal,
     .widget-modal {
         max-width: 90%;
