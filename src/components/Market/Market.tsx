@@ -1,7 +1,7 @@
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import throttle from 'lodash.throttle';
-import { useEffect, useState } from 'react';
 
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
@@ -25,7 +25,7 @@ export function Market({activePlayer, gameState}: IDeckProps): JSX.Element {
         .filter(card => card.state === CardState.IN_MARKET)
         .sort((cardA, cardB) => cardA.index - cardB.index);
 
-    const handlePickUpCard = async (card: ICard) => {
+    const handlePickUpCard = throttle(async (card: ICard) => {
         if (submitting) {
             return;
         }
@@ -45,7 +45,7 @@ export function Market({activePlayer, gameState}: IDeckProps): JSX.Element {
         }
 
         setSubmitting(false);
-    };
+    }, 500);
 
     const calculateClass = (index: number) => {
         return hoveredCardIndex === index ? 'hover' :  '';

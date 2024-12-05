@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import throttle from 'lodash.throttle';
 
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
@@ -32,7 +33,7 @@ export function Deck(props: IDeckProps): JSX.Element {
     const selectable = actions.find(action => action.type === ActionType.DRAW_CARD) &&
         activePlayer.userId === currentPlayer.userId;
 
-    const handleDrawCard = async () => {
+    const handleDrawCard = throttle(async () =>  {
         if (currentPlayer.cardsInHand.length === 10) {
             toast.info('You cannot draw more than 10 cards');
         }
@@ -59,7 +60,7 @@ export function Deck(props: IDeckProps): JSX.Element {
         }
 
         setSubmitting(false);
-    };
+    }, 500);
 
     const revealedDragons = gameState.cards.filter(card =>
         card.tribe.name === TribeName.DRAGON &&

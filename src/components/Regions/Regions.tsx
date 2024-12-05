@@ -1,5 +1,6 @@
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
+import throttle from 'lodash.throttle';
 
 import GameApi from '../../api/Game.api';
 import {
@@ -41,7 +42,7 @@ export function Regions(props: IRegionsProps): JSX.Element {
 
     const dispatch = useDispatch();
 
-    const onSelectRegion = async (region?: IRegion) => {
+    const onSelectRegion = throttle(async (region?: IRegion) => {
         let payload: IActionPayload;
 
         if (gameState.activePlayerId !== currentPlayer.id) {
@@ -97,7 +98,7 @@ export function Regions(props: IRegionsProps): JSX.Element {
         if (response.ok) {
             dispatch(clearSelections());
         }
-    }
+    }, 500);
 
     const submitKeepCardsAction = async () => {
         const payload: IKeepCardsPayload = {
