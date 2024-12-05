@@ -5,7 +5,6 @@
         rgba(0, 0, 0, 0.9));
     padding: 30px;
     box-sizing: border-box;
-    font-family: QuadratDemibold;
     overflow-y: auto;
     height: 85vh;
     max-width: 90%;
@@ -13,6 +12,12 @@
     overflow-y: auto;
     color: white;
     position: relative;
+
+    .title,
+    .section-title,
+    .section-description {
+        font-family: QuadratDemibold;
+    }
 
     .title {
         text-align: center;
@@ -50,5 +55,12 @@
         justify-content: center;
         gap: 20px;
         margin-bottom: 35px;
+    }
+
+    .card {
+
+        &.skeletons {
+            background: transparent;
+        }
     }
 }

@@ -370,7 +370,7 @@ export function Game(): JSX.Element {
                             }
                         </Modal> : null
                     }
-                    {currentPlayer.canRemoveOrcTokens && !isSpectator ?
+                    {activePlayer.id === currentPlayer.id && currentPlayer.canRemoveOrcTokens && !isSpectator ?
                         <Modal onClose={null} modalClass="orc-board-removal">
                            <OrcBoardRemoval player={currentPlayer} />
                         </Modal> : null
