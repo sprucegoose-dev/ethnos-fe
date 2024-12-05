@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
@@ -24,6 +25,7 @@ export function Deck(props: IDeckProps): JSX.Element {
         gameState
     } = props;
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
+    const [submitting, setSubmitting] = useState<boolean>(null);
 
     const cardsInDeck = new Array(gameState.cardsInDeckCount).fill(null);
 
@@ -39,7 +41,13 @@ export function Deck(props: IDeckProps): JSX.Element {
             return;
         }
 
+        if (submitting) {
+            return;
+        }
+
         if (activePlayer?.userId === auth.userId) {
+            setSubmitting(true);
+
             const response = await GameApi.sendAction(gameState.id, { type: ActionType.DRAW_CARD });
 
             if (!response.ok) {
@@ -49,6 +57,8 @@ export function Deck(props: IDeckProps): JSX.Element {
         } else {
             toast.info('Please wait for your turn');
         }
+
+        setSubmitting(false);
     };
 
     const revealedDragons = gameState.cards.filter(card =>
@@ -57,7 +67,7 @@ export function Deck(props: IDeckProps): JSX.Element {
     );
 
     return (
-        <div className={`deck ${selectable ? 'selectable' : ''}`} onClick={handleDrawCard}>
+        <div className={`deck ${selectable && !submitting ? 'selectable' : ''}`} onClick={handleDrawCard}>
             {
                 cardsInDeck.map((_card, index) =>
                     <FacedownCard showLogo={!index} key={`facedown-card-${index}`} />
