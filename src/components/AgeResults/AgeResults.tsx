@@ -128,7 +128,6 @@ export function AgeResults(props: IAgeResultsProps): JSX.Element {
             {gameState.players.map(player =>
                 <BandScores
                     player={player}
-
                     key={`player-band-scores-${player.id}`}
                 />
             )}

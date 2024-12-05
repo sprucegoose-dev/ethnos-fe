@@ -82,6 +82,11 @@ export const getBandScore = (cards: ICard[], leaderId: number): number => {
     let bandSize = filteredCards.length;
     let leader = filteredCards.find(card => card.id === leaderId);
 
+    if (!leader) {
+        console.warn(`Missing leader (leaderId: ${leaderId}, cardIds: ${cards.map(card => card.id)})`);
+        return 0;
+    }
+
     if (leader.tribe.name === TribeName.DWARVES) {
         bandSize += 1;
     }
