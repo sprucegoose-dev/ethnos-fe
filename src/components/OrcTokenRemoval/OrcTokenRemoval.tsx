@@ -12,7 +12,7 @@ import { OrcToken } from '../OrcToken/OrcToken';
 
 import './OrcTokenRemoval.scss';
 
-export function OrcBoardRemoval({ player }: IOrcTokenRemovalProps): JSX.Element {
+export function OrcBoardRemoval({ player, action }: IOrcTokenRemovalProps): JSX.Element {
     const [selectedTokens, setSelectedTokens] = useState<Color[]>(player.orcTokens);
     const [submitting, setSubmitting] = useState<boolean>(false);
 
@@ -33,6 +33,7 @@ export function OrcBoardRemoval({ player }: IOrcTokenRemovalProps): JSX.Element 
 
         const payload: IRemoveOrcTokensPayload = {
             type: ActionType.REMOVE_ORC_TOKENS,
+            nextActionId: action.nextActionId,
             tokens,
         };
 
@@ -49,6 +50,8 @@ export function OrcBoardRemoval({ player }: IOrcTokenRemovalProps): JSX.Element 
     return (
         <div className="orc-token-removal-container">
             <div className="instructions">
+                The Age has ended.
+                <br/>
                 Remove tokens from the Orc Hoard Board?
             </div>
             <div className="orc-tokens">

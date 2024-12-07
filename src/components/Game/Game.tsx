@@ -28,6 +28,7 @@ import {
 import {
     ActionType,
     IActionPayload,
+    IRemoveOrcTokensPayload,
 } from './Action.types';
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
@@ -102,6 +103,7 @@ export function Game(): JSX.Element {
         gameState?.state !== CREATED &&
         !gameState?.players.find(player => player.userId === auth.userId);
     const showChat = auth.userId && gameState?.players.find(player => player.userId === auth.userId);
+    const removeOrcTokensAction = actions.find(action => action.type === ActionType.REMOVE_ORC_TOKENS) as IRemoveOrcTokensPayload;
     let currentPlayer: IPlayer;
     // const { requestUndo } = useUndoState(gameState);
     let playerPosition: {[userId: number]: string};
@@ -370,9 +372,9 @@ export function Game(): JSX.Element {
                             }
                         </Modal> : null
                     }
-                    {activePlayer.id === currentPlayer.id && currentPlayer.canRemoveOrcTokens && !isSpectator ?
+                    {activePlayer.id === currentPlayer.id && removeOrcTokensAction && !isSpectator ?
                         <Modal onClose={null} modalClass="orc-board-removal">
-                           <OrcBoardRemoval player={currentPlayer} />
+                           <OrcBoardRemoval player={currentPlayer} action={removeOrcTokensAction} />
                         </Modal> : null
                     }
                     {showAgeResults && ageResults ?

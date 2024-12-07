@@ -15,9 +15,6 @@ import { groupCardsByLeader } from '../Game/helpers';
 export function AgeResults(props: IAgeResultsProps): JSX.Element {
     const { gameState } = props;
 
-    const shouldScoreOrcs = gameState.age === 3 &&
-        gameState.settings.tribes.includes(TribeName.ORCS);
-
     const getBandCards = (player: IPlayer) =>
         player.cards.filter(card => card.state == CardState.IN_BAND);
 
@@ -77,7 +74,7 @@ export function AgeResults(props: IAgeResultsProps): JSX.Element {
                                 Giants (VP)
                             </th> : null
                         }
-                        {shouldScoreOrcs ?
+                        {gameState.settings.tribes.includes(TribeName.ORCS) ?
                             <th>
                                 Orcs (VP)
                             </th> : null
@@ -112,7 +109,7 @@ export function AgeResults(props: IAgeResultsProps): JSX.Element {
                                 {player.pointsBreakdown[`${gameState.age}`]?.giants || 0}
                             </td> : null
                         }
-                        {shouldScoreOrcs ?
+                        {gameState.settings.tribes.includes(TribeName.ORCS) ?
                             <td>
                                 {player.pointsBreakdown[`${gameState.age}`]?.orcs || 0}
                             </td> : null

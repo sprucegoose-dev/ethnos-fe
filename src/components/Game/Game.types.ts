@@ -82,7 +82,6 @@ export interface IUser {
 }
 
 export interface IPlayer {
-    canRemoveOrcTokens: boolean;
     cards: ICard[];
     gameId: number;
     giantTokenValue: number;
