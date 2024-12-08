@@ -6,6 +6,8 @@
     align-items: center;
 
     .page-wrapper {
+        align-items: flex-end;
+        display: flex;
         margin: 0 5px;
 
         .page {
@@ -14,7 +16,6 @@
             padding: 2px 10px;
             display: inline-block;
             cursor: pointer;
-            margin-bottom: 10px;
             color: white;
             font-family: QuadratDemibold;
 
@@ -23,6 +24,11 @@
                 font-weight: bold;
             }
         }
+
+        .gap {
+            color: white;
+            margin-left: 10px;
+        }
     }
 }
 
@@ -30,11 +36,16 @@
     display: flex;
     justify-content: center;
     font-size: .9em;
+    flex-shrink: 0;
 
     .form-control {
         max-width: 75px;
         min-height: 36px;
         padding: 6px 10px;
+        background: rgba(0, 0, 0, .8);
+        border: 1px solid white;
+        color: white;
+        font-weight: bold;
     }
 
     .submit-btn {
