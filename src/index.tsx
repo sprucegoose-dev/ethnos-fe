@@ -15,6 +15,7 @@ import { Game } from './components/Game/Game';
 import { Account } from './components/Account/Account';
 import { Matches } from './components/Matches/Matches';
 import { Rules } from './components/Rules/Rules';
+import { RecentMatches } from './components/RecentMatches/RecentMatches';
 
 import './index.css';
 
@@ -35,6 +36,7 @@ root.render(
                             <Route path="game/:id" element={<Game />} />
                             <Route path="/matches/:username" element={<Matches />} />
                             <Route path="/matches" element={<Matches />} />
+                            <Route path="/recent-matches" element={<RecentMatches />} />
                             <Route path="/rules" element={<Rules />} />
                             <Route path="/" element={<Home />} />
                         </Route>

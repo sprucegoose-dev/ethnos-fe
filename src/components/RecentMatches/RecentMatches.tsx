@@ -1,16 +1,16 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { IMatchesProps } from './Matches.types';
+import { IRecentMatchesProps } from './RecentMatches.types';
 import { IRootReducer } from '../../reducers/reducers.types';
 import { IAuthReducer } from '../Auth/Auth.types';
 import { MatchRow } from '../MatchRow/MatchRow';
 import Paginator from '../Paginator/Paginator';
 import { useMatches } from '../../hooks/useMatches';
-import './Matches.scss';
 
-export function Matches(_props: IMatchesProps): JSX.Element {
+import './RecentMatches.scss';
+
+export function RecentMatches(_props: IRecentMatchesProps): JSX.Element {
     const auth = useSelector<IRootReducer>((state) => state.auth) as IAuthReducer;
     let username = useParams().username || auth.username;
     const {
@@ -18,15 +18,13 @@ export function Matches(_props: IMatchesProps): JSX.Element {
         matches,
         goToPage,
         totalPages,
-    } = useMatches(username);
-    const navigate = useNavigate();
+    } = useMatches();
 
-    useEffect(() => {
-        if (!auth.userId) {
-            navigate('/login');
-            return;
-        }
-    }, [auth, navigate]);
+    if (!auth.userId) {
+        <div>
+            You must be logged in to see recent matches,
+        </div>
+    }
 
     return (
         <div className="matches-container">

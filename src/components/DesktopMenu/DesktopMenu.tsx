@@ -27,6 +27,11 @@ export const menuItems: IMenuItem[] = [
         visibility: [ALWAYS],
     },
     {
+        label: 'Recent Matches',
+        path: '/recent-matches',
+        visibility: [LOGGED_IN],
+    },
+    {
         label: 'My games',
         path: '/matches',
         visibility: [LOGGED_IN],
