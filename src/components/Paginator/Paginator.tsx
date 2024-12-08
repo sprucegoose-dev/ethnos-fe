@@ -70,6 +70,16 @@ const Paginator = ({ currentPage, onGoToPageCallback, pages }: IPaginatorProps) 
         );
     };
 
+    const handleTargetPageChange = (page: string) => {
+        let parsedPage = parseInt(page, 10);
+
+        if (isNaN(parsedPage)) {
+            parsedPage = null;
+        }
+
+        setTargetPage(parsedPage);
+    }
+
     const onDirectPageNavigation = () => {
         if (pages.includes(targetPage)) {
             onGoToPageCallback(targetPage);
@@ -95,8 +105,8 @@ const Paginator = ({ currentPage, onGoToPageCallback, pages }: IPaginatorProps) 
                 <div className="direct-navigation">
                     <input
                         className="form-control"
-                        value={targetPage}
-                        onChange={(e) => setTargetPage(parseInt(e.target.value, 10))}
+                        value={targetPage ? targetPage : ''}
+                        onChange={(e) => handleTargetPageChange(e.target.value)}
                         placeholder="Page"
                         name="targetPage"
                         autoComplete="off"
