@@ -94,6 +94,7 @@ export function Game(): JSX.Element {
     const [openWidgetModal, setOpenWidgetModal] = useState<IActiveWidgetModal>({ type: null, player: null });
     const [ageResults, setAgeResults] = useState<IGameState>(null);
     const [showAgeResults, setShowAgeResults] = useState<boolean>(false);
+    const [minimizeAgeResults, setMinimizeAgeResults] = useState<boolean>(false);
     const [audioInitialised, setAudioInitialized] = useState<boolean>(false);
     const prevAge = useRef<number>(0);
     const prevState = useRef<GameState>(null);
@@ -378,7 +379,12 @@ export function Game(): JSX.Element {
                         </Modal> : null
                     }
                     {showAgeResults && ageResults ?
-                        <Modal onClose={() => setShowAgeResults(false)} modalClass="age-results-modal age-results">
+                        <Modal
+                            onClose={() => setShowAgeResults(false)}
+                            onMinimize={() => setMinimizeAgeResults(!minimizeAgeResults)}
+                            modalClass="age-results-modal age-results"
+                            minimized={minimizeAgeResults}
+                        >
                             <AgeResults gameState={ageResults} />
                         </Modal> : null
                     }

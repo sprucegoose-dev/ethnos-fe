@@ -8,6 +8,10 @@
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.4);
     z-index: 150;
+
+    &.minimized {
+        background-color: transparent;
+    }
 }
 
 .modal {
@@ -19,6 +23,15 @@
     top: 25%;
     transform: translate(-50%, -25%);
     border: 5px solid rgba(255, 255, 255, 0.5);
+
+    &.minimized {
+        top: 75%;
+
+        .content {
+            height: 200px;
+            overflow-y: scroll;
+        }
+    }
 
     .modal-form {
         background: rgba(0, 0, 0, .8);
@@ -48,6 +61,18 @@
         position: absolute;
         right: 12px;
         top: 12px;
+
+        .btn-close-icon {
+            color: white;
+            font-size: 1.3rem;
+        }
+    }
+
+    .btn-minimize {
+        cursor: pointer;
+        position: absolute;
+        right: 45px;
+        top: 13px;
 
         .btn-close-icon {
             color: white;
